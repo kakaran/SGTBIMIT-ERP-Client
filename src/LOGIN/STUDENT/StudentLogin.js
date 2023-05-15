@@ -21,7 +21,7 @@ const StudentLogin = () => {
   // }, []);
 
   return (
-    <div className=" flex gap-16 flex-row h-[530px] my-4 max-w-7xl mx-auto ">
+    <div className=" flex gap-16 flex-row h-[530px] my-4  mx-auto ">
       <div className="  flex-1 hidden md:inline-flex flex-col   ">
         {/* <img
           className="h-20 w-20 absolute  bottom-0 left-[272px] right-0 top-24"
@@ -34,7 +34,7 @@ const StudentLogin = () => {
           alt=""
         /> */}
         <img
-          className="hidden mb-8  md:inline h-auto object-cover rounded-[32px]"
+          className="hidden mb-8 ml-10  md:inline h-auto object-cover rounded-[32px]"
           src="/sgtb.jpg"
           alt="banner_image"
         />
@@ -42,15 +42,15 @@ const StudentLogin = () => {
 
       <div className="bg-white flex-1 text-left flex  flex-col my-8">
         <h2 className="text-3xl  font-semibold">Login</h2>
-        <p className="text-[#7F8087] text-[20px] mt-2">
+        <p className="text-[#7F8087] text-[24px] mt-2">
           Welcome to official ERP system of SGTBIMIT
         </p>
 
-        <div className="bg-[#EEEEEE] mt-8 rounded-[32px] max-w-xs">
+        <div className="bg-[#EEEEEE]  text-[20px] mt-16 rounded-[32px] max-w-xs ">
           <button
-            className={`rounded-full "bg-[##EEEEEE]" w-40 h-12 ${
+            className={`rounded-full  w-40 h-12  ${
               isClicked
-                ? "bg-[#1B449C] text-white"
+                ? "bg-[#1B449C]  text-white"
                 : "bg-[#EEEEEE] text-[#1B449C]"
             }`}
             onClick={handleClick}
@@ -84,7 +84,7 @@ const StudentLogin = () => {
                     type="email"
                     autoComplete="email"
                     required
-                    className="block w-[440px] rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#1B449C] sm:text-sm sm:leading-6"
+                    className="block w-[440px] rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#1B449C] sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -105,7 +105,7 @@ const StudentLogin = () => {
                     type="password"
                     autoComplete="current-password"
                     required
-                    className="block w-[440px] rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#1B449C] sm:text-sm sm:leading-6"
+                    className="block w-[440px] rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#1B449C] sm:text-sm sm:leading-6"
                   />
                 </div>
                 <div className="text-sm text-right w-[440px] mt-2">
@@ -121,7 +121,7 @@ const StudentLogin = () => {
               <div>
                 <button
                   type="submit"
-                  className="flex items-center w-40 justify-center rounded-md bg-[#1B449C] px-3 py-2.5 text-[16px]  leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="flex items-center w-40 justify-center rounded-xl bg-[#1B449C] px-3 py-4 text-[16px]  leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Login
                   <img className="  ml-2" src="/right.png" alt="" />
