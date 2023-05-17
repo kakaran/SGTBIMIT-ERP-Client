@@ -1,7 +1,8 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
+
 /* .stupage{
     min-height: 100vh;
     width: 100%;
@@ -12,3 +13,61 @@
     position: relative;
 
 } */
+
+
+.login_Page_Controller {
+    display: flex;
+    padding: 50px;
+    gap: 20px;
+}
+
+.ImageContainer {
+    background-image: url("https://s3-alpha-sig.figma.com/img/90ea/ae4e/4139f27b8014e5e06a40021723b6e1d4?Expires=1685318400&Signature=D1SzHsyxHNdsAJCCeMNXpAYJIInHZ4hhq073xq-Gd4x6EXBt5vePvi4RNzdObRRHNixVR-PrIpptVkPG2Z3NXHjUHx7ufQUlS5NRRUCskFUUbVkxX2vFP-HHD3hJRLky2ZNv3v~eYJFrPHeviPQ0s-bW8MY5IPRLtp26~wRHGj1i0RWj-i0DVSkFtgjIIl4XRcyyN7Eql7XQ2tliP7gQ8R3jWZakTg930YVW8EumEHw2EkZ-Rlh~TGcLeXhCQ23~SYqX0diBYx85jk35jNDmtNEHdFxjlaaab5NbbZ204fvaiwNoHCuuQp51zcB3XpXj6YAIt0p9E-OmhYnFlY6V3w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 1060px;
+    height: 930px;
+    border-radius: 30px
+}
+
+.imageBackground {
+    background: rgba(255, 255, 255, 0.2);
+    width: 129px;
+    height: 129px;
+    margin: 20px;
+    border-radius: 20px;
+}
+
+.imageBackground img {
+    margin: auto;
+}
+
+.Login-form_Container {
+    width: 1060px;
+}
+
+.Login-form_Container h2 {
+    font-family: 'HelveticaNeue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+}
+
+.Login-form_Container p {
+    font-weight: 400;
+    font-size: 24px;
+    color: #7F8087;
+}
+
+.LoginsDiversionbutton {
+    width: 416px;
+    height: 56px;
+    box-sizing: border-box;
+    background: #EEEEEE;
+    border: 1px solid #D9D9D9;
+    border-radius: 32px;
+    display: flex;
+}
+
+.LoginDiversButtoninActive {
+}
