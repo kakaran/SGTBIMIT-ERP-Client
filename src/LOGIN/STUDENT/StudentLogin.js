@@ -1,26 +1,49 @@
-import React, { useEffect, useState } from "react";
-// import VisibilityIcon from "@mui/icons-material/Visibility";
-// import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import React, { useState } from "react";
+import { MdKeyboardArrowRight } from 'react-icons/md';
+import "./StudentLogin.css"
+import axios from "axios";
+import { useAuth } from "../../Context/auth"
+import { useNavigate } from "react-router-dom";
+
 
 const StudentLogin = () => {
-  const [isClicked, setIsClicked] = useState(false);
+  const [email, setEamil] = useState();
+  const [password, setPassword] = useState()
+  const [auth, setAuth] = useAuth();
+  const [loginOption, setloginOption] = useState(true)
+  const navigate = useNavigate()
 
-  const handleClick = () => {
-    setIsClicked(!isClicked);
-  };
-  // const [translate, setTranslate] = useState(false);
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [showPassword, setShowPassword] = useState(false);
-  // const [loading] = useState(false);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setTranslate(true);
-  //   }, 1000);
-  // }, []);
+  const StudentFacultylogin = async () => {
+    try {
+      let Data
+      if (loginOption) {
+         Data = (await axios.post("http://localhost:5000/api/Student/Signin", { email, password })).data;
+         navigate("/Dashboard/Student")
+      } else {
+         Data = (await axios.post("http://localhost:5000/api/Faculty/Signin", { email, password })).data
+         navigate("/Dashboard/Faculty")
+
+      }
+      if (Data.token) {
+        setAuth({
+          ...auth,
+          _id: Data.userID,
+          token: Data.token
+        })
+        localStorage.setItem("authtok", JSON.stringify(Data))
+      }
+    } catch (error) {
+      console.log('====================================');
+      console.log(error);
+      console.log('====================================');
+    }
+  }
+
+
 
   return (
+<<<<<<< HEAD
     <div className=" flex gap-16 flex-row h-[530px] my-4  mx-auto ">
       <div className="  flex-1 hidden md:inline-flex flex-col   ">
         {/* <img
@@ -128,10 +151,47 @@ const StudentLogin = () => {
                 </button>
               </div>
             </form>
+=======
+    <>
+      <div className="login_Page_Controller">
+        <div className="ImageContainer">
+          <div className="imageBackground">
+            <img src="/logo.png" alt="" />
+>>>>>>> 870cc179d4f7627b25aa7a0a9c906a45bce63ab4
           </div>
         </div>
+        <div className="Login-form_Container">
+          <h2>Login</h2>
+          <p>Welcome to official ERP system of SGTBIMIT</p>
+          <div className="LoginsDiversionbutton">
+            <p className={loginOption ? "LoginDiversButtoninActive" : "LoginDriveButtoninNotActive"} onClick={() => {
+              setloginOption(!loginOption)
+            }}>Student</p>
+            <p className={!loginOption ? "LoginDiversButtoninActive" : "LoginDriveButtoninNotActive"} onClick={() => {
+              setloginOption(!loginOption)
+            }}>Faculty</p>
+          </div>
+          <div className="LoginForm">
+            <div className="labelContainer">
+              <label htmlFor="Email">Email Address</label>
+              <input type="email" name="Email" id="Email" onChange={(e) => {
+                setEamil(e.target.value);
+              }} />
+            </div>
+            <div className="labelContainer">
+              <label htmlFor="password">Password</label>
+              <input type="password" name="password" id="password" onChange={(e) => {
+                setPassword(e.target.value);
+              }} />
+            </div>
+            <p>Forget Password ?</p>
+          </div>
+          <button onClick={() => {
+            StudentFacultylogin()
+          }}>Login <MdKeyboardArrowRight /></button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
