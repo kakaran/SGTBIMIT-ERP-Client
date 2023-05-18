@@ -23,7 +23,7 @@ const Spinner = () => {
           <div class="newtons-cradle__dot"></div>
         </div>
         <div>
-          <span className='spinnerMessage'>Redirecting to you in {count} second</span>
+          <span className='spinnerMessage'>Redirecting to you  {count} second</span>
         </div>
       </div>
     </>

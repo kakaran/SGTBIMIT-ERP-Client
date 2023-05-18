@@ -7,28 +7,38 @@ import Stu_Dashboard from './Pages/Stu_Dashboard/Stu_Dashboard';
 import Student from './Routes/Student';
 import Faculty from './Routes/Faculty';
 import Fac_Dashboard from './Pages/Fac_Dashboard/Fac_Dashboard';
-// import FacultyLogin from './LOGIN/FACULTY/FacultyLogin';
-// import StuBody from './STUDENT_PAGE/StuBody';
-// import StudentHome from './STUDENT_PAGE/StudentHome';
-// import StuSidebar from './STUDENT_PAGE/StuSidebar';
-// import StuHeader from './STUDENT_PAGE/StuHeader';
-// import FacBody from './FACULTY_PAGE/FacBody';
-// import FacHeader from './FACULTY_PAGE/FacHeader';
-// import FacSidebar from './FACULTY_PAGE/FacSidebar';
-// import FacultyHome from './FACULTY_PAGE/FacultyHome';
+import AdSupAdm from './LOGIN/Admin_SuperAdmin/AdSupAdm';
+import Admin from './Routes/Admin';
+import Adm_Dashboard from './Pages/Adm_Dashboard/Adm_Dashboard';
+import Super_Admin from './Routes/Super_Admin';
+import Sup_Adm_Dashboard from './Pages/Sup_Adm_Dashboard/Sup_Adm_Dashboard';
+
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
           <Route exact path="/" element={<StudentLogin />} />
+          <Route exact path="/admin" element={<AdSupAdm />} />
+          
           {/* Student Routes */}
-          <Route exact path="/Dashboard" element={<Student/>}>
+          <Route exact path="/Dashboard" element={<Student />}>
             <Route exact path="Student" element={<Stu_Dashboard />} />
           </Route>
+
           {/* Faculty Routes */}
-          <Route exact path="/Dashboard" element={<Faculty/>}>
+          <Route exact path="/Dashboard" element={<Faculty />}>
             <Route exact path="Faculty" element={<Fac_Dashboard />} />
+          </Route>
+
+          {/* Admin Routes */}
+          <Route exact path="/Dashboard" element={<Admin />}>
+            <Route exact path="Admin" element={<Adm_Dashboard />} />
+          </Route>
+
+          {/* Super Admin Routes */}
+          <Route exact path="/Dashboard" element={<Super_Admin />}>
+            <Route exact path="Admin" element={<Sup_Adm_Dashboard />} />
           </Route>
         </Routes>
       </Router>
