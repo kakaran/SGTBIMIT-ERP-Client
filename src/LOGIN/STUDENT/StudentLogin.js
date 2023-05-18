@@ -3,6 +3,7 @@ import { MdKeyboardArrowRight } from 'react-icons/md';
 import "./StudentLogin.css"
 import axios from "axios";
 import { useAuth } from "../../Context/auth"
+import { useNavigate } from "react-router-dom";
 
 
 const StudentLogin = () => {
@@ -10,14 +11,19 @@ const StudentLogin = () => {
   const [password, setPassword] = useState()
   const [auth, setAuth] = useAuth();
   const [loginOption, setloginOption] = useState(true)
+  const navigate = useNavigate()
+
 
   const StudentFacultylogin = async () => {
     try {
       let Data
       if (loginOption) {
          Data = (await axios.post("http://localhost:5000/api/Student/Signin", { email, password })).data;
+         navigate("/Dashboard/Student")
       } else {
          Data = (await axios.post("http://localhost:5000/api/Faculty/Signin", { email, password })).data
+         navigate("/Dashboard/Faculty")
+
       }
       if (Data.token) {
         setAuth({
