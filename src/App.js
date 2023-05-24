@@ -38,7 +38,7 @@ function App() {
 
           {/* Super Admin Routes */}
           <Route exact path="/Dashboard" element={<Super_Admin />}>
-            <Route exact path="Admin" element={<Sup_Adm_Dashboard />} />
+            <Route exact path="Sup_Admin" element={<Sup_Adm_Dashboard />} />
           </Route>
         </Routes>
       </Router>
