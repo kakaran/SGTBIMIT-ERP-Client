@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import StudentCard from "../components/StudentCard";
 import ScheduleTable from "../components/ScheduleTable";
 
-function Dashboard() {
+export default function Stu_Dashboard() {
   return (
     <div className="flex  text-3xl h-screen overflow-hidden">
       <Sidebar />
@@ -27,5 +27,3 @@ function Dashboard() {
     </div>
   );
 }
-
-export default Dashboard;
