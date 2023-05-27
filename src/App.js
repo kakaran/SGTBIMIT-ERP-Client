@@ -1,17 +1,18 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import './App.css';
+import "./App.css";
 // import Login from './LOGIN/Login';
-import StudentLogin from './LOGIN/STUDENT/StudentLogin';
-import Stu_Dashboard from './Pages/Stu_Dashboard/Stu_Dashboard';
-import Student from './Routes/Student';
-import Faculty from './Routes/Faculty';
-import Fac_Dashboard from './Pages/Fac_Dashboard/Fac_Dashboard';
-import AdSupAdm from './LOGIN/Admin_SuperAdmin/AdSupAdm';
-import Admin from './Routes/Admin';
-import Adm_Dashboard from './Pages/Adm_Dashboard/Adm_Dashboard';
-import Super_Admin from './Routes/Super_Admin';
-import Sup_Adm_Dashboard from './Pages/Sup_Adm_Dashboard/Sup_Adm_Dashboard';
+import StudentLogin from "./LOGIN/STUDENT/StudentLogin";
+import Stu_Dashboard from "./Pages/Stu_Dashboard/Stu_Dashboard";
+import Student from "./Routes/Student";
+import Faculty from "./Routes/Faculty";
+import Fac_Dashboard from "./Pages/Fac_Dashboard/Fac_Dashboard";
+import AdSupAdm from "./LOGIN/Admin_SuperAdmin/AdSupAdm";
+
+import Adm_Dashboard from "./Pages/Adm_Dashboard/Adm_Dashboard";
+import Super_Admin from "./Routes/Super_Admin";
+import Sup_Adm_Dashboard from "./Pages/Sup_Adm_Dashboard/Sup_Adm_Dashboard";
+import Admin from "./Routes/admin";
 
 function App() {
   return (
@@ -20,10 +21,12 @@ function App() {
         <Routes>
           <Route exact path="/" element={<StudentLogin />} />
           <Route exact path="/admin" element={<AdSupAdm />} />
-          
+
           {/* Student Routes */}
           <Route exact path="/Dashboard" element={<Student />}>
+            {/* <Dashboard> */}
             <Route exact path="Student" element={<Stu_Dashboard />} />
+            {/* </Dashboard> */}
           </Route>
 
           {/* Faculty Routes */}
