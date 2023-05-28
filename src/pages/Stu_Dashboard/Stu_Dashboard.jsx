@@ -1,26 +1,74 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import StudentCard from "../../components/StudentCard";
 import ScheduleTable from "../../components/ScheduleTable";
-import Cards from "../../components/Cards";
+import axios from "axios";
 
 export default function Stu_Dashboard() {
+  const [studentDetail, setStudentDetail] = useState();
+
+  useEffect(() => {
+    const StudentDataGet = async () => {
+      try {
+        const Data = (
+          await axios.get("http://localhost:5000/api/Student/Student_Get")
+        ).data;
+        // console.log(Data);
+        if (Data) {
+          setStudentDetail(Data);
+        }
+      } catch (error) {
+        console.log("====================================");
+        console.log(error);
+        console.log("====================================");
+      }
+    };
+    StudentDataGet();
+  }, []);
+
   return (
     <div className="flex  text-3xl h-screen overflow-hidden">
       <Sidebar />
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-        <Header />
+        <Header
+          Name={studentDetail?.firstname + " " + studentDetail?.lastname}
+          Course={
+            studentDetail?.course +
+            " " +
+            studentDetail?.semester +
+            studentDetail?.section
+          }
+          _id={studentDetail?._id}
+        />
         <main>
           <div className="px-4 h-screen bg-gray-100 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <div className="grid grid-cols-6">
               <div className="col-span-2">
-                <StudentCard />
+                <StudentCard
+                  Student_ID={studentDetail?.rollnumber}
+                  Email={studentDetail?.email}
+                  PhoneNumber={studentDetail?.phone}
+                  Address={studentDetail?.address}
+                  Batch={studentDetail?.batch}
+                  Name={
+                    studentDetail?.firstname + " " + studentDetail?.lastname
+                  }
+                  Course={
+                    studentDetail?.course +
+                    " " +
+                    studentDetail?.semester +
+                    studentDetail?.section
+                  }
+                  _id={studentDetail?._id}
+                />
               </div>
-
               <div className="col-span-4">
-                <Cards />
-                <ScheduleTable />
+                <ScheduleTable
+                  Course={studentDetail?.course}
+                  Semester={studentDetail?.semester}
+                  Section={studentDetail?.section}
+                />
               </div>
             </div>
           </div>

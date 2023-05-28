@@ -1,8 +1,5 @@
-import React from "react";
-import {
-  CalendarIcon,
-  AdjustmentsHorizontalIcon,
-} from "@heroicons/react/24/outline";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 
 const scheduleDetails = [
   {
@@ -53,7 +50,47 @@ const scheduleDetails = [
   // Add more schedule details as needed
 ];
 
-function ScheduleTable() {
+function ScheduleTable(prope) {
+  const [timetable, setTimeTable] = useState();
+
+  const TodayDate = (separator = "") => {
+    let newDate = new Date();
+    let date = newDate.getDate();
+    let month = newDate.getMonth() + 1;
+    let year = newDate.getFullYear();
+    return `${separator}${date}-${
+      month < 10 ? `0${month}` : `${month}`
+    }-${year}${separator}`;
+  };
+
+  console.log(prope);
+
+  useEffect(() => {
+    const TimeTableGet = async () => {
+      try {
+        let Date = await TodayDate();
+        const Detail = {
+          Date: Date,
+          Course: await `${prope?.Course}`,
+          Semester: await `${prope?.Semester}`,
+          section: await `${prope?.Section}`,
+        };
+        const Data = await axios.post(
+          "http://localhost:5000/api/Student/Student_Time_Table",
+          { Detail }
+        );
+        console.log(Data);
+      } catch (error) {
+        console.log("====================================");
+        console.log(error);
+        console.log("====================================");
+      }
+    };
+    {
+      prope.Course && TimeTableGet();
+    }
+  }, [prope]);
+
   return (
     <div className="flex flex-col border-2 bg-white rounded-lg border-[#E0E2E7] justify-center items-center overflow-hidden">
       <div className="flex h-20 flex-col md:flex-row items-center gap-4 justify-between w-full">
