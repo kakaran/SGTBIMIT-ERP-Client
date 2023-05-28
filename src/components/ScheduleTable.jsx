@@ -67,7 +67,6 @@ function ScheduleTable(prope) {
     }-${year}${separator}`;
   };
 
-  console.log(prope);
 
   useEffect(() => {
     const TimeTableGet = async () => {
@@ -79,11 +78,16 @@ function ScheduleTable(prope) {
           Semester: await `${prope?.Semester}`,
           section: await `${prope?.Section}`,
         };
+
         const Data = await axios.post(
           "http://localhost:5000/api/Student/Student_Time_Table",
           { Detail }
         );
-        console.log(Data);
+        
+        console.log(Data.data);
+        if(Data){
+          setTimeTable(Data.data)
+        }
       } catch (error) {
         console.log("====================================");
         console.log(error);
@@ -125,49 +129,40 @@ function ScheduleTable(prope) {
             </tr>
           </thead>
           <tbody className="text-left">
-            {scheduleDetails.map(
-              ({
-                id,
-                time,
-                subjectName,
-                subjectImage,
-                subjectTopic,
-                teacher,
-                status,
-              }) => (
-                <tr className="h-20" key={id}>
+            {timetable?.map((value,index) => (
+                <tr className="h-20" key={index}>
                   <td className="py-2 px-4 border-b font-semibold  text-[#5C59E8]">
-                    {time}
+                    {value.time}
                   </td>
                   <td className="flex flex-row py-6 space-x-3 px-4 border-b items-center  justify-start">
                     <img
                       className="h-10 w-10 rounded-lg object-cover"
-                      src={subjectImage}
-                      alt={subjectName}
+                      src="/Book.png"
+                      alt="subject Image"
                     />
                     <div className="flex flex-col ">
                       <span className="text-black font-semibold">
-                        {subjectName}
+                        {value.subject_id.Subject_Name}
                       </span>{" "}
                       <span className="mt-1 font-semibold capitalize text-[#667085]">
-                        {subjectTopic}
+                        {value.subject_id.Subject_Code}
                       </span>
                     </div>
                   </td>
 
                   <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                    {teacher}
+                    {value.Teacher_id.firstName}
                   </td>
 
                   <td className="border-b px-4 py-2">
                     <div
                       className={`py-2 px-3 text-[15px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${
-                        status === "Attended"
+                        "" === "Attended"
                           ? "  text-[#0D894F] "
                           : " text-[#F04438] "
                       } `}
                     >
-                      {status}
+                      ""
                     </div>
                   </td>
                 </tr>
