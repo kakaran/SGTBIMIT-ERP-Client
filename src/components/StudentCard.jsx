@@ -1,39 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 
-const StudentDetails = [
-  {
-    id: 1,
-    detailName: "Student ID",
-    detailImage: "/studentID.png",
-    studentDetail: "3569112021",
-  },
-  {
-    id: 2,
-    detailName: "Email ID",
-    detailImage: "/top_mail_box.png",
-    studentDetail: "sehajbindra1234@gmail.com",
-  },
-  {
-    id: 3,
-    detailName: "Phone Number",
-    detailImage: "/phone.png",
-    studentDetail: "9667337843",
-  },
-  {
-    id: 4,
-    detailName: "Address",
-    detailImage: "/address.png",
-    studentDetail: "202, Blockf, Pocket2 , Sector-16 Rohini, Delhi-85",
-  },
-  {
-    id: 5,
-    detailName: "Batch",
-    detailImage: "/scheduleicon.png",
-    studentDetail: "2024",
-  },
-];
-
-function StudentCard() {
+function StudentCard(prope) {
+  // console.log(prope);
+  const StudentDetails = [
+    {
+      id: 1,
+      detailName: "Student ID",
+      detailImage: "/studentID.png",
+      studentDetail: `${prope?.Student_ID}`,
+    },
+    {
+      id: 2,
+      detailName: "Email ID",
+      detailImage: "/top_mail_box.png",
+      studentDetail: `${prope?.Email}`,
+    },
+    {
+      id: 3,
+      detailName: "Phone Number",
+      detailImage: "/phone.png",
+      studentDetail: `${prope?.PhoneNumber}`,
+    },
+    {
+      id: 4,
+      detailName: "Address",
+      detailImage: "/address.png",
+      studentDetail: `${prope?.Address}`,
+    },
+    {
+      id: 5,
+      detailName: "Batch",
+      detailImage: "/scheduleicon.png",
+      studentDetail: `${prope?.Batch}`,
+    },
+  ];
   return (
     <div className="rounded-[8px] bg-[#ffff] flex flex-col w-[362px]  h-[658px] gap-[18px] border-2 border-[#E0E2E7] relative shadow-sm py-8 px-4">
       <div>
@@ -45,19 +45,20 @@ function StudentCard() {
       </div>
 
       <div className=" flex-col items-center flex ">
-        <img
-          className="object-cover absolute w-[164px] h-[164px] rounded-full"
-          src="/profileimage.png"
-          alt=""
-        />
+        {prope._id ?
+          <img
+            className="object-cover absolute w-[164px] h-[164px] rounded-full"
+            src={`http://localhost:5000/api/Student/Student_Image/${prope?._id}`}
+            alt=""
+          /> : ""}
       </div>
 
       <div className="mt-40 flex-col flex items-center justify-center">
         <span className=" font-semibold text-[#333843] text-lg capitalize">
-          sehaj bindra
+          {prope?.Name}
         </span>
         <span className="text-sm text-center font-semibold text-[#667085] mt-[1px]">
-          BCA 4C
+          {prope?.Course}
         </span>
       </div>
 
