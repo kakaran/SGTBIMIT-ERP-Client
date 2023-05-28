@@ -85,8 +85,8 @@ function ScheduleTable(prope) {
         );
         
         console.log(Data.data);
-        if(Data){
-          setTimeTable(Data.data)
+        if(Data.data.status){
+          setTimeTable(Data.data.data)
         }
       } catch (error) {
         console.log("====================================");
