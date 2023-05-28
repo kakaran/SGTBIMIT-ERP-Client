@@ -1,5 +1,9 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import {
+  CalendarIcon,
+  AdjustmentsHorizontalIcon,
+} from "@heroicons/react/24/outline";
 
 const scheduleDetails = [
   {
@@ -21,7 +25,7 @@ const scheduleDetails = [
     status: "Missed",
   },
   {
-    id: 2,
+    id: 3,
     time: "11:00",
     subjectImage: "/schedule_subject.png",
     subjectName: "Data science ",
@@ -30,7 +34,7 @@ const scheduleDetails = [
     status: "Attended",
   },
   {
-    id: 2,
+    id: 4,
     time: "12:00",
     subjectImage: "/schedule_subject.png",
     subjectName: "Accounts ",

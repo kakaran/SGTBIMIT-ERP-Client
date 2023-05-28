@@ -5,11 +5,12 @@ import StudentLogin from "./LOGIN/STUDENT/StudentLogin";
 import Student from "./Routes/Student";
 import Faculty from "./Routes/Faculty";
 import AdSupAdm from "./LOGIN/Admin_SuperAdmin/AdSupAdm";
-import Stu_Dashboard from "./Pages/Stu_Dashboard/Stu_Dashboard";
-import Adm_Dashboard from "./Pages/Adm_Dashboard/Adm_Dashboard";
+import Stu_Dashboard from "./pages/Stu_Dashboard/Stu_Dashboard";
+import Adm_Dashboard from "./pages/Adm_Dashboard/Adm_Dashboard";
 import Super_Admin from "./Routes/Super_Admin";
-import Sup_Adm_Dashboard from "./Pages/Sup_Adm_Dashboard/Sup_Adm_Dashboard";
+import Sup_Adm_Dashboard from "./pages/Sup_Adm_Dashboard/Sup_Adm_Dashboard";
 import Admin from "./Routes/Admin";
+import Fac_Dashboard from "./pages/Fac_Dashboard/Fac_Dashboard";
 
 function App() {
   return (
