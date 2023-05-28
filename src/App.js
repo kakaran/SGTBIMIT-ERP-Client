@@ -1,19 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-// import Login from './LOGIN/Login';
 import StudentLogin from "./LOGIN/STUDENT/StudentLogin";
-
 import Student from "./Routes/Student";
 import Faculty from "./Routes/Faculty";
-import Fac_Dashboard from "./Pages/Fac_Dashboard/Fac_Dashboard";
 import AdSupAdm from "./LOGIN/Admin_SuperAdmin/AdSupAdm";
-
-import Adm_Dashboard from "./Pages/Adm_Dashboard/Adm_Dashboard";
 import Super_Admin from "./Routes/Super_Admin";
-import Sup_Adm_Dashboard from "./Pages/Sup_Adm_Dashboard/Sup_Adm_Dashboard";
-import Admin from "./Routes/admin";
+import Admin from "./Routes/Admin";
 import Stu_Dashboard from "./pages/Stu_Dashboard/Stu_Dashboard";
+import Fac_Dashboard from "./pages/Fac_Dashboard/Fac_Dashboard";
+import Adm_Dashboard from "./pages/Adm_Dashboard/Adm_Dashboard";
+import Sup_Adm_Dashboard from "./pages/Sup_Adm_Dashboard/Sup_Adm_Dashboard";
 
 function App() {
   return (

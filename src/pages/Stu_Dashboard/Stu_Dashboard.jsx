@@ -1,8 +1,9 @@
 import React from "react";
-import Sidebar from "../components/Sidebar";
-import Header from "../components/Header";
-import StudentCard from "../components/StudentCard";
-import ScheduleTable from "../components/ScheduleTable";
+import Sidebar from "../../components/Sidebar";
+import Header from "../../components/Header";
+import StudentCard from "../../components/StudentCard";
+import ScheduleTable from "../../components/ScheduleTable";
+import Cards from "../../components/Cards";
 
 export default function Stu_Dashboard() {
   return (
@@ -18,6 +19,7 @@ export default function Stu_Dashboard() {
               </div>
 
               <div className="col-span-4">
+                <Cards />
                 <ScheduleTable />
               </div>
             </div>
