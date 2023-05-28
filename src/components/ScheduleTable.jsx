@@ -49,9 +49,9 @@ function ScheduleTable(prope) {
         const Data = await axios.post("http://localhost:5000/api/Student/Student_Time_Table", { Detail })
         console.log(Data);
       } catch (error) {
-        console.log('================================');
+        console.log('====================================');
         console.log(error);
-        console.log('================================');
+        console.log('====================================');
       }
     }
     {prope.Course && TimeTableGet()}
