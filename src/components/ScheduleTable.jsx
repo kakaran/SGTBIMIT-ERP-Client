@@ -56,15 +56,15 @@ const scheduleDetails = [
 
 function ScheduleTable(prope) {
   const [timetable, setTimeTable] = useState();
+  const [studentStatus,setStudentStatus] = useState()
 
   const TodayDate = (separator = "") => {
     let newDate = new Date();
     let date = newDate.getDate();
     let month = newDate.getMonth() + 1;
     let year = newDate.getFullYear();
-    return `${separator}${date}-${
-      month < 10 ? `0${month}` : `${month}`
-    }-${year}${separator}`;
+    return `${separator}${date}-${month < 10 ? `0${month}` : `${month}`
+      }-${year}${separator}`;
   };
 
 
@@ -83,9 +83,9 @@ function ScheduleTable(prope) {
           "http://localhost:5000/api/Student/Student_Time_Table",
           { Detail }
         );
-        
-        console.log(Data.data);
-        if(Data.data.status){
+
+        // console.log(Data.data);
+        if (Data.data.status) {
           setTimeTable(Data.data.data)
         }
       } catch (error) {
@@ -98,6 +98,19 @@ function ScheduleTable(prope) {
       prope.Course && TimeTableGet();
     }
   }, [prope]);
+
+  const StudentStatusCheck = async (sub_id,time) =>{
+    try {
+      let Date = await TodayDate();
+
+      const Data = await (await axios.get(`http://localhost:5000/api/Student/Student_Status_Check/${sub_id}/${time}/${Date}`)).data
+      setStudentStatus(Data)
+    } catch (error) {
+      console.log('====================================');
+      console.log(error);
+      console.log('====================================');
+    }
+  }
 
   return (
     <div className="flex flex-col border-2 bg-white rounded-lg border-[#E0E2E7] justify-center items-center overflow-hidden">
@@ -129,7 +142,9 @@ function ScheduleTable(prope) {
             </tr>
           </thead>
           <tbody className="text-left">
-            {timetable?.map((value,index) => (
+            {timetable?.map((value, index) => {
+              {timetable && StudentStatusCheck(value.subject_id._id,value.time)}
+              return (
                 <tr className="h-20" key={index}>
                   <td className="py-2 px-4 border-b font-semibold  text-[#5C59E8]">
                     {value.time}
@@ -156,17 +171,17 @@ function ScheduleTable(prope) {
 
                   <td className="border-b px-4 py-2">
                     <div
-                      className={`py-2 px-3 text-[15px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${
-                        "" === "Attended"
+                      className={`py-2 px-3 text-[15px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${studentStatus 
                           ? "  text-[#0D894F] "
                           : " text-[#F04438] "
-                      } `}
+                        } `}
                     >
-                      ""
+                      {studentStatus ? "Attended" : "Missed"}
                     </div>
                   </td>
                 </tr>
               )
+            }
             )}
           </tbody>
         </table>
