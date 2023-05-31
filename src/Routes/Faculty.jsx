@@ -10,7 +10,7 @@ const Faculty = () => {
 
     useEffect(() => {
         const authCheck = async () => {
-            const res = await axios.get("http://localhost:5000/api/Faculty/facu-auth");
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/Faculty/facu-auth`);
             // console.log(res);
             if (res.data.ok) {
                 setOk(true)

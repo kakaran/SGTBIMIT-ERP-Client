@@ -6,6 +6,7 @@ import ScheduleTable from "../../components/ScheduleTable";
 import axios from "axios";
 import Cards from "../../components/Cards";
 
+
 export default function Stu_Dashboard() {
   const [studentDetail, setStudentDetail] = useState();
 
@@ -13,7 +14,7 @@ export default function Stu_Dashboard() {
     const StudentDataGet = async () => {
       try {
         const Data = (
-          await axios.get("http://localhost:5000/api/Student/Student_Get")
+          await axios.get(`${process.env.REACT_APP_URL}/api/Student/Student_Get`)
         ).data;
         console.log(Data);
         if (Data) {

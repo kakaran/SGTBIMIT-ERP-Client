@@ -55,10 +55,9 @@ const scheduleDetails = [
 ];
 
 function ScheduleTable(prope) {
-  const [timetable, setTimeTable] = useState();
-  const [studentStatus,setStudentStatus] = useState()
+  const [timetable, setTimeTable] = useState([]);
 
-  const TodayDate = (separator = "") => {
+  const TodayDate = async (separator = "") => {
     let newDate = new Date();
     let date = newDate.getDate();
     let month = newDate.getMonth() + 1;
@@ -67,24 +66,27 @@ function ScheduleTable(prope) {
       }-${year}${separator}`;
   };
 
+  const ProppeDataHold = async () => {
+    let Date = await TodayDate();
+    const Detail = {
+      Date: Date,
+      Course: `${prope?.Course}`,
+      Semester: `${prope?.Semester}`,
+      section: `${prope?.Section}`,
+    };
+    return Detail
+  }
 
   useEffect(() => {
     const TimeTableGet = async () => {
       try {
-        let Date = await TodayDate();
-        const Detail = {
-          Date: Date,
-          Course: await `${prope?.Course}`,
-          Semester: await `${prope?.Semester}`,
-          section: await `${prope?.Section}`,
-        };
-
+        const Detail = await ProppeDataHold()
         const Data = await axios.post(
-          "http://localhost:5000/api/Student/Student_Time_Table",
+          `${process.env.REACT_APP_URL}/api/Student/Student_Time_Table`,
           { Detail }
         );
 
-        // console.log(Data.data);
+        // console.log(Data.data.data);
         if (Data.data.status) {
           setTimeTable(Data.data.data)
         }
@@ -97,20 +99,8 @@ function ScheduleTable(prope) {
     {
       prope.Course && TimeTableGet();
     }
-  }, [prope]);
+  }, [prope.Course]);
 
-  const StudentStatusCheck = async (sub_id,time) =>{
-    try {
-      let Date = await TodayDate();
-
-      const Data = await (await axios.get(`http://localhost:5000/api/Student/Student_Status_Check/${sub_id}/${time}/${Date}`)).data
-      setStudentStatus(Data)
-    } catch (error) {
-      console.log('====================================');
-      console.log(error);
-      console.log('====================================');
-    }
-  }
 
   return (
     <div className="flex flex-col border-2 bg-white rounded-lg border-[#E0E2E7] justify-center items-center overflow-hidden">
@@ -142,8 +132,8 @@ function ScheduleTable(prope) {
             </tr>
           </thead>
           <tbody className="text-left">
-            {timetable?.map((value, index) => {
-              {timetable && StudentStatusCheck(value.subject_id._id,value.time)}
+            {timetable.map((value, index) => {
+              // {index && StudentStatusCheck(value?.subject_id?._id, value?.time)}
               return (
                 <tr className="h-20" key={index}>
                   <td className="py-2 px-4 border-b font-semibold  text-[#5C59E8]">
@@ -157,26 +147,26 @@ function ScheduleTable(prope) {
                     />
                     <div className="flex flex-col ">
                       <span className="text-black font-semibold">
-                        {value.subject_id.Subject_Name}
+                        {value.SubjectName}
                       </span>{" "}
                       <span className="mt-1 font-semibold capitalize text-[#667085]">
-                        {value.subject_id.Subject_Code}
+                        {value.SubjectCode}
                       </span>
                     </div>
                   </td>
 
                   <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                    {value.Teacher_id.firstName}
+                    {value.TeacherName}
                   </td>
 
                   <td className="border-b px-4 py-2">
                     <div
-                      className={`py-2 px-3 text-[15px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${studentStatus 
-                          ? "  text-[#0D894F] "
-                          : " text-[#F04438] "
+                      className={`py-2 px-3 text-[15px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${value.Status
+                        ? "  text-[#0D894F] "
+                        : " text-[#F04438] "
                         } `}
                     >
-                      {studentStatus ? "Attended" : "Missed"}
+                      {value.Status ? "Attended" : "Missed"}
                     </div>
                   </td>
                 </tr>

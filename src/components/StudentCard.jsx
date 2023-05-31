@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 function StudentCard(prope) {
+  console.log(process.env.REACT_APP_URL);
   // console.log(prope);
   const StudentDetails = [
     {
@@ -48,7 +49,7 @@ function StudentCard(prope) {
         {prope._id ?
           <img
             className="object-cover absolute w-[164px] h-[164px] rounded-full"
-            src={`http://localhost:5000/api/Student/Student_Image/${prope?._id}`}
+            src={`${process.env.REACT_APP_URL}/api/Student/Student_Image/${prope?._id}`}
             alt=""
           /> : ""}
       </div>

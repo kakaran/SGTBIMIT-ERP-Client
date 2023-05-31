@@ -10,7 +10,7 @@ const Super_Admin = () => {
 
     useEffect(() => {
         const authCheck = async () => {
-            const res = await axios.get("http://localhost:5000/api/superAdmin/Super_Admin-auth");
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/superAdmin/Super_Admin-auth`);
             // console.log(res);
             if (res.data.ok) {
                 setOk(true)

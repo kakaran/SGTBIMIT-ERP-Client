@@ -26,7 +26,7 @@ function Header(prope) {
           {prope._id ?
             <img
               className="object-cover rounded-full h-10 w-10"
-              src={`http://localhost:5000/api/Student/Student_Image/${prope?._id}`}
+              src={`${process.env.REACT_APP_URL}/api/Student/Student_Image/${prope?._id}`}
               alt=""
             /> : ""}
 
