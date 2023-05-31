@@ -1,0 +1,95 @@
+import React from "react";
+import {
+  
+    AdjustmentsHorizontalIcon,
+  } from "@heroicons/react/24/outline";
+
+const TeacherDetails = [
+  {
+    id: 1,
+    teacherName: "Dr Raj kumar",
+    eid: "401",
+    departmentName: "BCA",
+    contactNumber: "8444888800",
+    scheduleDetails: "",
+  },
+  {
+    id: 2,
+    teacherName: "Dr Raj kumar",
+    eid: "402",
+    departmentName: "BBA",
+    contactNumber: "8444888801",
+    scheduleDetails: "",
+  },
+  {
+    id: 3,
+    teacherName: "Dr Raj kumar",
+    eid: "403",
+    departmentName: "BBA(B&I)",
+    contactNumber: "8444888802",
+    scheduleDetails: "",
+  },
+  {
+    id: 4,
+    teacherName: "Dr Raj kumar",
+    eid: "404",
+    departmentName: "BBA(G)",
+    contactNumber: "8444888803",
+    scheduleDetails: "",
+  },
+  {
+    id: 5,
+    teacherName: "Dr Raj kumar",
+    eid: "405",
+    departmentName: "B.Com(hons.)",
+    contactNumber: "8444888804",
+    scheduleDetails: "",
+  },
+  // Add more schedule details as needed
+];
+
+function TeacherTable(prope) {
+
+  return (
+    <div className="flex flex-col border-2 bg-white rounded-lg border-[#E0E2E7] justify-center items-center overflow-hidden">
+        <div className="flex h-20 flex-col md:flex-row items-center gap-4 justify-between w-full">
+        <h2 className="text-2xl ml-4 font-bold">Teachers</h2>
+        <div className="text-[#667085] font-semibold text-[16px] space-x-2 leading-5 flex justify-center md:justify-end mr-4">
+          
+
+          <div className="flex flex-row items-center rounded-xl border py-2 px-3 border-[#E0E2E7] space-x-1">
+            <AdjustmentsHorizontalIcon className="h-5 w-5 object-cover" />
+            <button className="text-sm px-4 py-2 rounded-md ">Filters</button>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full text-sm leading-5 overflow-x-auto">
+        <table className="min-w-full bg-white ">
+          <thead className="bg-[#F9F9FC] h-16 text-left ml-1">
+            <tr>
+              <th className="py-2 px-4 border-b w-1/6">Name</th>
+              <th className="py-2 px-4 border-b w-2/6">EID</th>
+              <th className="py-2 px-4 border-b w-2/6">Department</th>
+              <th className="py-2 px-4 border-b w-1/6">Contact</th>
+              <th className="py-2 px-4 border-b w-1/6">Schedule</th>
+            </tr>
+          </thead>
+
+
+
+
+
+
+
+
+
+
+
+        </table> 
+      </div>   
+    </div>
+  );
+}
+
+export default TeacherTable
