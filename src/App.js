@@ -9,8 +9,8 @@ import Super_Admin from "./Routes/Super_Admin";
 import Admin from "./Routes/Admin";
 import FacDashboard from "./pages/Fac_Dashboard/FacDashboard"
 import StuDashboard from "./pages/Stu_Dashboard/StuDashboard";
-import AdmDashboard from "./pages/Adm_Dashboard/Adm_Dashboard"
-import SupAdmDashboard from "./pages/Sup_Adm_Dashboard/Sup_Adm_Dashboard"
+import SupAdmDashboard from "./pages/Sup_Adm_Dashboard/SupAdmDashboard";
+import AdmDashboard from "./pages/Adm_Dashboard/AdmDashboard";
 function App() {
   return (
     <div className="App">
