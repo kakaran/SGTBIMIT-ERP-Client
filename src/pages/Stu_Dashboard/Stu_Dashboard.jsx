@@ -6,7 +6,6 @@ import ScheduleTable from "../../components/ScheduleTable";
 import axios from "axios";
 import Cards from "../../components/Cards";
 
-
 export default function Stu_Dashboard() {
   const [studentDetail, setStudentDetail] = useState();
 
@@ -14,7 +13,9 @@ export default function Stu_Dashboard() {
     const StudentDataGet = async () => {
       try {
         const Data = (
-          await axios.get(`${process.env.REACT_APP_URL}/api/Student/Student_Get`)
+          await axios.get(
+            `${process.env.REACT_APP_URL}/api/Student/Student_Get`
+          )
         ).data;
         console.log(Data);
         if (Data) {
@@ -45,8 +46,8 @@ export default function Stu_Dashboard() {
         />
         <main>
           <div className="px-4 h-screen bg-gray-100 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            <div className="grid grid-cols-6">
-              <div className="col-span-2">
+            <div className=" grid grid-cols-1 md:grid-cols-6">
+              <div className="col-span-1 md:col-span-2">
                 <StudentCard
                   Student_ID={studentDetail?.rollnumber}
                   Email={studentDetail?.email}
@@ -65,7 +66,7 @@ export default function Stu_Dashboard() {
                   _id={studentDetail?._id}
                 />
               </div>
-              <div className="col-span-4">
+              <div className="hidden md:inline md:col-span-4">
                 <Cards />
                 <ScheduleTable
                   Course={studentDetail?.course}

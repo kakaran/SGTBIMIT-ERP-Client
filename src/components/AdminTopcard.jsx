@@ -41,7 +41,7 @@ function AdminTopcard() {
         ({ id, img, headline1, heading2, subHeading, subHeadingColor }) => (
           <div
             key={id}
-            className=" bg-white  w-[300px] h-[160px] border-2 border-[#E0E2E7] rounded-lg p-4"
+            className=" bg-white md:w-full  w-[300px] h-[160px] border-2 border-[#E0E2E7] rounded-lg p-4"
           >
             <div className="bg-[#CFE7DC] relative gap-[8px] border-4 border-[#FEEDEC] rounded-full p-[8px] w-10 h-10">
               <img className="h-full w-full" src={img} alt={headline1} />

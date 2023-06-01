@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-const Fac_Dashboard = () => {
-  return (
-    <div>Fac_Dashboard</div>
-  )
+function Fac_Dashboard() {
+  return <div>hello world</div>;
 }
 
-export default Fac_Dashboard
+export default Fac_Dashboard;
