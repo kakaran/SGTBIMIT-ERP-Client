@@ -6,7 +6,7 @@ import ScheduleTable from "../../components/ScheduleTable";
 import axios from "axios";
 import Cards from "../../components/Cards";
 
-export default function Stu_Dashboard() {
+export default function StuDashboard() {
   const [studentDetail, setStudentDetail] = useState();
 
   useEffect(() => {

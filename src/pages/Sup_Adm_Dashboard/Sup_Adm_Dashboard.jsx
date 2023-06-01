@@ -5,7 +5,7 @@ import AdminTopcard from "../../components/AdminTopcard";
 import TeacherTable from "../../components/TeacherTable";
 import Support from "../../components/Support";
 import StudentsDetailTable from "../../components/StudentsDetailTable";
-const Sup_Adm_Dashboard = () => {
+const SupAdmDashboard = () => {
   return (
     <div>
       <div className="flex  text-3xl h-screen overflow-hidden">
@@ -41,4 +41,4 @@ const Sup_Adm_Dashboard = () => {
   );
 };
 
-export default Sup_Adm_Dashboard;
+export default SupAdmDashboard;

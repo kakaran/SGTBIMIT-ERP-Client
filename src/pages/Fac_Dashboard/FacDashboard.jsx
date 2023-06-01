@@ -1,7 +1,7 @@
 import React from "react";
 
-function Fac_Dashboard() {
+function FacDashboard() {
   return <div>hello world</div>;
 }
 
-export default Fac_Dashboard;
+export default FacDashboard;

@@ -7,10 +7,10 @@ import Faculty from "./Routes/Faculty";
 import AdSupAdm from "./LOGIN/Admin_SuperAdmin/AdSupAdm";
 import Super_Admin from "./Routes/Super_Admin";
 import Admin from "./Routes/Admin";
-import Fac_Dashboard from "./pages/Fac_Dashboard/Fac_Dashboard"
-import Stu_Dashboard from "./Pages/Stu_Dashboard/Stu_Dashboard";
-import Adm_Dashboard from "./pages/Adm_Dashboard/Adm_Dashboard"
-import Sup_Adm_Dashboard from "./pages/Sup_Adm_Dashboard/Sup_Adm_Dashboard"
+import FacDashboard from "./pages/Fac_Dashboard/FacDashboard"
+import StuDashboard from "./pages/Stu_Dashboard/StuDashboard";
+import AdmDashboard from "./pages/Adm_Dashboard/Adm_Dashboard"
+import SupAdmDashboard from "./pages/Sup_Adm_Dashboard/Sup_Adm_Dashboard"
 function App() {
   return (
     <div className="App">
@@ -22,22 +22,22 @@ function App() {
           {/* Student Routes */}
           <Route exact path="/Dashboard" element={<Student />}>
             {/* <Dashboard> */}
-            <Route exact path="Student" element={<Stu_Dashboard />} />
+            <Route exact path="Student" element={<StuDashboard />} />
           </Route>
 
           {/* Faculty Routes */}
           <Route exact path="/Dashboard" element={<Faculty />}>
-            <Route exact path="Faculty" element={<Fac_Dashboard />} />
+            <Route exact path="Faculty" element={<FacDashboard />} />
           </Route>
 
           {/* Admin Routes */}
           <Route exact path="/Dashboard" element={<Admin />}>
-            <Route exact path="Admin" element={<Adm_Dashboard />} />
+            <Route exact path="Admin" element={<AdmDashboard />} />
           </Route>
 
           {/* Super Admin Routes */}
           <Route exact path="/Dashboard" element={<Super_Admin />}>
-            <Route exact path="Sup_Admin" element={<Sup_Adm_Dashboard />} />
+            <Route exact path="Sup_Admin" element={<SupAdmDashboard />} />
           </Route>
         </Routes>
       </Router>
