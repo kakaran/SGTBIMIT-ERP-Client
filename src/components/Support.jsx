@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const supportDetails = [
   {
@@ -46,6 +46,11 @@ const supportDetails = [
 ];
 
 function Support() {
+  const [selectedButton, setSelectedButton] = useState(null);
+
+  const handleButtonClick = (buttonId) => {
+    setSelectedButton(buttonId === selectedButton ? null : buttonId);
+  };
   return (
     <div>
       <div className="w-[360px] md:w-full bg-white h-[596px] p-[24px] border-2 border-[] rounded-lg">
@@ -59,7 +64,42 @@ function Support() {
           </div>
         </div>
 
-        <p className="mt-3 font-medium text-[18px]">Grivances</p>
+        <p className="mt-2 font-medium text-[16px]">Grivances</p>
+
+        <div className="w-full border text-center border-[] rounded-lg  my-2 cursor-pointer p-2">
+          <div className="flex items-center text-lg space-x-4">
+            <h1
+              className={`w-1/3 px-3 py-2 ${
+                selectedButton === "button1"
+                  ? "bg-[#DEDEFA]  rounded-lg text-[#4543AE]"
+                  : " text-[#667085]"
+              }`}
+              onClick={() => handleButtonClick("button1")}
+            >
+              All
+            </h1>
+            <h2
+              className={`w-1/3 px-3 py-2 ${
+                selectedButton === "button2"
+                  ? "bg-[#DEDEFA]  rounded-lg text-[#4543AE]"
+                  : " text-[#667085]"
+              }`}
+              onClick={() => handleButtonClick("button2")}
+            >
+              Open
+            </h2>
+            <h3
+              className={`w-1/3 px-3 py-2 ${
+                selectedButton === "button3"
+                  ? "bg-[#DEDEFA]  rounded-lg text-[#4543AE]"
+                  : " text-[#667085]"
+              }`}
+              onClick={() => handleButtonClick("button3")}
+            >
+              Resolved
+            </h3>
+          </div>
+        </div>
 
         {supportDetails.map(({ id, name, role, img, status }) => (
           <div key={id} className="flex space-y-3 space-x-3 ">
