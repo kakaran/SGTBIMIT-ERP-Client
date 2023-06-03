@@ -5,6 +5,7 @@ import AdminTopcard from "../../components/AdminTopcard";
 import TeacherTable from "../../components/TeacherTable";
 import Support from "../../components/Support";
 import StudentsDetailTable from "../../components/StudentsDetailTable";
+import Statastics from "../../components/Statastics";
 const SupAdmDashboard = () => {
   return (
     <div>
@@ -18,6 +19,15 @@ const SupAdmDashboard = () => {
             <div>
               <div>
                 <AdminTopcard />
+              </div>
+
+              <div className="grid-cols-5 grid gap-[20px] my-8">
+                <div className="col-span-2">
+                  <p>hellllo worldd</p>
+                </div>
+                <div className="col-span-3">
+                  <Statastics />
+                </div>
               </div>
 
               <div className="grid grid-cols-5 gap-[20px]">
