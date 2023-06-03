@@ -1,40 +1,59 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
+import axios from 'axios'
 
-const cardsdetails = [
-  {
-    id: 1,
-    img: "/class_attended.png",
-    headline1: " Total Students",
-    heading2: "1200",
-    subHeading: "+10%",
-    subHeadingColor: "text-[#0D894F]",
-  },
-  {
-    id: 2,
-    img: "/total_teachers.png",
-    headline1: "Total Teachers",
-    heading2: "54",
-    subHeading: "+5%",
-    subHeadingColor: "text-[#0D894F]",
-  },
-  {
-    id: 3,
-    img: "/total_course.png",
-    headline1: "Total Course",
-    heading2: "4",
-    subHeading: "info",
-    subHeadingColor: "text-[#13B2E4]",
-  },
-  {
-    id: 4,
-    img: "/fee.png",
-    headline1: "Fee Collection",
-    heading2: "Rs.55,25,400",
-    subHeading: "-25%",
-    subHeadingColor: "text-[#F04438]",
-  },
-];
+
 function AdminTopcard() {
+  const [cardData,setCardData]= useState()
+
+  useEffect(() => {
+   const CardDataGet = async () =>{
+    try {
+      const Data = (await axios.get(`${process.env.REACT_APP_URL}/api/admin/cards_Data`)).data
+      console.log(Data);
+      setCardData(Data)
+    } catch (error) {
+      console.log('====================================');
+      console.log(error);
+      console.log('====================================');
+    }
+   }
+   CardDataGet()
+  }, [])
+  
+  const cardsdetails = [
+    {
+      id: 1,
+      img: "/class_attended.png",
+      headline1: " Total Students",
+      heading2: `${cardData?.TotalStudents}`,
+      // subHeading: "+10%",
+      // subHeadingColor: "text-[#0D894F]",
+    },
+    {
+      id: 2,
+      img: "/total_teachers.png",
+      headline1: "Total Teachers",
+      heading2: `${cardData?.TotalTeachers}`,
+      // subHeading: "+5%",
+      // subHeadingColor: "text-[#0D894F]",
+    },
+    {
+      id: 3,
+      img: "/total_course.png",
+      headline1: "Total Course",
+      heading2: `${cardData?.TotalCourses}`,
+      subHeading: "info",
+      subHeadingColor: "text-[#13B2E4]",
+    },
+    {
+      id: 4,
+      img: "/fee.png",
+      headline1: "Fee Collection",
+      heading2: "Rs.55,25,400",
+      subHeading: "-25%",
+      subHeadingColor: "text-[#F04438]",
+    },
+  ];
   return (
     <div className="flex gap-8 mb-8 ">
       {cardsdetails.map(

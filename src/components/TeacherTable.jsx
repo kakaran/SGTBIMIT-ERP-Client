@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import {
   AdjustmentsHorizontalIcon,
   EyeIcon,
 } from "@heroicons/react/24/outline";
+import axios from "axios";
 
 const TeacherDetails = [
   {
@@ -53,7 +54,26 @@ const TeacherDetails = [
   // Add more schedule details as needed
 ];
 
-function TeacherTable(prope) {
+function TeacherTable() {
+  const [teachers,setTeachers] = useState();
+
+  useEffect(() => {
+    const AllTeacherGet = async () =>{
+      try {
+        const Data = (await axios.get(`${process.env.REACT_APP_URL}/api/admin/Teacher_Display`)).data
+        console.log(Data);
+        if(Data.Status){
+          setTeachers(Data.Result)
+        }
+      } catch (error) {
+        console.log('====================================');
+        console.log(error);
+        console.log('====================================');
+      }
+    }
+    AllTeacherGet()
+  }, [])
+  
   return (
     <div className="flex flex-col  border-2 bg-white rounded-lg border-[#E0E2E7] justify-center items-center overflow-hidden">
       <div className="flex h-20 flex-col md:flex-row items-center gap-4 justify-between w-full">
@@ -79,28 +99,28 @@ function TeacherTable(prope) {
           </thead>
 
           <tbody className="text-left">
-            {TeacherDetails.map((value, index) => {
+            {teachers?.map((value, index) => {
               // {index && StudentStatusCheck(value?.subject_id?._id, value?.time)}
               return (
                 <tr className="h-20" key={index}>
                   <td className="py-6 flex flex-col  px-4 border-b font-semibold  text-black">
-                    {value.teacherName}
+                    {value?.firstName + (value?.lastName ? value?.lastName : "")}
 
                     <span className="text-[#667085]">
-                      {value.teacherDetail}
+                      {value?.teacherDetail}
                     </span>
                   </td>
                   <td className="py-2 px-4 border-b">
                     <span className="text-black font-semibold">
-                      {value.eid}
+                      {value?.email}
                     </span>{" "}
                   </td>
 
                   <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                    {value.departmentName}
+                    {value?.departmentName}
                   </td>
                   <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                    {value.contactNumber}
+                    {value?.phone}
                   </td>
 
                   <td className="border-b px-4 py-2">

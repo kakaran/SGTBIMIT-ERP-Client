@@ -1,32 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
-const cardsdetails = [
-  {
-    id: 1,
-    img: "/class_attended.png",
-    headline1: " Total Classes Attended",
-    heading2: "75/100",
-    subHeading: "75%",
-    subHeadingColor: "text-[#0D894F]",
-  },
-  {
-    id: 2,
-    img: "/icon.svg",
-    headline1: "Pending Assignments",
-    heading2: "02",
-    subHeading: "Deadline Next Week ",
-    subHeadingColor: "text-[#F04438]",
-  },
-  {
-    id: 3,
-    img: "/credits.png",
-    headline1: "Credits Scored",
-    heading2: "24/48",
-    subHeading: "Sem 3",
-    subHeadingColor: "text-[#13B2E4]",
-  },
-];
+
 function Cards() {
+  const [attendance, setAttendance] = useState();
+
+
+  useEffect(() => {
+    const TotalAttendance = async () => {
+      try {
+        const Data = (await axios.get(`${process.env.REACT_APP_URL}/api/Student/TotalAttendanceCount`)).data
+        // console.log(Data);
+        setAttendance(Data)
+      } catch (error) {
+        console.log('====================================');
+        console.log(error);
+        console.log('====================================');
+      }
+    }
+    TotalAttendance()
+  }, [])
+  const cardsdetails = [
+    {
+      id: 1,
+      img: "/class_attended.png",
+      headline1: " Total Classes Attended",
+      heading2: `${attendance?.Attend}/${attendance?.Total}`,
+      subHeading: `${Math.round((attendance?.Attend/attendance?.Total)*100)}%`,
+      subHeadingColor: "text-[#0D894F]",
+    },
+    {
+      id: 2,
+      img: "/icon.svg",
+      headline1: "Pending Assignments",
+      heading2: "02",
+      subHeading: "Deadline Next Week ",
+      subHeadingColor: "text-[#F04438]",
+    },
+    {
+      id: 3,
+      img: "/credits.png",
+      headline1: "Credits Scored",
+      heading2: "24/48",
+      subHeading: "Sem 3",
+      subHeadingColor: "text-[#13B2E4]",
+    },
+  ];
   return (
     <div className="flex gap-8 mb-8 ">
       {cardsdetails.map(
