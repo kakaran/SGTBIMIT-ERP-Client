@@ -36,7 +36,7 @@ function StudentCard(prope) {
     },
   ];
   return (
-    <div className="rounded-[8px] bg-[#ffff] flex flex-col w-[362px]  h-[658px] gap-[18px] border-2 border-[#E0E2E7] relative shadow-sm py-8 px-4">
+    <div className="rounded-[8px] bg-[#ffff] flex flex-col w-[362px]  h-[658px] gap-[18px] border-2 border-[#E0E2E7] relative shadow-sm py-8 px-4 ">
       <div>
         <img
           className="absolute h-[148px]  w-[344px] top-[8px] left-[8px]  rounded-[4px]"

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import axios from 'axios'
 
 import {
   AdjustmentsHorizontalIcon,
@@ -18,6 +19,7 @@ const TeacherDetails = [
     feeStatus: "paid",
     Added: "26 DEC 2022",
   },
+
 
   {
     id: 2,
@@ -99,23 +101,48 @@ const TeacherDetails = [
   // Add more schedule details as needed
 ];
 
-const Courses = [{ name: "BCA" }, { name: "BBA" }, { name: "B&I" }];
-const Semesters = [{ name: "1" }, { name: "2" }, { name: "3" }, { name: "4" }];
-const Sections = [{ name: "A" }, { name: "B" }, { name: "C" }];
 function StudentsDetailTable() {
-  const [selectedOption, setSelectedOption] = useState(Courses[0]);
-  const [selectedClass, setSelectedClass] = useState(Semesters[0]);
-  const [selectedSection, setSelectedSection] = useState(Sections[0]);
+  const [Course, setCourse] = useState();
+  const [Semester, setSemester] = useState();
+  const [Section, setSection] = useState();
+  const [filterData,setFilterData] = useState();
+  const [allData,setAllData] = useState();
+
   const handleOptionChange = (e) => {
-    setSelectedOption(e.target.value);
-  };
-  const handleClassChange = (e) => {
-    setSelectedClass(e.target.value);
+    setSection(e.target.value);
   };
 
-  const handleSectionChange = (e) => {
-    setSelectedSection(e.target.value);
-  };
+  useEffect(() => {
+    const AllStudentGet = async () =>{
+      try {
+        const Data = (await axios.get(`${process.env.REACT_APP_URL}/api/admin/All_Student_Display`)).data
+        console.log(Data);
+        setAllData(Data)
+      } catch (error) {
+        console.log('====================================');
+        console.log(error);
+        console.log('====================================');
+      }
+    } 
+    AllStudentGet()
+  }, [])
+
+  // const DataFilter = async () =>{
+  //   console.log("hi");
+  //   if(Course && Section && Semester ){
+  //     let Data = [];
+  //     allData.map((value)=>{
+  //       if(value.course == Course,value.section == Section,value.semester == Semester){
+  //         Data.push(value)
+  //       }
+  //     })
+  //     setFilterData(Data);
+  //   }else{
+  //     setFilterData(allData)
+  //   }
+  // }
+ 
+  
 
   return (
     <div>
@@ -126,34 +153,42 @@ function StudentsDetailTable() {
           <div>
             <select
               className="border-none bg-[#F0F1F3] outline-none focus-within:outline-none rounded-xl"
-              value={selectedOption}
-              onChange={handleOptionChange}
+              onChange={(e)=>{setCourse(e.target.value)}}
+              value={Course}
             >
-              {Courses.map((course, index) => (
-                <option key={index}>{course.name}</option>
-              ))}
+              <option value="">---</option>
+              <option value="BCA">BCA</option>
+              <option value="BBA">BBA</option>
+              <option value="B&I">B&I</option>
+              <option value="BCOM">BCOM</option>
             </select>
           </div>
           <div>
             <select
               className="border-none bg-[#F0F1F3] outline-none focus-within:outline-none rounded-xl"
-              value={selectedClass}
-              onChange={handleClassChange}
+              onChange={(e)=>{setSemester(e.target.value)}}
+              value={Semester}
             >
-              {Semesters.map((sem, index) => (
-                <option key={index}>{sem.name}</option>
-              ))}
+              <option value="">-</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
             </select>
           </div>
           <div>
             <select
               className="border-none bg-[#F0F1F3] outline-none focus-within:outline-none rounded-xl"
-              value={selectedSection}
-              onChange={handleSectionChange}
+              onChange={(e)=>{setSection(e.target.value)}}
+              value={Section}
             >
-              {Sections.map((sec, index) => (
-                <option key={index}>{sec.name}</option>
-              ))}
+             <option value="">-</option>
+             <option value="A">A</option>
+             <option value="B">B</option>
+             <option value="C">C</option>
+             <option value="D">D</option>
             </select>
           </div>
           <div className="ml-auto flex space-x-2 px-2">
@@ -190,7 +225,7 @@ function StudentsDetailTable() {
             </thead>
 
             <tbody className="text-left">
-              {TeacherDetails.map((value, index) => {
+              {filterData?.map((value, index) => {
                 // {index && StudentStatusCheck(value?.subject_id?._id, value?.time)}
                 return (
                   <tr className="h-20" key={value.id}>
@@ -198,40 +233,39 @@ function StudentsDetailTable() {
                       <div>
                         <img
                           className=""
-                          src={value.studentImage}
-                          alt={value.studentName}
+                          // src={value.studentImage}
+                          // alt={value.studentName}
                         />
                       </div>
                       <div className="flex ml-3 flex-col">
-                        {value.studentName}
+                        {`${value?.firstname} ${value?.lastname}`}
 
                         <span className="text-[#667085]">
-                          {value.studentEmail}
+                          {value?.email}
                         </span>
                       </div>
                     </td>
                     <td className="py-2 px-4 border-b">
                       <span className="text-black font-semibold">
-                        {value.phoneNumber}
+                        {value?.phone}
                       </span>{" "}
                     </td>
 
                     <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                      {value.RollNumber}
+                      {value?.rollnumber}
                     </td>
                     <td className="border-b px-4 py-2">
                       <div
-                        className={`py-2 px-3 text-[14px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${
-                          value.feeStatus
+                        className={`py-2 px-3 text-[14px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${value.feeStatus
                             ? "  text-[#0D894F] "
                             : " text-[#F04438] "
-                        } `}
+                          } `}
                       >
-                        {value.feeStatus ? "paid" : "Unpaid"}
+                        {value?.feeStatus ? "paid" : "Unpaid"}
                       </div>
                     </td>
                     <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                      {value.Added}
+                      {/* {Date(value?.createdAt).toLocaleDateString()} */}
                     </td>
 
                     <td className="border-b px-4 py-2">
