@@ -6,6 +6,7 @@ import TeacherTable from "../../components/TeacherTable";
 import Support from "../../components/Support";
 import StudentsDetailTable from "../../components/StudentsDetailTable";
 import Statastics from "../../components/Statastics";
+import FeeCollected from "../../components/FeeCollected";
 const SupAdmDashboard = () => {
   return (
     <div>
@@ -23,7 +24,7 @@ const SupAdmDashboard = () => {
 
               <div className="grid-cols-5 grid gap-[20px] my-8">
                 <div className="col-span-2">
-                  <p>hellllo worldd</p>
+                  <FeeCollected />
                 </div>
                 <div className="col-span-3">
                   <Statastics />
