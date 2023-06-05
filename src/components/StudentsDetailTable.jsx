@@ -283,7 +283,7 @@ function StudentsDetailTable() {
                       </div>
                     </td>
                     <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                      {(new Date(value?.createdAt)).toLocaleDateString()}
+                      { new Date(value?.stu_id.createdAt).toLocaleDateString()}
                     </td>
                     <td className="border-b px-4 py-2">
                       <div className={"flex items-center space-x-3 "}>
