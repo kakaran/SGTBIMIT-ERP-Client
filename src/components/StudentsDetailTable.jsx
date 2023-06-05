@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import axios from 'axios'
 
@@ -8,115 +8,110 @@ import {
   PlusIcon,
 } from "@heroicons/react/24/outline";
 
-const TeacherDetails = [
-  {
-    id: 1,
-    studentName: "Sehaj Bindra",
-    studentImage: "/User2.svg",
-    studentEmail: "sehajbindra1234@gmail.com",
-    phoneNumber: "078 5054 8877",
-    RollNumber: "078 6013 3854",
-    feeStatus: "paid",
-    Added: "26 DEC 2022",
-  },
+// const TeacherDetails = [
+//   {
+//     id: 1,
+//     studentName: "Sehaj Bindra",
+//     studentImage: "/User2.svg",
+//     studentEmail: "sehajbindra1234@gmail.com",
+//     phoneNumber: "078 5054 8877",
+//     RollNumber: "078 6013 3854",
+//     feeStatus: "paid",
+//     Added: "26 DEC 2022",
+//   },
 
 
-  {
-    id: 2,
-    studentName: "Sehaj Bindra",
-    studentImage: "/User2.svg",
-    studentEmail: "sehajbindra1234@gmail.com",
-    phoneNumber: "078 5054 8877",
-    RollNumber: "078 6013 3854",
-    feeStatus: "paid",
-    Added: "26 DEC 2022",
-  },
+//   {
+//     id: 2,
+//     studentName: "Sehaj Bindra",
+//     studentImage: "/User2.svg",
+//     studentEmail: "sehajbindra1234@gmail.com",
+//     phoneNumber: "078 5054 8877",
+//     RollNumber: "078 6013 3854",
+//     feeStatus: "paid",
+//     Added: "26 DEC 2022",
+//   },
 
-  {
-    id: 3,
-    studentName: "Sehaj Bindra",
-    studentImage: "/User2.svg",
-    studentEmail: "sehajbindra1234@gmail.com",
-    phoneNumber: "078 5054 8877",
-    RollNumber: "078 6013 3854",
-    feeStatus: "paid",
-    Added: "26 DEC 2022",
-  },
+//   {
+//     id: 3,
+//     studentName: "Sehaj Bindra",
+//     studentImage: "/User2.svg",
+//     studentEmail: "sehajbindra1234@gmail.com",
+//     phoneNumber: "078 5054 8877",
+//     RollNumber: "078 6013 3854",
+//     feeStatus: "paid",
+//     Added: "26 DEC 2022",
+//   },
 
-  {
-    id: 4,
-    studentName: "Sehaj Bindra",
-    studentImage: "/User2.svg",
-    studentEmail: "sehajbindra1234@gmail.com",
-    phoneNumber: "078 5054 8877",
-    RollNumber: "078 6013 3854",
-    feeStatus: "paid",
-    Added: "26 DEC 2022",
-  },
+//   {
+//     id: 4,
+//     studentName: "Sehaj Bindra",
+//     studentImage: "/User2.svg",
+//     studentEmail: "sehajbindra1234@gmail.com",
+//     phoneNumber: "078 5054 8877",
+//     RollNumber: "078 6013 3854",
+//     feeStatus: "paid",
+//     Added: "26 DEC 2022",
+//   },
 
-  {
-    id: 5,
-    studentName: "Sehaj Bindra",
-    studentImage: "/User2.svg",
-    studentEmail: "sehajbindra1234@gmail.com",
-    phoneNumber: "078 5054 8877",
-    RollNumber: "078 6013 3854",
-    feeStatus: "paid",
-    Added: "26 DEC 2022",
-  },
+//   {
+//     id: 5,
+//     studentName: "Sehaj Bindra",
+//     studentImage: "/User2.svg",
+//     studentEmail: "sehajbindra1234@gmail.com",
+//     phoneNumber: "078 5054 8877",
+//     RollNumber: "078 6013 3854",
+//     feeStatus: "paid",
+//     Added: "26 DEC 2022",
+//   },
 
-  {
-    id: 6,
-    studentName: "Sehaj Bindra",
-    studentImage: "/User2.svg",
-    studentEmail: "sehajbindra1234@gmail.com",
-    phoneNumber: "078 5054 8877",
-    RollNumber: "078 6013 3854",
-    feeStatus: "paid",
-    Added: "26 DEC 2022",
-  },
+//   {
+//     id: 6,
+//     studentName: "Sehaj Bindra",
+//     studentImage: "/User2.svg",
+//     studentEmail: "sehajbindra1234@gmail.com",
+//     phoneNumber: "078 5054 8877",
+//     RollNumber: "078 6013 3854",
+//     feeStatus: "paid",
+//     Added: "26 DEC 2022",
+//   },
 
-  {
-    id: 7,
-    studentName: "Sehaj Bindra",
-    studentImage: "/User2.svg",
-    studentEmail: "sehajbindra1234@gmail.com",
-    phoneNumber: "078 5054 8877",
-    RollNumber: "078 6013 3854",
-    feeStatus: "paid",
-    Added: "26 DEC 2022",
-  },
+//   {
+//     id: 7,
+//     studentName: "Sehaj Bindra",
+//     studentImage: "/User2.svg",
+//     studentEmail: "sehajbindra1234@gmail.com",
+//     phoneNumber: "078 5054 8877",
+//     RollNumber: "078 6013 3854",
+//     feeStatus: "paid",
+//     Added: "26 DEC 2022",
+//   },
 
-  {
-    id: 8,
-    studentName: "Sehaj Bindra",
-    studentImage: "/User2.svg",
-    studentEmail: "sehajbindra1234@gmail.com",
-    phoneNumber: "078 5054 8877",
-    RollNumber: "078 6013 3854",
-    feeStatus: "paid",
-    Added: "26 DEC 2022",
-  },
+//   {
+//     id: 8,
+//     studentName: "Sehaj Bindra",
+//     studentImage: "/User2.svg",
+//     studentEmail: "sehajbindra1234@gmail.com",
+//     phoneNumber: "078 5054 8877",
+//     RollNumber: "078 6013 3854",
+//     feeStatus: "paid",
+//     Added: "26 DEC 2022",
+//   },
 
-  // Add more schedule details as needed
-];
+//   // Add more schedule details as needed
+// ];
 
 function StudentsDetailTable() {
   const [Course, setCourse] = useState();
   const [Semester, setSemester] = useState();
-  const [Section, setSection] = useState();
+  const Section = useRef();
   const [filterData, setFilterData] = useState();
   const [allData, setAllData] = useState();
-
-  // const handleOptionChange = (e) => {
-  //   setSection(e.target.value);
-  // };
 
   useEffect(() => {
     const AllStudentGet = async () => {
       try {
         const Data = (await axios.get(`${process.env.REACT_APP_URL}/api/admin/All_Student_Display`)).data
-        console.log(Data);
         setAllData(Data)
       } catch (error) {
         console.log('====================================');
@@ -128,26 +123,27 @@ function StudentsDetailTable() {
   }, [])
 
   const DataFilter = async () => {
-    console.log("hi");
-    console.log(Course, Section, Semester);
-    // if(Course && Section && Semester ){
-    console.log("hi2");
-    allData.map((value) => {
+    console.log(allData);
+    allData?.map((value) => {
       if (value.Sem.semNumber == Semester) {
         value.Sem.Courses.map((value1) => {
           if (value1.course == Course) {
             value1.Sections.map((value2) => {
-              if (value2.section == Section) {
+              if (value2.section == Section.current) {
                 setFilterData(value2)
+                // setSemester("")
+                // setCourse("")
+                // Section.current = ""
               }
             })
           }
         })
       }
     })
-    // }
   }
-  console.log(filterData);
+
+
+  // console.log(filterData);
   // let Data = []
   // Data = allData?.sort((a, b) => { a.Sem.semNumber - b.Sem.semNumber })
   return (
@@ -160,12 +156,11 @@ function StudentsDetailTable() {
             <select
               className="border-none bg-[#F0F1F3] outline-none focus-within:outline-none rounded-xl"
               onChange={(e) => { setSemester(e.target.value) }}
-            value={Semester}
+              value={Semester}
             >
               <option value="">--</option>
               {
                 allData?.map((value, index) => {
-                  // console.log(value);
                   return (
                     <option value={value?.Sem?.semNumber} key={index}>{value?.Sem?.semNumber}</option>
                   )
@@ -177,7 +172,7 @@ function StudentsDetailTable() {
             <select
               className="border-none bg-[#F0F1F3] outline-none focus-within:outline-none rounded-xl"
               onChange={(e) => { setCourse(e.target.value) }}
-            value={Course}
+              value={Course}
             >
               <option value="">--</option>
               {allData?.map((value) => {
@@ -194,8 +189,8 @@ function StudentsDetailTable() {
           <div>
             <select
               className="border-none bg-[#F0F1F3] outline-none focus-within:outline-none rounded-xl"
-              onChange={async (e) => {setSection(e.target.value); DataFilter(e) }}
-            value={Section}
+              onChange={(e) => { Section.current = e.target.value; DataFilter(e) }}
+              value={Section.current}
             >
               <option value="">--</option>
               {allData?.map((value) => {
@@ -255,9 +250,9 @@ function StudentsDetailTable() {
                     <td className="py-6 flex   px-4 border-b font-semibold  text-black">
                       <div>
                         <img
-                          className=""
-                        // src={value.studentImage}
-                        // alt={value.studentName}
+                          className="object-cover rounded-full h-10 w-10"
+                          src={`${process.env.REACT_APP_URL}/api/Student/Image_Display/${value?.stu_id?._id}`}
+                          alt={value?.stu_id?.firstname}
                         />
                       </div>
                       <div className="flex ml-3 flex-col">
@@ -288,9 +283,8 @@ function StudentsDetailTable() {
                       </div>
                     </td>
                     <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                      {/* {Date(value?.createdAt).toLocaleDateString()} */}
+                      {(new Date(value?.createdAt)).toLocaleDateString()}
                     </td>
-
                     <td className="border-b px-4 py-2">
                       <div className={"flex items-center space-x-3 "}>
                         <img src="/blackEye.svg" alt="" />
