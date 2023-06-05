@@ -105,15 +105,15 @@ function StudentsDetailTable() {
   const [Course, setCourse] = useState();
   const [Semester, setSemester] = useState();
   const [Section, setSection] = useState();
-  const [filterData,setFilterData] = useState();
-  const [allData,setAllData] = useState();
+  const [filterData, setFilterData] = useState();
+  const [allData, setAllData] = useState();
 
-  const handleOptionChange = (e) => {
-    setSection(e.target.value);
-  };
+  // const handleOptionChange = (e) => {
+  //   setSection(e.target.value);
+  // };
 
   useEffect(() => {
-    const AllStudentGet = async () =>{
+    const AllStudentGet = async () => {
       try {
         const Data = (await axios.get(`${process.env.REACT_APP_URL}/api/admin/All_Student_Display`)).data
         console.log(Data);
@@ -123,27 +123,33 @@ function StudentsDetailTable() {
         console.log(error);
         console.log('====================================');
       }
-    } 
+    }
     AllStudentGet()
   }, [])
 
-  // const DataFilter = async () =>{
-  //   console.log("hi");
-  //   if(Course && Section && Semester ){
-  //     let Data = [];
-  //     allData.map((value)=>{
-  //       if(value.course == Course,value.section == Section,value.semester == Semester){
-  //         Data.push(value)
-  //       }
-  //     })
-  //     setFilterData(Data);
-  //   }else{
-  //     setFilterData(allData)
-  //   }
-  // }
- 
-  
-
+  const DataFilter = async () => {
+    console.log("hi");
+    console.log(Course, Section, Semester);
+    // if(Course && Section && Semester ){
+    console.log("hi2");
+    allData.map((value) => {
+      if (value.Sem.semNumber == Semester) {
+        value.Sem.Courses.map((value1) => {
+          if (value1.course == Course) {
+            value1.Sections.map((value2) => {
+              if (value2.section == Section) {
+                setFilterData(value2)
+              }
+            })
+          }
+        })
+      }
+    })
+    // }
+  }
+  console.log(filterData);
+  // let Data = []
+  // Data = allData?.sort((a, b) => { a.Sem.semNumber - b.Sem.semNumber })
   return (
     <div>
       <div className="flex flex-col  border-2 bg-white rounded-lg border-[#E0E2E7] justify-center items-center overflow-hidden">
@@ -153,42 +159,58 @@ function StudentsDetailTable() {
           <div>
             <select
               className="border-none bg-[#F0F1F3] outline-none focus-within:outline-none rounded-xl"
-              onChange={(e)=>{setCourse(e.target.value)}}
-              value={Course}
+              onChange={(e) => { setSemester(e.target.value) }}
+            value={Semester}
             >
-              <option value="">---</option>
-              <option value="BCA">BCA</option>
-              <option value="BBA">BBA</option>
-              <option value="B&I">B&I</option>
-              <option value="BCOM">BCOM</option>
+              <option value="">--</option>
+              {
+                allData?.map((value, index) => {
+                  // console.log(value);
+                  return (
+                    <option value={value?.Sem?.semNumber} key={index}>{value?.Sem?.semNumber}</option>
+                  )
+                })}
+            </select>
+
+          </div>
+          <div>
+            <select
+              className="border-none bg-[#F0F1F3] outline-none focus-within:outline-none rounded-xl"
+              onChange={(e) => { setCourse(e.target.value) }}
+            value={Course}
+            >
+              <option value="">--</option>
+              {allData?.map((value) => {
+                if (value?.Sem?.semNumber == Semester) {
+                  return value?.Sem?.Courses?.map((value1, index) => {
+                    return (
+                      <option value={value1?.course} key={index}>{value1?.course}</option>
+                    )
+                  })
+                }
+              })}
             </select>
           </div>
           <div>
             <select
               className="border-none bg-[#F0F1F3] outline-none focus-within:outline-none rounded-xl"
-              onChange={(e)=>{setSemester(e.target.value)}}
-              value={Semester}
+              onChange={async (e) => {setSection(e.target.value); DataFilter(e) }}
+            value={Section}
             >
-              <option value="">-</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-            </select>
-          </div>
-          <div>
-            <select
-              className="border-none bg-[#F0F1F3] outline-none focus-within:outline-none rounded-xl"
-              onChange={(e)=>{setSection(e.target.value)}}
-              value={Section}
-            >
-             <option value="">-</option>
-             <option value="A">A</option>
-             <option value="B">B</option>
-             <option value="C">C</option>
-             <option value="D">D</option>
+              <option value="">--</option>
+              {allData?.map((value) => {
+                if (value?.Sem?.semNumber == Semester) {
+                  return value?.Sem?.Courses?.map((value1) => {
+                    if (value1.course == Course) {
+                      return value1.Sections.map((value2, index) => {
+                        return (
+                          <option value={value2?.section} key={index}>{value2?.section}</option>
+                        )
+                      })
+                    }
+                  })
+                }
+              })}
             </select>
           </div>
           <div className="ml-auto flex space-x-2 px-2">
@@ -225,40 +247,41 @@ function StudentsDetailTable() {
             </thead>
 
             <tbody className="text-left">
-              {filterData?.map((value, index) => {
+              {filterData?.StudentsIDs?.map((value, index) => {
+                // console.log(value);
                 // {index && StudentStatusCheck(value?.subject_id?._id, value?.time)}
                 return (
-                  <tr className="h-20" key={value.id}>
+                  <tr className="h-20" key={index}>
                     <td className="py-6 flex   px-4 border-b font-semibold  text-black">
                       <div>
                         <img
                           className=""
-                          // src={value.studentImage}
-                          // alt={value.studentName}
+                        // src={value.studentImage}
+                        // alt={value.studentName}
                         />
                       </div>
                       <div className="flex ml-3 flex-col">
-                        {`${value?.firstname} ${value?.lastname}`}
+                        {`${value?.stu_id?.firstname} ${value?.stu_id?.lastname}`}
 
                         <span className="text-[#667085]">
-                          {value?.email}
+                          {value?.stu_id?.email}
                         </span>
                       </div>
                     </td>
                     <td className="py-2 px-4 border-b">
                       <span className="text-black font-semibold">
-                        {value?.phone}
+                        {value?.stu_id?.phone}
                       </span>{" "}
                     </td>
 
                     <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                      {value?.rollnumber}
+                      {value?.stu_id?.rollnumber}
                     </td>
                     <td className="border-b px-4 py-2">
                       <div
                         className={`py-2 px-3 text-[14px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${value.feeStatus
-                            ? "  text-[#0D894F] "
-                            : " text-[#F04438] "
+                          ? "  text-[#0D894F] "
+                          : " text-[#F04438] "
                           } `}
                       >
                         {value?.feeStatus ? "paid" : "Unpaid"}
