@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import axios from 'axios'
+import axios from "axios";
 
 import {
   AdjustmentsHorizontalIcon,
@@ -19,7 +19,6 @@ import {
 //     feeStatus: "paid",
 //     Added: "26 DEC 2022",
 //   },
-
 
 //   {
 //     id: 2,
@@ -111,16 +110,20 @@ function StudentsDetailTable() {
   useEffect(() => {
     const AllStudentGet = async () => {
       try {
-        const Data = (await axios.get(`${process.env.REACT_APP_URL}/api/admin/All_Student_Display`)).data
-        setAllData(Data)
+        const Data = (
+          await axios.get(
+            `${process.env.REACT_APP_URL}/api/admin/All_Student_Display`
+          )
+        ).data;
+        setAllData(Data);
       } catch (error) {
-        console.log('====================================');
+        console.log("====================================");
         console.log(error);
-        console.log('====================================');
+        console.log("====================================");
       }
-    }
-    AllStudentGet()
-  }, [])
+    };
+    AllStudentGet();
+  }, []);
 
   const DataFilter = async () => {
     console.log(allData);
@@ -130,18 +133,17 @@ function StudentsDetailTable() {
           if (value1.course == Course) {
             value1.Sections.map((value2) => {
               if (value2.section == Section.current) {
-                setFilterData(value2)
+                setFilterData(value2);
                 // setSemester("")
                 // setCourse("")
                 // Section.current = ""
               }
-            })
+            });
           }
-        })
+        });
       }
-    })
-  }
-
+    });
+  };
 
   // console.log(filterData);
   // let Data = []
@@ -155,23 +157,27 @@ function StudentsDetailTable() {
           <div>
             <select
               className="border-none bg-[#F0F1F3] outline-none focus-within:outline-none rounded-xl"
-              onChange={(e) => { setSemester(e.target.value) }}
+              onChange={(e) => {
+                setSemester(e.target.value);
+              }}
               value={Semester}
             >
               <option value="">--</option>
-              {
-                allData?.map((value, index) => {
-                  return (
-                    <option value={value?.Sem?.semNumber} key={index}>{value?.Sem?.semNumber}</option>
-                  )
-                })}
+              {allData?.map((value, index) => {
+                return (
+                  <option value={value?.Sem?.semNumber} key={index}>
+                    {value?.Sem?.semNumber}
+                  </option>
+                );
+              })}
             </select>
-
           </div>
           <div>
             <select
               className="border-none bg-[#F0F1F3] outline-none focus-within:outline-none rounded-xl"
-              onChange={(e) => { setCourse(e.target.value) }}
+              onChange={(e) => {
+                setCourse(e.target.value);
+              }}
               value={Course}
             >
               <option value="">--</option>
@@ -179,9 +185,11 @@ function StudentsDetailTable() {
                 if (value?.Sem?.semNumber == Semester) {
                   return value?.Sem?.Courses?.map((value1, index) => {
                     return (
-                      <option value={value1?.course} key={index}>{value1?.course}</option>
-                    )
-                  })
+                      <option value={value1?.course} key={index}>
+                        {value1?.course}
+                      </option>
+                    );
+                  });
                 }
               })}
             </select>
@@ -189,7 +197,10 @@ function StudentsDetailTable() {
           <div>
             <select
               className="border-none bg-[#F0F1F3] outline-none focus-within:outline-none rounded-xl"
-              onChange={(e) => { Section.current = e.target.value; DataFilter(e) }}
+              onChange={(e) => {
+                Section.current = e.target.value;
+                DataFilter(e);
+              }}
               value={Section.current}
             >
               <option value="">--</option>
@@ -199,11 +210,13 @@ function StudentsDetailTable() {
                     if (value1.course == Course) {
                       return value1.Sections.map((value2, index) => {
                         return (
-                          <option value={value2?.section} key={index}>{value2?.section}</option>
-                        )
-                      })
+                          <option value={value2?.section} key={index}>
+                            {value2?.section}
+                          </option>
+                        );
+                      });
                     }
-                  })
+                  });
                 }
               })}
             </select>
@@ -220,9 +233,12 @@ function StudentsDetailTable() {
             <div className="text-[#fff]  font-semibold text-[16px]  leading-5 flex justify-center md:justify-end mr-4">
               <div className="flex flex-row bg-[#5C59E8] items-center rounded-xl border-none py-2 px-3  space-x-1">
                 <PlusIcon className="h-5 w-5 object-cover" />
-                <button className="text-sm px-4 py-2 rounded-md ">
+                <a
+                  href="/Sup_Admin/AddStudent"
+                  className="text-sm px-4 py-2 rounded-md "
+                >
                   Add Student
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -274,16 +290,17 @@ function StudentsDetailTable() {
                     </td>
                     <td className="border-b px-4 py-2">
                       <div
-                        className={`py-2 px-3 text-[14px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${value.feeStatus
-                          ? "  text-[#0D894F] "
-                          : " text-[#F04438] "
-                          } `}
+                        className={`py-2 px-3 text-[14px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${
+                          value.feeStatus
+                            ? "  text-[#0D894F] "
+                            : " text-[#F04438] "
+                        } `}
                       >
                         {value?.feeStatus ? "paid" : "Unpaid"}
                       </div>
                     </td>
                     <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                      { new Date(value?.stu_id.createdAt).toLocaleDateString()}
+                      {new Date(value?.stu_id.createdAt).toLocaleDateString()}
                     </td>
                     <td className="border-b px-4 py-2">
                       <div className={"flex items-center space-x-3 "}>

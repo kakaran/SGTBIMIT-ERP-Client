@@ -11,6 +11,7 @@ import FacDashboard from "./pages/Fac_Dashboard/FacDashboard";
 import StuDashboard from "./pages/Stu_Dashboard/StuDashboard";
 import SupAdmDashboard from "./pages/Sup_Adm_Dashboard/SupAdmDashboard";
 import AdmDashboard from "./pages/Adm_Dashboard/AdmDashboard";
+import AddStudent from "./pages/Sup_Adm_Dashboard/Add Student/AddStudent";
 function App() {
   return (
     <div className="App">
@@ -35,10 +36,11 @@ function App() {
             <Route exact path="Admin" element={<AdmDashboard />} />
           </Route>
 
+          <Route exact path="Sup_Admin" element={<SupAdmDashboard />} />
+
+          <Route exact path="/AddStudent" element={<AddStudent />} />
           {/* Super Admin Routes */}
-          <Route exact path="/Dashboard" element={<Super_Admin />}>
-            <Route exact path="Sup_Admin" element={<SupAdmDashboard />} />
-          </Route>
+          <Route exact path="/Dashboard" element={<Super_Admin />}></Route>
         </Routes>
       </Router>
     </div>
