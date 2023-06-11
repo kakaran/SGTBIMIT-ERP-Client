@@ -1,14 +1,5 @@
 import React, { useState } from "react";
 
-const Inputs = [
-  { id: 1, label: "First Name", type: "text" },
-  { id: 2, label: "Last Name", type: "text" },
-  { id: 3, label: "Student ID", type: "text" },
-  { id: 4, label: "Email ID", type: "text" },
-  { id: 4, label: "Phone Number", type: "text" },
-  { id: 4, label: "Department", type: "text" },
-];
-
 const Inputs2 = [
   { id: 1, label: "Father's Name / Guardian Name", type: "text" },
   { id: 2, label: "Mother's Name", type: "text" },
@@ -26,6 +17,38 @@ const options = [
 function GeneralInformation() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
+
+  const [studentAdd, setStudentAdd] = useState({
+    name: "",
+    position: "",
+    shortNote: "",
+    longNote: "",
+  });
+  const [filedata, setFileData] = useState();
+
+  const Onchagetesdetail = (e) => {
+    setStudentAdd({ ...studentAdd, [e.target.name]: e.target.value });
+  };
+
+  const Inputs = [
+    { id: 1, label: "First Name", type: "text", name: "firstname" },
+    { id: 2, label: "Last Name", type: "text", name: "lastname" },
+    { id: 3, label: "Student ID", type: "text", name: "rollnumber" },
+    { id: 4, label: "Email ID", type: "text", name: "email" },
+    { id: 4, label: "Phone Number", type: "text", name: "phone" },
+    { id: 4, label: "Department", type: "text", name: "department" },
+  ];
+
+  const Inputs2 = [
+    {
+      id: 1,
+      label: "Father's Name / Guardian Name",
+      type: "text",
+      name: "fathername",
+    },
+    { id: 2, label: "Mother's Name", type: "text", name: "mothername" },
+    { id: 3, label: "Mobile Number", type: "text", name: "fathernumber" },
+  ];
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
