@@ -5,6 +5,9 @@ import GeneralInformation from "../../../components/GeneralInformation";
 import GuardianInformation from "../../../components/GuardianInformation";
 import Media from "../../../components/Media";
 import Others from "../../../components/Others";
+import Selection from "../../../components/Selection";
+import FeeStatus from "../../../components/FeeStatus";
+import FeeStatus2 from "../../../components/FeeStatus2";
 
 const Buttons = [
   { id: 1, name: "Cancel", img: "/cross.svg" },
@@ -47,23 +50,32 @@ function AddStudent() {
                 ))}
               </div>
             </div>
-            <div className="grid-cols-10 grid gap-[20px] my-8">
-              <div className="col-span-8">
+            <div className="grid-cols-12 grid gap-[20px] my-8">
+              <div className="col-span-9">
                 <GeneralInformation />
               </div>
+              <div className="col-span-3">
+                <Selection />
+              </div>
 
-              <div className="col-span-8">
+              <div className="col-span-9">
                 <GuardianInformation />
               </div>
 
-              <div className="col-span-8">
-                <Media />
-              </div>
-              <div className="col-span-8">
-                <Others />
+              <div className="col-span-3">
+                <FeeStatus />
+                <div className="my-5">
+                  <FeeStatus2 />
+                </div>
               </div>
 
-              <div className="col-span-2"></div>
+              <div className="col-span-9">
+                <Media />
+              </div>
+
+              <div className="col-span-9">
+                <Others />
+              </div>
             </div>
 
             <div className="my-10"></div>
