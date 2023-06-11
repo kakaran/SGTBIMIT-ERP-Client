@@ -10,8 +10,8 @@ const options = [
 
 function Selection() {
   return (
-    <div className="rounded-lg bg-white border border-[] w-full h-full p-6 gap-[14px]">
-      Selection
+    <div className="rounded-lg bg-white border border-[] w-full max-h-fit p-6 gap-[14px]">
+      Class
       {options.map(({ label, option }) => (
         <div className="flex flex-col my-4">
           <label

@@ -2,9 +2,6 @@ import React from "react";
 import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
 import GeneralInformation from "../../../components/GeneralInformation";
-import GuardianInformation from "../../../components/GuardianInformation";
-import Media from "../../../components/Media";
-import Others from "../../../components/Others";
 import Selection from "../../../components/Selection";
 import FeeStatus from "../../../components/FeeStatus";
 import FeeStatus2 from "../../../components/FeeStatus2";
@@ -56,35 +53,17 @@ function AddStudent() {
               </div>
               <div className="col-span-3">
                 <Selection />
-              </div>
 
-              <div className="col-span-9">
-                <GuardianInformation />
-              </div>
-
-              <div className="col-span-3">
-                <FeeStatus />
-                <div className="my-5">
-                  <FeeStatus2 />
+                <div className="my-8">
+                  <FeeStatus />
+                  <div className="my-5">
+                    <FeeStatus2 />
+                  </div>
                 </div>
               </div>
-
-<<<<<<< HEAD
-              <div className="col-span-2">
-hi
-=======
-              <div className="col-span-9">
-                <Media />
-              </div>
-
-              <div className="col-span-9">
-                <Others />
->>>>>>> 59e17a4953e011536f98a4fedb554394adc16796
-              </div>
             </div>
 
-            <div className="my-10">
-            </div>
+            <div className="my-10"></div>
           </div>
         </div>
       </div>
