@@ -2,9 +2,6 @@ import React from "react";
 import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
 import GeneralInformation from "../../../components/GeneralInformation";
-import Selection from "../../../components/Selection";
-import FeeStatus from "../../../components/FeeStatus";
-import FeeStatus2 from "../../../components/FeeStatus2";
 
 const Buttons = [
   { id: 1, name: "Cancel", img: "/cross.svg" },
