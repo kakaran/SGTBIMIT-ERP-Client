@@ -3,8 +3,10 @@ import React, { useState } from "react";
 const Inputs = [
   { id: 1, label: "First Name", type: "text" },
   { id: 2, label: "Last Name", type: "text" },
-  { id: 3, label: "Student ID", type: "Number" },
+  { id: 3, label: "Student ID", type: "text" },
   { id: 4, label: "Email ID", type: "text" },
+  { id: 4, label: "Phone Number", type: "text" },
+  { id: 4, label: "Department", type: "text" },
 ];
 
 const Inputs2 = [
