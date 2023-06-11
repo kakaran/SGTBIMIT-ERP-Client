@@ -36,10 +36,10 @@ function App() {
             <Route exact path="Admin" element={<AdmDashboard />} />
           </Route>
 
-          <Route exact path="Sup_Admin/AddStudent" element={<AddStudent />} />
           {/* Super Admin Routes */}
           <Route exact path="/Dashboard" element={<Super_Admin />}>
             <Route exact path="Sup_Admin" element={<SupAdmDashboard />} />
+            <Route exact path="Sup_Admin/AddStudent" element={<AddStudent />} />
           </Route>
         </Routes>
       </Router>

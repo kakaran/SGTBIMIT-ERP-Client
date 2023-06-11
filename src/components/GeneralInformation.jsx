@@ -1,28 +1,27 @@
 import React, { useState } from "react";
 
-const Inputs2 = [
-  { id: 1, label: "Father's Name / Guardian Name", type: "text" },
-  { id: 2, label: "Mother's Name", type: "text" },
-  { id: 3, label: "Mobile Number", type: "text" },
-  { id: 4, label: "any", type: "text" },
-];
 
-const options = [
-  { id: 1, label: "course", option: "Select a Course" },
-  { id: 1, label: "Batch", option: "Select Batch" },
-  { id: 1, label: "Semester", option: "Select Semester" },
-  { id: 1, label: "Section", option: "Select Section" },
-];
 
 function GeneralInformation() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
 
   const [studentAdd, setStudentAdd] = useState({
-    name: "",
-    position: "",
-    shortNote: "",
-    longNote: "",
+    firstname: "",
+    lastname: "",
+    rollnumber: "",
+    email: "",
+    phone: "",
+    department: "",
+    fathername: "",
+    mothername: "",
+    fathernumber: "",
+    section: "",
+    address: "",
+    batch: "",
+    gender: "",
+    course: "",
+    semester: "",
   });
   const [filedata, setFileData] = useState();
 
@@ -30,26 +29,8 @@ function GeneralInformation() {
     setStudentAdd({ ...studentAdd, [e.target.name]: e.target.value });
   };
 
-  const Inputs = [
-    { id: 1, label: "First Name", type: "text", name: "firstname" },
-    { id: 2, label: "Last Name", type: "text", name: "lastname" },
-    { id: 3, label: "Student ID", type: "text", name: "rollnumber" },
-    { id: 4, label: "Email ID", type: "text", name: "email" },
-    { id: 4, label: "Phone Number", type: "text", name: "phone" },
-    { id: 4, label: "Department", type: "text", name: "department" },
-  ];
 
-  const Inputs2 = [
-    {
-      id: 1,
-      label: "Father's Name / Guardian Name",
-      type: "text",
-      name: "fathername",
-    },
-    { id: 2, label: "Mother's Name", type: "text", name: "mothername" },
-    { id: 3, label: "Mobile Number", type: "text", name: "fathernumber" },
-  ];
-
+  console.log(studentAdd);
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -63,6 +44,28 @@ function GeneralInformation() {
     }
   };
 
+  const Inputs = [
+    { id: 1, label: "First Name", type: "text", name: "firstname" },
+    { id: 2, label: "Last Name", type: "text", name: "lastname" },
+    { id: 3, label: "Student ID", type: "text", name: "rollnumber" },
+    { id: 4, label: "Email ID", type: "text", name: "email" },
+    { id: 4, label: "Phone Number", type: "text", name: "phone" },
+    { id: 4, label: "Department", type: "text", name: "department" },
+  ];
+
+  const Inputs2 = [
+    { id: 1, label: "Father's Name / Guardian Name", type: "text", name: "fathername" },
+    { id: 2, label: "Mother's Name", type: "text", name: "mothername" },
+    { id: 3, label: "Mobile Number", type: "text", name: "fathernumber" },
+  ];
+
+  const options = [
+    { id: 1, label: "course", option: "Select a Course" },
+    // { id: 1, label: "Batch", option: "Select Batch" },
+    { id: 1, label: "Semester", option: "Select Semester" },
+    { id: 1, label: "Section", option: "Select Section" },
+  ];
+
   return (
     <div className="grid grid-cols-12 my-10 gap-4 ">
       <div className="col-span-9">
@@ -71,7 +74,7 @@ function GeneralInformation() {
           <h2>General Information</h2>
 
           <div className="grid grid-cols-2 my-4 gap-4 ">
-            {Inputs.map(({ id, type, label }) => (
+            {Inputs.map(({ id, type, label ,name}) => (
               <div key={id} className="w-full  ">
                 <div>
                   <label
@@ -84,10 +87,27 @@ function GeneralInformation() {
                     type={type}
                     className="block w-full rounded-md bg-[#F9F9FC] border-gray-300 shadow-sm focus:border-primary-400  focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
                     placeholder={label}
+                    name = {name}
+                    onChange={Onchagetesdetail}
                   />
                 </div>
               </div>
             ))}
+
+            <div className="flex flex-col my-4">
+              <label
+                className="text-[15px]  capitalize text-black font-semibold"
+                htmlFor=""
+              >
+                Gender
+              </label>
+              <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name="gender" onChange={Onchagetesdetail}>
+                <option value="">Select</option>
+                <option value="optionA">Male</option>
+                <option value="optionB">Female</option>
+                <option value="optionC">Other</option>
+              </select>
+            </div>
           </div>
 
           <div>
@@ -99,6 +119,8 @@ function GeneralInformation() {
               placeholder="Enter Student Address Here..."
               cols="30"
               rows="6"
+              name= "address"
+              onChange={Onchagetesdetail}
             ></textarea>
           </div>
         </div>
@@ -120,12 +142,14 @@ function GeneralInformation() {
                     type={type}
                     className="block w-full rounded-md bg-[#F9F9FC] border-gray-300 shadow-sm focus:border-primary-400  focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
                     placeholder={label}
+                    onChange={Onchagetesdetail}
                   />
                 </div>
               </div>
             ))}
+
           </div>
-          <div>
+          {/* <div>
             <label className="mb-1 capitalize block text-[15px] font-semibold text-black">
               Lorem Ipsum
             </label>
@@ -135,7 +159,7 @@ function GeneralInformation() {
               cols="30"
               rows="6"
             ></textarea>
-          </div>
+          </div> */}
         </div>
 
         {/* Media */}
@@ -207,25 +231,81 @@ function GeneralInformation() {
         {/* Selection */}
         <div className="rounded-lg bg-white border border-[] w-full max-h-fit p-6 gap-[14px]">
           Class
-          {options.map(({ label, option }) => (
-            <div className="flex flex-col my-4">
-              <label
-                className="text-[15px]  capitalize text-black font-semibold"
-                htmlFor=""
-              >
-                {label}
-              </label>
-              <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]">
-                <option value={option}>{option}</option>
-                <img src="/ArrowDown.svg" alt="" />
+          <div className="flex flex-col my-4">
+            <label
+              className="text-[15px]  capitalize text-black font-semibold"
+              htmlFor=""
+            >
+              Course
+            </label>
+            <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name= "course" onChange={Onchagetesdetail}>
+            <option value="">Select Course</option>
 
-                <option value="optionA">Option A</option>
-                <option value="optionB">Option B</option>
-                <option value="optionC">Option C</option>
-              </select>
+              <img src="/ArrowDown.svg" alt="" />
+
+              <option value="BCA">BCA</option>
+              <option value="BBA">BBA</option>
+              <option value="BCOM">BCOM</option>
+            </select>
+          </div>
+          <div className="flex flex-col my-4">
+            <label
+              className="text-[15px]  capitalize text-black font-semibold"
+              htmlFor=""
+            >
+              Semester
+            </label>
+            <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name = "semester"onChange={Onchagetesdetail}>
+            <option value="">Select Semester</option>
+
+              <img src="/ArrowDown.svg" alt="" />
+
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+          <div className="flex flex-col my-4">
+            <label
+              className="text-[15px]  capitalize text-black font-semibold"
+              htmlFor=""
+            >
+              Section
+            </label>
+            <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name = "section" onChange={Onchagetesdetail}>
+            <option value="">Select Section</option>
+
+              <img src="/ArrowDown.svg" alt="" />
+
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+            </select>
+          </div>
+          <div className="w-full  ">
+            <div>
+              <label
+                for="example1"
+                className="mb-1 capitalize block text-[15px] font-semibold text-black"
+              >
+                {/* {label} */}
+                Batch
+              </label>
+              <input
+                type="text"
+                name= "batch"
+                className="block w-full rounded-md bg-[#F9F9FC] border-gray-300 shadow-sm focus:border-primary-400  focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+                placeholder="Enter Batch"
+                onChange={Onchagetesdetail}
+              />
             </div>
-          ))}
+          </div>
         </div>
+
 
         {/* fee Status */}
 
@@ -245,20 +325,20 @@ function GeneralInformation() {
             >
               Fee
             </label>
-            <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]">
+            <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" onChange={Onchagetesdetail}>
               <option value="">Select</option>
               <img src="/ArrowDown.svg" alt="" />
 
-              <option value="optionA">Option A</option>
-              <option value="optionB">Option B</option>
-              <option value="optionC">Option C</option>
+              <option value="Paid">Paid</option>
+              <option value="Unpaid">Unpaid</option>
+              <option value="Other">Other</option>
             </select>
           </div>
         </div>
 
         {/* fee status 2 */}
 
-        <div className="w-full bg-white h-[164px] p-6 rounded-lg border-2 border-[]">
+        {/* <div className="w-full bg-white h-[164px] p-6 rounded-lg border-2 border-[]">
           <div className="flex justify-between">
             <h2 className="">Fee </h2>
 
@@ -283,7 +363,7 @@ function GeneralInformation() {
               <option value="optionC">Option C</option>
             </select>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
