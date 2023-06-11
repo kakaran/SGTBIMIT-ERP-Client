@@ -47,23 +47,9 @@ function AddStudent() {
                 ))}
               </div>
             </div>
-            <div className="grid-cols-12 grid gap-[20px] my-8">
-              <div className="col-span-9">
-                <GeneralInformation />
-              </div>
-              <div className="col-span-3">
-                <Selection />
-
-                <div className="my-8">
-                  <FeeStatus />
-                  <div className="my-5">
-                    <FeeStatus2 />
-                  </div>
-                </div>
-              </div>
+            <div className="">
+              <GeneralInformation />
             </div>
-
-            <div className="my-10"></div>
           </div>
         </div>
       </div>
