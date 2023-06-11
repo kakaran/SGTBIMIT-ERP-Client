@@ -63,10 +63,13 @@ function AddStudent() {
                 <Others />
               </div>
 
-              <div className="col-span-2"></div>
+              <div className="col-span-2">
+hi
+              </div>
             </div>
 
-            <div className="my-10"></div>
+            <div className="my-10">
+            </div>
           </div>
         </div>
       </div>

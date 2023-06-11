@@ -10,7 +10,6 @@ export default function GuardianInformation() {
   return (
     <div className="w-[840px] p-4 md:w-full h-full bg-white rounded-lg  border-2 border-[]">
       <h2>Parents/Guardian's Information</h2>
-
       <div className="grid grid-cols-2 my-4 gap-4 ">
         {Inputs.map(({ id, type, label }) => (
           <div key={id} className="w-full  ">
@@ -30,7 +29,6 @@ export default function GuardianInformation() {
           </div>
         ))}
       </div>
-
       <div>
         <label className="mb-1 capitalize block text-[15px] font-semibold text-black">
           Lorem Ipsum

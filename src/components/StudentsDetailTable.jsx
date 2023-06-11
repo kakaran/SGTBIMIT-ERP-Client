@@ -234,7 +234,7 @@ function StudentsDetailTable() {
               <div className="flex flex-row bg-[#5C59E8] items-center rounded-xl border-none py-2 px-3  space-x-1">
                 <PlusIcon className="h-5 w-5 object-cover" />
                 <a
-                  href="/Sup_Admin/AddStudent"
+                  href="/Dashboard/Sup_Admin/AddStudent"
                   className="text-sm px-4 py-2 rounded-md "
                 >
                   Add Student
