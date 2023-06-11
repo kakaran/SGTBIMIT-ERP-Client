@@ -3,8 +3,10 @@ import React from "react";
 const Inputs = [
   { id: 1, label: "First Name", type: "text" },
   { id: 2, label: "Last Name", type: "text" },
-  { id: 3, label: "Student ID", type: "Number" },
+  { id: 3, label: "Student ID", type: "text" },
   { id: 4, label: "Email ID", type: "text" },
+  { id: 4, label: "Phone Number", type: "text" },
+  { id: 4, label: "Department", type: "text" },
 ];
 function GeneralInformation() {
   return (
@@ -29,6 +31,15 @@ function GeneralInformation() {
             </div>
           </div>
         ))}
+        <div>
+          <label
+            for="example1"
+            className="mb-1 capitalize block text-[15px] font-semibold text-black"
+          >
+            
+          </label>
+
+        </div>
       </div>
 
       <div>

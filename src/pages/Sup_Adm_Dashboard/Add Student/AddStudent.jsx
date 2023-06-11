@@ -38,10 +38,9 @@ function AddStudent() {
               <div className="flex text-lg my-2 items-center space-x-3">
                 {Buttons.map(({ name, img, id }) => (
                   <div
-                    className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 ${
-                      name === "Add Student" &&
+                    className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 ${name === "Add Student" &&
                       "border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]"
-                    } `}
+                      } `}
                     key={id}
                   >
                     <img src={img} alt={name} />
@@ -64,22 +63,17 @@ function AddStudent() {
 
               <div className="col-span-3">
                 <FeeStatus />
-                <div className="my-5">
+                {/* <div className="my-5">
                   <FeeStatus2 />
-                </div>
+                </div> */}
               </div>
 
-<<<<<<< HEAD
-              <div className="col-span-2">
-hi
-=======
               <div className="col-span-9">
                 <Media />
               </div>
 
               <div className="col-span-9">
                 <Others />
->>>>>>> 59e17a4953e011536f98a4fedb554394adc16796
               </div>
             </div>
 

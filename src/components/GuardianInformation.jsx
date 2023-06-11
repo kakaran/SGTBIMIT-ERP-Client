@@ -3,8 +3,7 @@ import React from "react";
 const Inputs = [
   { id: 1, label: "Father's Name / Guardian Name", type: "text" },
   { id: 2, label: "Mother's Name", type: "text" },
-  { id: 3, label: "lorem ipsum", type: "Number" },
-  { id: 4, label: "any", type: "text" },
+  { id: 3, label: "Father Number", type: "text" },
 ];
 export default function GuardianInformation() {
   return (
@@ -29,7 +28,7 @@ export default function GuardianInformation() {
           </div>
         ))}
       </div>
-      <div>
+      {/* <div>
         <label className="mb-1 capitalize block text-[15px] font-semibold text-black">
           Lorem Ipsum
         </label>
@@ -39,7 +38,7 @@ export default function GuardianInformation() {
           cols="30"
           rows="6"
         ></textarea>
-      </div>
+      </div> */}
     </div>
   );
 }
