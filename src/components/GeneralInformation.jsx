@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 
@@ -22,8 +23,9 @@ function GeneralInformation() {
     gender: "",
     course: "",
     semester: "",
+    Fee: "",
+    note: ""
   });
-  const [filedata, setFileData] = useState();
 
   const Onchagetesdetail = (e) => {
     setStudentAdd({ ...studentAdd, [e.target.name]: e.target.value });
@@ -66,6 +68,44 @@ function GeneralInformation() {
     { id: 1, label: "Section", option: "Select Section" },
   ];
 
+  const SubmitForm = async () => {
+    try {
+      let formData = new FormData();
+      formData.append("batch", studentAdd.batch);
+      formData.append("fathernumber", Number(studentAdd.fathernumber));
+      formData.append("section", studentAdd.section);
+      formData.append("firstname", studentAdd.firstname);
+      formData.append("lastname", studentAdd.lastname);
+      formData.append("year", Number(studentAdd.year));
+      formData.append("department", studentAdd.department);
+      formData.append("gender", studentAdd.gender);
+      formData.append("mothername", studentAdd.mothername);
+      formData.append("fathername", studentAdd.fathername);
+      formData.append("dob", studentAdd.dob);
+      formData.append("phone", Number(studentAdd.phone));
+      formData.append("address", studentAdd.address);
+      formData.append("rollnumber", studentAdd.rollnumber);
+      formData.append("course", studentAdd.course);
+      formData.append("semester", studentAdd.semester);
+      formData.append("Fee", studentAdd.Fee);
+      formData.append("note", studentAdd.note);
+      formData.append("avatar", selectedFile)
+
+      const Data = await axios.post(`${process.env.REACT_APP_URL}/api/admin/Student_Add`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      if(Data.success){
+        alert(Data.message)
+      }
+    } catch (error) {
+      console.log('====================================');
+      console.log(error);
+      console.log('====================================');
+    }
+  }
+
   return (
     <div className="grid grid-cols-12 my-10 gap-4 ">
       <div className="col-span-9">
@@ -74,7 +114,7 @@ function GeneralInformation() {
           <h2>General Information</h2>
 
           <div className="grid grid-cols-2 my-4 gap-4 ">
-            {Inputs.map(({ id, type, label ,name}) => (
+            {Inputs.map(({ id, type, label, name }) => (
               <div key={id} className="w-full  ">
                 <div>
                   <label
@@ -87,7 +127,7 @@ function GeneralInformation() {
                     type={type}
                     className="block w-full rounded-md bg-[#F9F9FC] border-gray-300 shadow-sm focus:border-primary-400  focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
                     placeholder={label}
-                    name = {name}
+                    name={name}
                     onChange={Onchagetesdetail}
                   />
                 </div>
@@ -108,7 +148,27 @@ function GeneralInformation() {
                 <option value="optionC">Other</option>
               </select>
             </div>
+
+            <div className="flex flex-col my-4">
+              <label
+                className="text-[15px]  capitalize text-black font-semibold"
+                htmlFor=""
+              >
+                DOB
+              </label>
+              <input
+                type="Date"
+                className="block w-full rounded-md bg-[#F9F9FC] border-gray-300 shadow-sm focus:border-primary-400  focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+                placeholder="DOB"
+                name="dob"
+                onChange={Onchagetesdetail}
+              />
+            </div>
+
+
           </div>
+
+
 
           <div>
             <label className="mb-1 capitalize block text-[15px] font-semibold text-black">
@@ -119,7 +179,7 @@ function GeneralInformation() {
               placeholder="Enter Student Address Here..."
               cols="30"
               rows="6"
-              name= "address"
+              name="address"
               onChange={Onchagetesdetail}
             ></textarea>
           </div>
@@ -129,7 +189,7 @@ function GeneralInformation() {
         <div className="w-[840px] my-8 p-4 md:w-full max-h-fit bg-white rounded-lg  border-2 border-[]">
           <h2>Parents/Guardian's Information</h2>
           <div className="grid grid-cols-2 my-4 gap-4 ">
-            {Inputs2.map(({ id, type, label }) => (
+            {Inputs2.map(({ id, type, label, name }) => (
               <div key={id} className="w-full  ">
                 <div>
                   <label
@@ -142,6 +202,7 @@ function GeneralInformation() {
                     type={type}
                     className="block w-full rounded-md bg-[#F9F9FC] border-gray-300 shadow-sm focus:border-primary-400  focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
                     placeholder={label}
+                    name={name}
                     onChange={Onchagetesdetail}
                   />
                 </div>
@@ -208,6 +269,7 @@ function GeneralInformation() {
                 id="example5"
                 type="file"
                 className="sr-only"
+                accept="image/png,image/jpeg,image/jpg"
                 onChange={handleFileChange}
               />
             </label>
@@ -223,6 +285,8 @@ function GeneralInformation() {
             placeholder="Any note"
             cols="30"
             rows="4"
+            name="note"
+            onChange={Onchagetesdetail}
           ></textarea>
         </div>
       </div>
@@ -238,8 +302,8 @@ function GeneralInformation() {
             >
               Course
             </label>
-            <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name= "course" onChange={Onchagetesdetail}>
-            <option value="">Select Course</option>
+            <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name="course" onChange={Onchagetesdetail}>
+              <option value="">Select Course</option>
 
               <img src="/ArrowDown.svg" alt="" />
 
@@ -255,8 +319,8 @@ function GeneralInformation() {
             >
               Semester
             </label>
-            <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name = "semester"onChange={Onchagetesdetail}>
-            <option value="">Select Semester</option>
+            <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name="semester" onChange={Onchagetesdetail}>
+              <option value="">Select Semester</option>
 
               <img src="/ArrowDown.svg" alt="" />
 
@@ -275,8 +339,8 @@ function GeneralInformation() {
             >
               Section
             </label>
-            <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name = "section" onChange={Onchagetesdetail}>
-            <option value="">Select Section</option>
+            <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name="section" onChange={Onchagetesdetail}>
+              <option value="">Select Section</option>
 
               <img src="/ArrowDown.svg" alt="" />
 
@@ -297,7 +361,7 @@ function GeneralInformation() {
               </label>
               <input
                 type="text"
-                name= "batch"
+                name="batch"
                 className="block w-full rounded-md bg-[#F9F9FC] border-gray-300 shadow-sm focus:border-primary-400  focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
                 placeholder="Enter Batch"
                 onChange={Onchagetesdetail}
@@ -325,7 +389,7 @@ function GeneralInformation() {
             >
               Fee
             </label>
-            <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" onChange={Onchagetesdetail}>
+            <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name="Fee" onChange={Onchagetesdetail}>
               <option value="">Select</option>
               <img src="/ArrowDown.svg" alt="" />
 

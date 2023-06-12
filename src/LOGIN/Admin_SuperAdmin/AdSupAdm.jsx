@@ -39,8 +39,6 @@ console.log(process.env.REACT_APP_URL);
     }
   }
 
-
-
   return (
     <>
       <div className="login_Page_Controller">
