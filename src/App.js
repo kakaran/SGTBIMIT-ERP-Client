@@ -12,7 +12,6 @@ import StuDashboard from "./pages/Stu_Dashboard/StuDashboard";
 import SupAdmDashboard from "./pages/Sup_Adm_Dashboard/SupAdmDashboard";
 import AdmDashboard from "./pages/Adm_Dashboard/AdmDashboard";
 import AddStudent from "./pages/Sup_Adm_Dashboard/Add Student/AddStudent";
-import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (

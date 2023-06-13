@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import axios from "axios";
-
+import swal from 'sweetalert'
 import {
   AdjustmentsHorizontalIcon,
   EyeIcon,
@@ -144,6 +144,34 @@ function StudentsDetailTable() {
       }
     });
   };
+
+  // const StudentDelete = async (_id) => {
+  //   try {
+  //     swal({
+  //       title: "Are you sure?",
+  //       text: "Once deleted, you will not be able to recover this imaginary file!",
+  //       icon: "warning",
+  //       buttons: true,
+  //       dangerMode: true,
+  //     })
+  //       .then(async(willDelete) => {
+  //         if (willDelete) {
+  //           swal("Poof! Student has been deleted!", {
+  //             icon: "success",
+  //           });
+  //           const Data = (await axios(`${process.env.REACT_APP_URL}/api/admin//Student_Delete/${_id}`)).data;
+  //           console.log(Data);
+  //         } else {
+  //           swal("Your imaginary file is safe!");
+  //         }
+  //       });
+      
+  //   } catch (error) {
+  //     console.log('====================================');
+  //     console.log(error);
+  //     console.log('====================================');
+  //   }
+  // }
 
   // console.log(filterData);
   // let Data = []
@@ -290,17 +318,16 @@ function StudentsDetailTable() {
                     </td>
                     <td className="border-b px-4 py-2">
                       <div
-                        className={`py-2 px-3 text-[14px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${
-                          value.feeStatus
+                        className={`py-2 px-3 text-[14px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${value.feeStatus
                             ? "  text-[#0D894F] "
                             : " text-[#F04438] "
-                        } `}
+                          } `}
                       >
                         {value?.feeStatus ? "paid" : "Unpaid"}
                       </div>
                     </td>
                     <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                      {new Date(value?.stu_id.createdAt).toLocaleDateString()}
+                      {new Date(value?.stu_id?.createdAt).toLocaleDateString()}
                     </td>
                     <td className="border-b px-4 py-2">
                       <div className={"flex items-center space-x-3 "}>
