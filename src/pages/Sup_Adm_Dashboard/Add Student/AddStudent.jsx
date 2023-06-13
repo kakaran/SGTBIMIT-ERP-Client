@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
-import GeneralInformation from "../../../components/GeneralInformation";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {useNavigate} from "react-router-dom";
 
 function AddStudent() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
+  const [formfill, setFormFill] = useState({
+    total: "",
+    status: "",
+  });
+  const navigate = useNavigate();
 
   const [studentAdd, setStudentAdd] = useState({
     firstname: "",
@@ -29,15 +32,13 @@ function AddStudent() {
     course: "",
     semester: "",
     Fee: "",
-    note: ""
+    note: "",
   });
 
   const Onchagetesdetail = (e) => {
     setStudentAdd({ ...studentAdd, [e.target.name]: e.target.value });
   };
 
-
-  console.log(studentAdd);
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -51,6 +52,22 @@ function AddStudent() {
     }
   };
 
+  useEffect(() => {
+    try {
+      let totalIndex = 0;
+      let fillIndex = 0;
+      for (let key in studentAdd) {
+        totalIndex += 1;
+        if (studentAdd[key] !== "") {
+          fillIndex += 1;
+        }
+      }
+      setFormFill({ total: totalIndex, status: fillIndex });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [studentAdd]);
+
   const SubmitForm = async () => {
     try {
       let formData = new FormData();
@@ -59,7 +76,7 @@ function AddStudent() {
       formData.append("section", studentAdd.section);
       formData.append("firstname", studentAdd.firstname);
       formData.append("lastname", studentAdd.lastname);
-      formData.append("email", studentAdd.email)
+      formData.append("email", studentAdd.email);
       // formData.append("year", Number(studentAdd.year));
       formData.append("department", studentAdd.department);
       formData.append("gender", studentAdd.gender);
@@ -73,13 +90,19 @@ function AddStudent() {
       formData.append("semester", studentAdd.semester);
       formData.append("Fee", studentAdd.Fee);
       formData.append("note", studentAdd.note);
-      formData.append("avatar", selectedFile)
+      formData.append("avatar", selectedFile);
 
-      const Data = (await axios.post(`${process.env.REACT_APP_URL}/api/admin/Student_Add`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })).data
+      const Data = (
+        await axios.post(
+          `${process.env.REACT_APP_URL}/api/admin/Student_Add`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+      ).data;
 
       if (Data.success) {
         toast.success(`${Data.message}`, {
@@ -94,7 +117,6 @@ function AddStudent() {
         });
       }
     } catch (error) {
-
       if (!error.response.data.success) {
         toast.error(`${error.response.data.message}`, {
           position: "top-right",
@@ -107,11 +129,11 @@ function AddStudent() {
           theme: "colored",
         });
       }
-      console.log('====================================');
+      console.log("====================================");
       console.log(error);
-      console.log('====================================');
+      console.log("====================================");
     }
-  }
+  };
 
   const Inputs = [
     { id: 1, label: "First Name", type: "text", name: "firstname" },
@@ -123,7 +145,12 @@ function AddStudent() {
   ];
 
   const Inputs2 = [
-    { id: 1, label: "Father's Name / Guardian Name", type: "text", name: "fathername" },
+    {
+      id: 1,
+      label: "Father's Name / Guardian Name",
+      type: "text",
+      name: "fathername",
+    },
     { id: 2, label: "Mother's Name", type: "text", name: "mothername" },
     { id: 3, label: "Mobile Number", type: "text", name: "fathernumber" },
   ];
@@ -140,8 +167,6 @@ function AddStudent() {
     { id: 1, label: "Semester", option: "Select Semester" },
     { id: 1, label: "Section", option: "Select Section" },
   ];
-
-
 
   return (
     <div>
@@ -165,11 +190,13 @@ function AddStudent() {
               <div className="flex text-lg my-2 items-center space-x-3">
                 {Buttons.map(({ name, img, id, method }) => (
                   <div
-                    className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 ${name === "Add Student" &&
+                    className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 ${
+                      name === "Add Student" &&
                       "border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]"
-                      } `}
+                    } `}
                     key={id}
                     onClick={method}
+
                   >
                     <img src={img} alt={name} />
                     <p>{name}</p>
@@ -213,7 +240,11 @@ function AddStudent() {
                         >
                           Gender
                         </label>
-                        <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name="gender" onChange={Onchagetesdetail}>
+                        <select
+                          className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]"
+                          name="gender"
+                          onChange={Onchagetesdetail}
+                        >
                           <option value="">Select</option>
                           <option value="optionA">Male</option>
                           <option value="optionB">Female</option>
@@ -236,11 +267,7 @@ function AddStudent() {
                           onChange={Onchagetesdetail}
                         />
                       </div>
-
-
                     </div>
-
-
 
                     <div>
                       <label className="mb-1 capitalize block text-[15px] font-semibold text-black">
@@ -280,7 +307,6 @@ function AddStudent() {
                           </div>
                         </div>
                       ))}
-
                     </div>
                     {/* <div>
             <label className="mb-1 capitalize block text-[15px] font-semibold text-black">
@@ -309,7 +335,11 @@ function AddStudent() {
                       <label className="flex w-full cursor-pointer appearance-none items-center justify-center rounded-md border-2 border-dashed border-gray-200 p-6 transition-all hover:border-primary-300">
                         <div className="space-y-1 text-center">
                           {imageUrl ? (
-                            <img src={imageUrl} alt="Uploaded" className="mx-auto h-40" />
+                            <img
+                              src={imageUrl}
+                              alt="Uploaded"
+                              className="mx-auto h-40"
+                            />
                           ) : (
                             <div className="mx-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
                               <svg
@@ -374,7 +404,11 @@ function AddStudent() {
                       >
                         Course
                       </label>
-                      <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name="course" onChange={Onchagetesdetail}>
+                      <select
+                        className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]"
+                        name="course"
+                        onChange={Onchagetesdetail}
+                      >
                         <option value="">Select Course</option>
 
                         <img src="/ArrowDown.svg" alt="" />
@@ -391,7 +425,11 @@ function AddStudent() {
                       >
                         Semester
                       </label>
-                      <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name="semester" onChange={Onchagetesdetail}>
+                      <select
+                        className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]"
+                        name="semester"
+                        onChange={Onchagetesdetail}
+                      >
                         <option value="">Select Semester</option>
 
                         <img src="/ArrowDown.svg" alt="" />
@@ -411,7 +449,11 @@ function AddStudent() {
                       >
                         Section
                       </label>
-                      <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name="section" onChange={Onchagetesdetail}>
+                      <select
+                        className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]"
+                        name="section"
+                        onChange={Onchagetesdetail}
+                      >
                         <option value="">Select Section</option>
 
                         <img src="/ArrowDown.svg" alt="" />
@@ -442,7 +484,6 @@ function AddStudent() {
                     </div>
                   </div>
 
-
                   {/* fee Status */}
 
                   <div className="w-full bg-white my-8 h-[164px] p-6 rounded-lg border-2 border-[]">
@@ -461,7 +502,11 @@ function AddStudent() {
                       >
                         Fee
                       </label>
-                      <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]" name="Fee" onChange={Onchagetesdetail}>
+                      <select
+                        className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]"
+                        name="Fee"
+                        onChange={Onchagetesdetail}
+                      >
                         <option value="">Select</option>
                         <img src="/ArrowDown.svg" alt="" />
 
@@ -471,7 +516,6 @@ function AddStudent() {
                       </select>
                     </div>
                     <ToastContainer />
-
                   </div>
 
                   {/* fee status 2 */}
@@ -506,9 +550,29 @@ function AddStudent() {
               </div>
             </div>
           </div>
+          <div className="flex items-center justify-between px-2  bottom-0 right-0 fixed max-w-7xl bg-white border-t border-gray-200">
+              <p className="text-xl">Form Completion <span className={` p-1.5 rounded-xl	 ${formfill.status
+                            ? "  text-[#0D894F] bg-[#E7F4EE]"
+                            : " text-[#F04438]  bg-[#FCDAD7]"
+                          } `} >{formfill.status ? Math.round(((formfill.status/formfill.total)) * 100) + "%" : "0%" }</span></p>
+            <div className="flex text-lg my-2 items-center space-x-3">
+              {Buttons.map(({ name, img, id, method }) => (
+                <div
+                  className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 ${
+                    name === "Add Student" &&
+                    "border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]"
+                  } `}
+                  key={id}
+                  onClick={method}
+                >
+                  <img src={img} alt={name} />
+                  <p>{name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-
     </div>
   );
 }

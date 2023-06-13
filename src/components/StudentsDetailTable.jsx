@@ -7,6 +7,11 @@ import {
   EyeIcon,
   PlusIcon,
 } from "@heroicons/react/24/outline";
+import { FaRegEye } from 'react-icons/fa';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { BsPencil } from 'react-icons/bs';
+
+
 
 // const TeacherDetails = [
 //   {
@@ -106,6 +111,7 @@ function StudentsDetailTable() {
   const Section = useRef();
   const [filterData, setFilterData] = useState();
   const [allData, setAllData] = useState();
+  const [render,setRender] = useState(0);
 
   useEffect(() => {
     const AllStudentGet = async () => {
@@ -116,6 +122,7 @@ function StudentsDetailTable() {
           )
         ).data;
         setAllData(Data);
+        setRender(0)
       } catch (error) {
         console.log("====================================");
         console.log(error);
@@ -123,10 +130,10 @@ function StudentsDetailTable() {
       }
     };
     AllStudentGet();
-  }, []);
+  }, [render]);
 
   const DataFilter = async () => {
-    console.log(allData);
+    // console.log(allData);
     allData?.map((value) => {
       if (value.Sem.semNumber == Semester) {
         value.Sem.Courses.map((value1) => {
@@ -145,33 +152,34 @@ function StudentsDetailTable() {
     });
   };
 
-  // const StudentDelete = async (_id) => {
-  //   try {
-  //     swal({
-  //       title: "Are you sure?",
-  //       text: "Once deleted, you will not be able to recover this imaginary file!",
-  //       icon: "warning",
-  //       buttons: true,
-  //       dangerMode: true,
-  //     })
-  //       .then(async(willDelete) => {
-  //         if (willDelete) {
-  //           swal("Poof! Student has been deleted!", {
-  //             icon: "success",
-  //           });
-  //           const Data = (await axios(`${process.env.REACT_APP_URL}/api/admin//Student_Delete/${_id}`)).data;
-  //           console.log(Data);
-  //         } else {
-  //           swal("Your imaginary file is safe!");
-  //         }
-  //       });
+  const StudentDelete = async (_id) => {
+    try {
+      swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+        .then(async(willDelete) => {
+          if (willDelete) {
+            swal("Poof! Student has been deleted!", {
+              icon: "success",
+            });
+            console.log(_id);
+            const Data = (await axios.delete(`${process.env.REACT_APP_URL}/api/admin/Student_Delete/${_id}`)).data;
+            setRender(1)
+          } else {
+            swal("Your imaginary file is safe!");
+          }
+        });
       
-  //   } catch (error) {
-  //     console.log('====================================');
-  //     console.log(error);
-  //     console.log('====================================');
-  //   }
-  // }
+    } catch (error) {
+      console.log('====================================');
+      console.log(error);
+      console.log('====================================');
+    }
+  }
 
   // console.log(filterData);
   // let Data = []
@@ -318,12 +326,12 @@ function StudentsDetailTable() {
                     </td>
                     <td className="border-b px-4 py-2">
                       <div
-                        className={`py-2 px-3 text-[14px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${value.feeStatus
+                        className={`py-2 px-3 text-[14px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${value?.stu_id?.Fee
                             ? "  text-[#0D894F] "
                             : " text-[#F04438] "
                           } `}
                       >
-                        {value?.feeStatus ? "paid" : "Unpaid"}
+                        {value?.stu_id?.Fee ? "paid" : "Unpaid"}
                       </div>
                     </td>
                     <td className="py-2 px-4 border-b font-semibold text-[#667085]">
@@ -331,9 +339,9 @@ function StudentsDetailTable() {
                     </td>
                     <td className="border-b px-4 py-2">
                       <div className={"flex items-center space-x-3 "}>
-                        <img src="/blackEye.svg" alt="" />
-                        <img src="/dustbin.svg" alt="" />
-                        <img src="/pencil.svg" alt="" />
+                        <FaRegEye className="text-lg text-zinc-600"/>
+                        <RiDeleteBin6Line className="text-lg text-zinc-600" onClick={()=>{StudentDelete(value?.stu_id?._id)}}/>
+                        <BsPencil className="text-lg text-zinc-600"/>
                       </div>
                     </td>
                   </tr>
