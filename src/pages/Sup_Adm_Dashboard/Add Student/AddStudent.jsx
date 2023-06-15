@@ -1,10 +1,10 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import {useNavigate} from "react-router-dom";
+// import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 function AddStudent() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -170,7 +170,7 @@ function AddStudent() {
 
   return (
     <div>
-      <div className="flex  text-3xl h-screen overflow-hidden">
+      <div className="flex  text-3xl overflow-y-auto overflow-hidden">
         <Sidebar />
 
         <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
@@ -196,7 +196,6 @@ function AddStudent() {
                     } `}
                     key={id}
                     onClick={method}
-
                   >
                     <img src={img} alt={name} />
                     <p>{name}</p>
@@ -544,18 +543,29 @@ function AddStudent() {
               <option value="optionB">Option B</option>
               <option value="optionC">Option C</option>
             </select>
-          </div>
-        </div> */}
+            </div>
+           </div> */}
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-between px-2  bottom-0 right-0 fixed max-w-7xl bg-white border-t border-gray-200">
-              <p className="text-xl">Form Completion <span className={` p-1.5 rounded-xl	 ${formfill.status
-                            ? "  text-[#0D894F] bg-[#E7F4EE]"
-                            : " text-[#F04438]  bg-[#FCDAD7]"
-                          } `} >{formfill.status ? Math.round(((formfill.status/formfill.total)) * 100) + "%" : "0%" }</span></p>
-            <div className="flex text-lg my-2 items-center space-x-3">
+
+          <div className="flex  items-center px-4 left-64 fixed bottom-0 right-0   justify-between  h-20      bg-white border border-gray-200">
+            <p className="text-xl  ">
+              Form Completion{" "}
+              <span
+                className={` p-1.5 rounded-xl	 ${
+                  formfill.status
+                    ? "  text-[#0D894F] bg-[#E7F4EE]"
+                    : " text-[#F04438]  bg-[#FCDAD7]"
+                } `}
+              >
+                {formfill.status
+                  ? Math.round((formfill.status / formfill.total) * 100) + "%"
+                  : "0%"}
+              </span>
+            </p>
+            <div className="flex justify-end  text-lg my-2 items-center space-x-3">
               {Buttons.map(({ name, img, id, method }) => (
                 <div
                   className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 ${
