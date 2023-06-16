@@ -185,7 +185,7 @@ function AddStudent() {
 
   return (
     <div>
-      <div className="flex  text-3xl overflow-y-auto overflow-hidden">
+      <div className="flex  text-3xl  overflow-hidden">
         <Sidebar />
 
         <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
