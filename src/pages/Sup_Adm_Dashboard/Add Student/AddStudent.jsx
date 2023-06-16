@@ -13,29 +13,31 @@ import { BsPencil } from "react-icons/bs";
 function AddStudent() {
   const [data, setData] = useState(null);
   const handleExcel = (e) => {
-    const promise = new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsArrayBuffer(e.target.files[0]);
+    if (e.target.files[0]) {
+      const promise = new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsArrayBuffer(e.target.files[0]);
 
-      fileReader.onload = (e) => {
-        const bufferArray = e.target.result;
-        const wb = XLSX.read(bufferArray, { type: "buffer" });
-        const wsname = wb.SheetNames[0];
-        const ws = wb.Sheets[wsname];
-        const data = XLSX.utils.sheet_to_json(ws);
-        resolve(data);
-      };
+        fileReader.onload = (e) => {
+          const bufferArray = e.target.result;
+          const wb = XLSX.read(bufferArray, { type: "buffer" });
+          const wsname = wb.SheetNames[0];
+          const ws = wb.Sheets[wsname];
+          const data = XLSX.utils.sheet_to_json(ws);
+          resolve(data);
+        };
 
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    })
+        fileReader.onerror = (error) => {
+          reject(error);
+        };
+      })
 
-    promise.then((d) => {
-      console.log(d);
-      setData(d);
-      console.log(d);
-    })
+      promise.then((d) => {
+        console.log(d);
+        setData(d);
+        console.log(d);
+      })
+    }
   }
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
