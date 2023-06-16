@@ -12,6 +12,7 @@ import StuDashboard from "./pages/Stu_Dashboard/StuDashboard";
 import SupAdmDashboard from "./pages/Sup_Adm_Dashboard/SupAdmDashboard";
 import AdmDashboard from "./pages/Adm_Dashboard/AdmDashboard";
 import AddStudent from "./pages/Sup_Adm_Dashboard/Add Student/AddStudent";
+import MultipleStudentAdd from "./pages/Sup_Adm_Dashboard/Add Student/MultipleStudentAdd";
 
 function App() {
   return (
@@ -39,8 +40,9 @@ function App() {
 
           {/* Super Admin Routes */}
           <Route exact path="/Dashboard" element={<Super_Admin />}>
-            <Route exact path="Sup_Admin/AddStudent" element={<AddStudent />} />
             <Route exact path="Sup_Admin" element={<SupAdmDashboard />} />
+            <Route exact path="Sup_Admin/AddStudent" element={<AddStudent />} />
+            <Route exact path="Sup_Admin/AddStudent/MultipleStudentAdd/:data" element={<MultipleStudentAdd />} />
           </Route>
         </Routes>
       </Router>

@@ -5,51 +5,38 @@ import axios from "axios";
 import * as XLSX from "xlsx";
 import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
-<<<<<<< HEAD
-import { Link } from "react-router-dom";
-=======
-import { useNavigate } from "react-router-dom";
-import { FaRegEye } from "react-icons/fa";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { BsPencil } from "react-icons/bs";
->>>>>>> cfa2c728c0ffb7092b5a99785b48b288c5581e6d
+import "../../../index.css"
+
+import { Link, useNavigate } from "react-router-dom";
 
 function AddStudent() {
   const [data, setData] = useState(null);
+  const navigate = useNavigate()
   const handleExcel = (e) => {
-    if (e.target.files[0]) {
-      const promise = new Promise((resolve, reject) => {
-        const fileReader = new FileReader();
-        fileReader.readAsArrayBuffer(e.target.files[0]);
-
-        fileReader.onload = (e) => {
-          const bufferArray = e.target.result;
-          const wb = XLSX.read(bufferArray, { type: "buffer" });
-          const wsname = wb.SheetNames[0];
-          const ws = wb.Sheets[wsname];
-          const data = XLSX.utils.sheet_to_json(ws);
-          resolve(data);
-        };
-
-        fileReader.onerror = (error) => {
-          reject(error);
-        };
-      })
-
-      promise.then((d) => {
-        console.log(d);
-        setData(d);
-        console.log(d);
-      })
+    e.preventDefault();
+    if (e.target.files) {
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(e.target.files[0]);
+      reader.onload = (e) => {
+        const data = e.target.result;
+        const workbook = XLSX.read(data, { type: "buffer" });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const json = XLSX.utils.sheet_to_json(worksheet,{defval : ""});
+        // console.log(json);
+        const dataString = JSON.stringify(json);
+        navigate(`/Dashboard/Sup_Admin/AddStudent/MultipleStudentAdd/${encodeURIComponent(dataString)}`)
+      };
     }
+
   }
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [formfill, setFormFill] = useState({
     total: "",
     status: "",
   });
-  const [excelFile, setExcelFile] = useState()
 
   const [studentAdd, setStudentAdd] = useState({
     firstname: "",
@@ -87,7 +74,7 @@ function AddStudent() {
       reader.readAsDataURL(file);
     }
   };
-
+  //form fill Validation 
   useEffect(() => {
     try {
       let totalIndex = 0;
@@ -190,16 +177,11 @@ function AddStudent() {
     { id: 3, label: "Mobile Number", type: "text", name: "fathernumber" },
   ];
 
-  const Buttons = [
-<<<<<<< HEAD
-    { id: 1, name: "Cancel", img: "/cross.svg", address: "/Dashboard/Sup_Admin" },
-    { id: 2, name: "Import a Csv", img: "/download.svg", Fileget: setExcelFile },
-=======
-    { id: 1, name: "Cancel", img: "/cross.svg" },
-    { id: 2, name: "Import an Excel", img: "/download.svg", method: handleExcel },
->>>>>>> cfa2c728c0ffb7092b5a99785b48b288c5581e6d
-    { id: 3, name: "Add Student", img: "/plus.svg", method: SubmitForm },
-  ];
+  // const Buttons = [
+  //   { id: 1, name: "Cancel", img: "/cross.svg", address: "/Dashboard/Sup_Admin" },
+  //   { id: 2, name: "Import a Csv", img: "/download.svg", Fileget: setExcelFile },
+  //   { id: 3, name: "Add Student", img: "/plus.svg", method: SubmitForm },
+  // ];
 
   return (
     <div>
@@ -221,33 +203,21 @@ function AddStudent() {
               </div>
 
               <div className="flex text-lg my-2 items-center space-x-3">
-<<<<<<< HEAD
 
                 <Link to="/Dashboard/Sup_Admin">
                   <div
                     className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2  `}
-=======
-                {/* {Buttons.map(({ name, img, id, method }) => (
-                  <div
-                    className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 ${name === "Add Student" &&
-                      "border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]"
-                      } `}
-                    key={id}
-                    onClick={method}
->>>>>>> cfa2c728c0ffb7092b5a99785b48b288c5581e6d
                   >
                     <img src="/cross.svg" alt="Cancel" />
                     <p>Cancel</p>
                   </div>
-<<<<<<< HEAD
                 </Link>
 
                 <div
                   className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]`}
-                  onClick={SubmitForm}
                 >
                   <img src="/plus.svg" alt="Add Student" />
-                  <input type="file" onChange={(e) => { setExcelFile(e.target.files[0]) }} className="w-16" />
+                  <input type="file" onChange={(e) => { handleExcel(e) }} className="w-24 fileHandler" />
                 </div>
 
                 <div
@@ -258,115 +228,9 @@ function AddStudent() {
                   <p>Add Student</p>
                 </div>
 
-=======
-                ))} */}
-                <div
-                  className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 `}
-                >
-                  <img src={'/cross.svg'} alt="" />
-                  <p>{"Cancel"}</p>
-                </div>
-                <div
-                  className={`relative flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2  `}
-                >
-                  <img src={'/download.svg'} alt="" />
-                  <p>{"Import an Excel"}</p>
-                  <input type="file" name="" id="" className="absolute h-full w-full opacity-0" onChange={handleExcel} />
-                </div>
-                <div
-                  className={`flex items-center text-[15px] font-semibold border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2
-                    "border-none bg-[#5C59E8] text-[#fff] `}
-                  onClick={SubmitForm}
-                >
-                  <img src={'/plus.svg'} alt="" />
-                  <p>{"Add Student"}</p>
-
-                </div>
->>>>>>> cfa2c728c0ffb7092b5a99785b48b288c5581e6d
               </div>
             </div>
-            {data && (
-              <div className="overflow-x-scroll">
-                <table className="w-[2500px] bg-white ">
-                  <thead className="bg-[#F9F9FC] h-16 text-left ml-1">
-                    <tr>
-                      <th className="py-2 px-4 border-b">Name</th>
-                      <th className="py-2 px-4 border-b">Phone</th>
-                      <th className="py-2 px-4 border-b">Father's Name</th>
-                      <th className="py-2 px-4 border-b">Mother's Name</th>
-                      <th className="py-2 px-4 border-b">Student ID</th>
-                      <th className="py-2 px-4 border-b">Other Data</th>
-                      <th className="py-2 px-4 border-b">Address</th>
-                    </tr>
-                  </thead>
 
-                  <tbody className="text-left">
-                    {data?.map((value, index) => {
-                      // console.log(value);
-                      // {index && StudentStatusCheck(value?.subject_id?._id, value?.time)}
-                      return (
-                        <tr className="h-20" key={index}>
-                          <td className="py-6 flex   px-4 border-b font-semibold  text-black">
-                            <div>
-                              <img
-                                className="object-cover rounded-full h-10 w-10"
-                                src={`${process.env.REACT_APP_URL}/api/Student/Image_Display/${value?.sID}`}
-                                alt=""
-                              />
-                            </div>
-                            <div className="flex ml-3 flex-col">
-                              {`${value?.Name}`}
-
-                              {/* <span className="text-[#667085]">
-                            {value?.stu_id?.email}
-                          </span> */}
-                            </div>
-                          </td>
-                          <td className="py-2 px-4 border-b">
-                            <span className="text-black font-semibold">
-                              {value?.Phone}
-                            </span>{" "}
-                          </td>
-
-                          <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                            {value?.FatherName}
-                          </td>
-                          <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                            {value?.MotherName}
-                          </td>
-                          {/* <td className="border-b px-4 py-2">
-                        <div
-                          className={`py-2 px-3 text-[14px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${value?.stu_id?.Fee
-                            ? "  text-[#0D894F] "
-                            : " text-[#F04438] "
-                            } `}
-                        >
-                          {value?.stu_id?.Fee ? "paid" : "Unpaid"}
-                        </div>
-                      </td> */}
-                          <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                            {value?.sID}
-                          </td>
-                          <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                            {value?.OtherData}
-                          </td>
-                          <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                            {value?.Address}
-                          </td>
-                          {/* <td className="border-b px-4 py-2">
-                        <div className={"flex items-center space-x-3 "}>
-                          <FaRegEye className="text-lg text-zinc-600" />
-                          <RiDeleteBin6Line className="text-lg text-zinc-600" />
-                          <BsPencil className="text-lg text-zinc-600" />
-                        </div>
-                      </td> */}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            )}
             <div className="">
               {/* <GeneralInformation /> */}
               <div className="grid grid-cols-12 my-10 gap-4 ">
@@ -674,7 +538,7 @@ function AddStudent() {
             </div>
           </div>
 
-          <div className="flex  items-center px-4 left-64 fixed bottom-0 right-0   justify-between  h-20      bg-white border border-gray-200">
+          <div className="flex  items-center px-4 left-64 fixed bottom-0 right-0 justify-between h-20 bg-white border border-gray-200">
             <p className="text-xl  ">
               Form Completion{" "}
               <span
@@ -688,34 +552,22 @@ function AddStudent() {
                   : "0%"}
               </span>
             </p>
-            <div className="flex justify-end  text-lg my-2 items-center space-x-3">
-<<<<<<< HEAD
+            <div className="flex text-lg my-2 items-center space-x-3">
+
               <Link to="/Dashboard/Sup_Admin">
                 <div
                   className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2  `}
-=======
-              {/* {Buttons.map(({ name, img, id, method }) => (
-                <div
-                  className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 ${name === "Add Student" &&
-                    "border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]"
-                    } `}
-                  key={id}
-                  onClick={method}
->>>>>>> cfa2c728c0ffb7092b5a99785b48b288c5581e6d
                 >
                   <img src="/cross.svg" alt="Cancel" />
                   <p>Cancel</p>
                 </div>
-<<<<<<< HEAD
               </Link>
-              <div className="text-center">
-                <input type="file" onChange={(e) => { setExcelFile(e.target.files[0]) }} className="w-16 relative top-2 cursor-pointer	" />
-                <div
-                  className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff] relative bottom-4`}
-                >
-                  <img src="/plus.svg" alt="Add Student" />
-                  <p>Import a Csv</p>
-                </div>
+
+              <div
+                className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]`}
+              >
+                <img src="/plus.svg" alt="Add Student" />
+                <input type="file" onChange={(e) => { handleExcel(e) }} className="w-24 fileHandler" />
               </div>
 
               <div
@@ -724,30 +576,8 @@ function AddStudent() {
               >
                 <img src="/plus.svg" alt="Add Student" />
                 <p>Add Student</p>
-=======
-              ))} */}
-              <div
-                className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 `}
-              >
-                <img src={'/cross.svg'} alt="" />
-                <p>{"Cancel"}</p>
               </div>
-              <div
-                className={`relative flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2  `}
-              >
-                <img src={'/download.svg'} alt="" />
-                <p>{"Import an Excel"}</p>
-                <input type="file" name="" id="" className="absolute h-full w-full opacity-0" onChange={handleExcel} />
-              </div>
-              <div
-                className={` flex items-center text-[15px] font-semibold border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2
-                    "border-none bg-[#5C59E8] text-[#fff] `}
-                onClick={SubmitForm}
-              >
-                <img src={'/plus.svg'} alt="" />
-                <p>{"Add Student"}</p>
->>>>>>> cfa2c728c0ffb7092b5a99785b48b288c5581e6d
-              </div>
+
             </div>
           </div>
         </div>

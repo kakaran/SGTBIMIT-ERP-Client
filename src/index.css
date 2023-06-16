@@ -17,3 +17,15 @@
   
   outline: none;
 }
+
+
+.fileHandler::-webkit-file-upload-button{
+  visibility: hidden;
+}
+
+
+.fileHandler::before{
+  content: "Import a Csv";
+  cursor: pointer;
+
+}
