@@ -2,11 +2,41 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
 import axios from "axios";
+import * as XLSX from "xlsx";
 import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { FaRegEye } from "react-icons/fa";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { BsPencil } from "react-icons/bs";
 
 function AddStudent() {
+  const [data, setData] = useState(null);
+  const handleExcel = (e) => {
+    const promise = new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsArrayBuffer(e.target.files[0]);
+
+      fileReader.onload = (e) => {
+        const bufferArray = e.target.result;
+        const wb = XLSX.read(bufferArray, { type: "buffer" });
+        const wsname = wb.SheetNames[0];
+        const ws = wb.Sheets[wsname];
+        const data = XLSX.utils.sheet_to_json(ws);
+        resolve(data);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    })
+
+    promise.then((d) => {
+      console.log(d);
+      setData(d);
+      console.log(d);
+    })
+  }
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [formfill, setFormFill] = useState({
@@ -157,7 +187,7 @@ function AddStudent() {
 
   const Buttons = [
     { id: 1, name: "Cancel", img: "/cross.svg" },
-    { id: 2, name: "Import a Csv", img: "/download.svg" },
+    { id: 2, name: "Import an Excel", img: "/download.svg", method: handleExcel },
     { id: 3, name: "Add Student", img: "/plus.svg", method: SubmitForm },
   ];
 
@@ -188,21 +218,124 @@ function AddStudent() {
               </div>
 
               <div className="flex text-lg my-2 items-center space-x-3">
-                {Buttons.map(({ name, img, id, method }) => (
+                {/* {Buttons.map(({ name, img, id, method }) => (
                   <div
-                    className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 ${
-                      name === "Add Student" &&
+                    className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 ${name === "Add Student" &&
                       "border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]"
-                    } `}
+                      } `}
                     key={id}
                     onClick={method}
                   >
                     <img src={img} alt={name} />
                     <p>{name}</p>
                   </div>
-                ))}
+                ))} */}
+                <div
+                  className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 `}
+                >
+                  <img src={'/cross.svg'} alt="" />
+                  <p>{"Cancel"}</p>
+                </div>
+                <div
+                  className={`relative flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2  `}
+                >
+                  <img src={'/download.svg'} alt="" />
+                  <p>{"Import an Excel"}</p>
+                  <input type="file" name="" id="" className="absolute h-full w-full opacity-0" onChange={handleExcel} />
+                </div>
+                <div
+                  className={`flex items-center text-[15px] font-semibold border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2
+                    "border-none bg-[#5C59E8] text-[#fff] `}
+                  onClick={SubmitForm}
+                >
+                  <img src={'/plus.svg'} alt="" />
+                  <p>{"Add Student"}</p>
+
+                </div>
               </div>
             </div>
+            {data && (
+              <div className="overflow-x-scroll">
+                <table className="w-[2500px] bg-white ">
+                  <thead className="bg-[#F9F9FC] h-16 text-left ml-1">
+                    <tr>
+                      <th className="py-2 px-4 border-b">Name</th>
+                      <th className="py-2 px-4 border-b">Phone</th>
+                      <th className="py-2 px-4 border-b">Father's Name</th>
+                      <th className="py-2 px-4 border-b">Mother's Name</th>
+                      <th className="py-2 px-4 border-b">Student ID</th>
+                      <th className="py-2 px-4 border-b">Other Data</th>
+                      <th className="py-2 px-4 border-b">Address</th>
+                    </tr>
+                  </thead>
+
+                  <tbody className="text-left">
+                    {data?.map((value, index) => {
+                      // console.log(value);
+                      // {index && StudentStatusCheck(value?.subject_id?._id, value?.time)}
+                      return (
+                        <tr className="h-20" key={index}>
+                          <td className="py-6 flex   px-4 border-b font-semibold  text-black">
+                            <div>
+                              <img
+                                className="object-cover rounded-full h-10 w-10"
+                                src={`${process.env.REACT_APP_URL}/api/Student/Image_Display/${value?.sID}`}
+                                alt=""
+                              />
+                            </div>
+                            <div className="flex ml-3 flex-col">
+                              {`${value?.Name}`}
+
+                              {/* <span className="text-[#667085]">
+                            {value?.stu_id?.email}
+                          </span> */}
+                            </div>
+                          </td>
+                          <td className="py-2 px-4 border-b">
+                            <span className="text-black font-semibold">
+                              {value?.Phone}
+                            </span>{" "}
+                          </td>
+
+                          <td className="py-2 px-4 border-b font-semibold text-[#667085]">
+                            {value?.FatherName}
+                          </td>
+                          <td className="py-2 px-4 border-b font-semibold text-[#667085]">
+                            {value?.MotherName}
+                          </td>
+                          {/* <td className="border-b px-4 py-2">
+                        <div
+                          className={`py-2 px-3 text-[14px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${value?.stu_id?.Fee
+                            ? "  text-[#0D894F] "
+                            : " text-[#F04438] "
+                            } `}
+                        >
+                          {value?.stu_id?.Fee ? "paid" : "Unpaid"}
+                        </div>
+                      </td> */}
+                          <td className="py-2 px-4 border-b font-semibold text-[#667085]">
+                            {value?.sID}
+                          </td>
+                          <td className="py-2 px-4 border-b font-semibold text-[#667085]">
+                            {value?.OtherData}
+                          </td>
+                          <td className="py-2 px-4 border-b font-semibold text-[#667085]">
+                            {value?.Address}
+                          </td>
+                          {/* <td className="border-b px-4 py-2">
+                        <div className={"flex items-center space-x-3 "}>
+                          <FaRegEye className="text-lg text-zinc-600" />
+                          <RiDeleteBin6Line className="text-lg text-zinc-600" />
+                          <BsPencil className="text-lg text-zinc-600" />
+                        </div>
+                      </td> */}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
             <div className="">
               {/* <GeneralInformation /> */}
               <div className="grid grid-cols-12 my-10 gap-4 ">
@@ -554,11 +687,10 @@ function AddStudent() {
             <p className="text-xl  ">
               Form Completion{" "}
               <span
-                className={` p-1.5 rounded-xl	 ${
-                  formfill.status
-                    ? "  text-[#0D894F] bg-[#E7F4EE]"
-                    : " text-[#F04438]  bg-[#FCDAD7]"
-                } `}
+                className={` p-1.5 rounded-xl	 ${formfill.status
+                  ? "  text-[#0D894F] bg-[#E7F4EE]"
+                  : " text-[#F04438]  bg-[#FCDAD7]"
+                  } `}
               >
                 {formfill.status
                   ? Math.round((formfill.status / formfill.total) * 100) + "%"
@@ -566,19 +698,39 @@ function AddStudent() {
               </span>
             </p>
             <div className="flex justify-end  text-lg my-2 items-center space-x-3">
-              {Buttons.map(({ name, img, id, method }) => (
+              {/* {Buttons.map(({ name, img, id, method }) => (
                 <div
-                  className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 ${
-                    name === "Add Student" &&
+                  className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 ${name === "Add Student" &&
                     "border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]"
-                  } `}
+                    } `}
                   key={id}
                   onClick={method}
                 >
                   <img src={img} alt={name} />
                   <p>{name}</p>
                 </div>
-              ))}
+              ))} */}
+              <div
+                className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 `}
+              >
+                <img src={'/cross.svg'} alt="" />
+                <p>{"Cancel"}</p>
+              </div>
+              <div
+                className={`relative flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2  `}
+              >
+                <img src={'/download.svg'} alt="" />
+                <p>{"Import an Excel"}</p>
+                <input type="file" name="" id="" className="absolute h-full w-full opacity-0" onChange={handleExcel} />
+              </div>
+              <div
+                className={` flex items-center text-[15px] font-semibold border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2
+                    "border-none bg-[#5C59E8] text-[#fff] `}
+                onClick={SubmitForm}
+              >
+                <img src={'/plus.svg'} alt="" />
+                <p>{"Add Student"}</p>
+              </div>
             </div>
           </div>
         </div>
