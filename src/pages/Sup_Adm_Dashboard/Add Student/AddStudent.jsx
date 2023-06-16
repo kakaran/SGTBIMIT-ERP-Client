@@ -4,7 +4,7 @@ import Header from "../../../components/Header";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function AddStudent() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -13,7 +13,7 @@ function AddStudent() {
     total: "",
     status: "",
   });
-  const navigate = useNavigate();
+  const [excelFile, setExcelFile] = useState()
 
   const [studentAdd, setStudentAdd] = useState({
     firstname: "",
@@ -103,7 +103,6 @@ function AddStudent() {
           }
         )
       ).data;
-
       if (Data.success) {
         toast.success(`${Data.message}`, {
           position: "top-center",
@@ -156,16 +155,9 @@ function AddStudent() {
   ];
 
   const Buttons = [
-    { id: 1, name: "Cancel", img: "/cross.svg" },
-    { id: 2, name: "Import a Csv", img: "/download.svg" },
+    { id: 1, name: "Cancel", img: "/cross.svg", address: "/Dashboard/Sup_Admin" },
+    { id: 2, name: "Import a Csv", img: "/download.svg", Fileget: setExcelFile },
     { id: 3, name: "Add Student", img: "/plus.svg", method: SubmitForm },
-  ];
-
-  const options = [
-    { id: 1, label: "course", option: "Select a Course" },
-    // { id: 1, label: "Batch", option: "Select Batch" },
-    { id: 1, label: "Semester", option: "Select Semester" },
-    { id: 1, label: "Section", option: "Select Section" },
   ];
 
   return (
@@ -188,19 +180,32 @@ function AddStudent() {
               </div>
 
               <div className="flex text-lg my-2 items-center space-x-3">
-                {Buttons.map(({ name, img, id, method }) => (
+
+                <Link to="/Dashboard/Sup_Admin">
                   <div
-                    className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 ${
-                      name === "Add Student" &&
-                      "border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]"
-                    } `}
-                    key={id}
-                    onClick={method}
+                    className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2  `}
                   >
-                    <img src={img} alt={name} />
-                    <p>{name}</p>
+                    <img src="/cross.svg" alt="Cancel" />
+                    <p>Cancel</p>
                   </div>
-                ))}
+                </Link>
+
+                <div
+                  className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]`}
+                  onClick={SubmitForm}
+                >
+                  <img src="/plus.svg" alt="Add Student" />
+                  <input type="file" onChange={(e) => { setExcelFile(e.target.files[0]) }} className="w-16" />
+                </div>
+
+                <div
+                  className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]`}
+                  onClick={SubmitForm}
+                >
+                  <img src="/plus.svg" alt="Add Student" />
+                  <p>Add Student</p>
+                </div>
+
               </div>
             </div>
             <div className="">
@@ -307,17 +312,6 @@ function AddStudent() {
                         </div>
                       ))}
                     </div>
-                    {/* <div>
-            <label className="mb-1 capitalize block text-[15px] font-semibold text-black">
-              Lorem Ipsum
-            </label>
-            <textarea
-              className="block w-full rounded-md bg-[#F9F9FC] border-gray-300 shadow-sm focus:border-primary-400  focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-              placeholder="Enter Lorem ipsum..."
-              cols="30"
-              rows="6"
-            ></textarea>
-          </div> */}
                   </div>
 
                   {/* Media */}
@@ -516,35 +510,6 @@ function AddStudent() {
                     </div>
                     <ToastContainer />
                   </div>
-
-                  {/* fee status 2 */}
-
-                  {/* <div className="w-full bg-white h-[164px] p-6 rounded-lg border-2 border-[]">
-          <div className="flex justify-between">
-            <h2 className="">Fee </h2>
-
-            <p className="py-2 px-3 text-[15px] leading-5   rounded-full text-[#0D894F] bg-[#E7F4EE] capitalize font-semibold  text-center">
-              Paid
-            </p>
-          </div>
-
-          <div className="flex flex-col my-2">
-            <label
-              className="text-[15px]  capitalize text-black font-semibold"
-              htmlFor=""
-            >
-              Fee
-            </label>
-            <select className="bg-gray-100 rounded-lg  border-2 border-[#E0E2E7]">
-              <option value="">Select</option>
-              <img src="/ArrowDown.svg" alt="" />
-
-              <option value="optionA">Option A</option>
-              <option value="optionB">Option B</option>
-              <option value="optionC">Option C</option>
-            </select>
-            </div>
-           </div> */}
                 </div>
               </div>
             </div>
@@ -554,11 +519,10 @@ function AddStudent() {
             <p className="text-xl  ">
               Form Completion{" "}
               <span
-                className={` p-1.5 rounded-xl	 ${
-                  formfill.status
-                    ? "  text-[#0D894F] bg-[#E7F4EE]"
-                    : " text-[#F04438]  bg-[#FCDAD7]"
-                } `}
+                className={` p-1.5 rounded-xl	 ${formfill.status
+                  ? "  text-[#0D894F] bg-[#E7F4EE]"
+                  : " text-[#F04438]  bg-[#FCDAD7]"
+                  } `}
               >
                 {formfill.status
                   ? Math.round((formfill.status / formfill.total) * 100) + "%"
@@ -566,19 +530,31 @@ function AddStudent() {
               </span>
             </p>
             <div className="flex justify-end  text-lg my-2 items-center space-x-3">
-              {Buttons.map(({ name, img, id, method }) => (
+              <Link to="/Dashboard/Sup_Admin">
                 <div
-                  className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 ${
-                    name === "Add Student" &&
-                    "border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]"
-                  } `}
-                  key={id}
-                  onClick={method}
+                  className={` flex items-center text-[15px] font-semibold text-[#858D9D] border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2  `}
                 >
-                  <img src={img} alt={name} />
-                  <p>{name}</p>
+                  <img src="/cross.svg" alt="Cancel" />
+                  <p>Cancel</p>
                 </div>
-              ))}
+              </Link>
+              <div className="text-center">
+                <input type="file" onChange={(e) => { setExcelFile(e.target.files[0]) }} className="w-16 relative top-2 cursor-pointer	" />
+                <div
+                  className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff] relative bottom-4`}
+                >
+                  <img src="/plus.svg" alt="Add Student" />
+                  <p>Import a Csv</p>
+                </div>
+              </div>
+
+              <div
+                className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]`}
+                onClick={SubmitForm}
+              >
+                <img src="/plus.svg" alt="Add Student" />
+                <p>Add Student</p>
+              </div>
             </div>
           </div>
         </div>
