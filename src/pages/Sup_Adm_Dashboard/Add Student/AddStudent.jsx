@@ -206,14 +206,14 @@ function AddStudent() {
                 </Link>
 
                 <div
-                  className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]`}
+                  className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[#ffff]`}
                 >
                   <img src="/plus.svg" alt="Add Student" />
                   <input type="file" onChange={(e) => { HandleExcelNavigate(e) }} className="w-24 fileHandler" />
                 </div>
 
                 <div
-                  className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]`}
+                  className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[#ffff]`}
                   onClick={SubmitForm}
                 >
                   <img src="/plus.svg" alt="Add Student" />
@@ -556,14 +556,14 @@ function AddStudent() {
               </Link>
 
               <div
-                className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]`}
+                className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[#ffff]`}
               >
                 <img src="/plus.svg" alt="Add Student" />
                 <input type="file" onChange={(e) => { HandleExcelNavigate(e) }} className="w-24 fileHandler" />
               </div>
 
               <div
-                className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]`}
+                className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[#ffff]`}
                 onClick={SubmitForm}
               >
                 <img src="/plus.svg" alt="Add Student" />
