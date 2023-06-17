@@ -13,40 +13,44 @@ import SupAdmDashboard from "./pages/Sup_Adm_Dashboard/SupAdmDashboard";
 import AdmDashboard from "./pages/Adm_Dashboard/AdmDashboard";
 import AddStudent from "./pages/Sup_Adm_Dashboard/Add Student/AddStudent";
 import MultipleStudentAdd from "./pages/Sup_Adm_Dashboard/Add Student/MultipleStudentAdd";
+import HandleExcel from "./Context/Excel/handleExcel";
 
 function App() {
+  const StudentListData = localStorage.getItem('StudentList');
   return (
-    <div className="App">
-      <Router>
-        <Routes>
-          <Route exact path="/" element={<StudentLogin />} />
-          <Route exact path="/admin" element={<AdSupAdm />} />
+    <>
+      <HandleExcel>
+        <Router>
+          <Routes>
+            <Route exact path="/" element={<StudentLogin />} />
+            <Route exact path="/admin" element={<AdSupAdm />} />
 
-          {/* Student Routes */}
-          <Route exact path="/Dashboard" element={<Student />}>
-            {/* <Dashboard> */}
-            <Route exact path="Student" element={<StuDashboard />} />
-          </Route>
+            {/* Student Routes */}
+            <Route exact path="/Dashboard" element={<Student />}>
+              {/* <Dashboard> */}
+              <Route exact path="Student" element={<StuDashboard />} />
+            </Route>
 
-          {/* Faculty Routes */}
-          <Route exact path="/Dashboard" element={<Faculty />}>
-            <Route exact path="Faculty" element={<FacDashboard />} />
-          </Route>
+            {/* Faculty Routes */}
+            <Route exact path="/Dashboard" element={<Faculty />}>
+              <Route exact path="Faculty" element={<FacDashboard />} />
+            </Route>
 
-          {/* Admin Routes */}
-          <Route exact path="/Dashboard" element={<Admin />}>
-            <Route exact path="Admin" element={<AdmDashboard />} />
-          </Route>
+            {/* Admin Routes */}
+            <Route exact path="/Dashboard" element={<Admin />}>
+              <Route exact path="Admin" element={<AdmDashboard />} />
+            </Route>
 
-          {/* Super Admin Routes */}
-          <Route exact path="/Dashboard" element={<Super_Admin />}>
-            <Route exact path="Sup_Admin" element={<SupAdmDashboard />} />
-            <Route exact path="Sup_Admin/AddStudent" element={<AddStudent />} />
-            <Route exact path="Sup_Admin/AddStudent/MultipleStudentAdd/:data" element={<MultipleStudentAdd />} />
-          </Route>
-        </Routes>
-      </Router>
-    </div>
+            {/* Super Admin Routes */}
+            <Route exact path="/Dashboard" element={<Super_Admin />}>
+              <Route exact path="Sup_Admin" element={<SupAdmDashboard />} />
+              <Route exact path="Sup_Admin/AddStudent" element={<AddStudent />} />
+              <Route exact path="Sup_Admin/AddStudent/MultipleStudentAdd" element={<MultipleStudentAdd />} />
+            </Route>
+          </Routes>
+        </Router>
+      </HandleExcel>
+    </>
   );
 }
 

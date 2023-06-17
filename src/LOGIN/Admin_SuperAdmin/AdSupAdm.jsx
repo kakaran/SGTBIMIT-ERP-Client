@@ -15,9 +15,7 @@ const AdSupAdm = () => {
 
   const StudentFacultylogin = async () => {
     try {
-console.log(process.env.REACT_APP_URL);
       const Data = (await axios.post(`${process.env.REACT_APP_URL}/api/admin/Signin`, { email, password })).data;
-      console.log(Data);
       if (Data.role == 0) {
         navigate("/Dashboard/Sup_Admin")
       } else if (Data.role == 1) {

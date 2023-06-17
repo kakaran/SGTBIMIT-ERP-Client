@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react'
 import Sidebar from '../../../components/Sidebar';
 import Header from '../../../components/Header';
 import { Link } from 'react-router-dom';
-
+import handleExcelContext from '../../../Context/Excel/handleExcelContext';
 const MultipleStudentAdd = () => {
-    const { data } = useParams();
-    const dataArray = JSON.parse(decodeURIComponent(data));//decode the URI Component to pass the Data from Params
-    const [storeData, setStoreData] = useState(dataArray);
+    const Method = useContext(handleExcelContext)
+    const [storeData, setStoreData] = useState(Method.Value);
     const [fillValueCheck, setFillValueCheck] = useState([])
 
+
+    //Form Fill Status Check
     useEffect(() => {
         const checkData = async () => {
             let Data = []
             storeData.map((value, index) => {
-                console.log(value);
+                // console.log(value);
                 let totalIndex = 0;
                 let fillIndex = 0;
                 for (let key in value) {
@@ -24,7 +24,7 @@ const MultipleStudentAdd = () => {
                     }
                 }
                 Data.push({
-                    index: index,
+                    name: value.firstname,
                     value: Math.round((fillIndex / totalIndex) * 100)
                 })
             })
@@ -33,7 +33,32 @@ const MultipleStudentAdd = () => {
         checkData()
     }, [])
 
-    console.log(fillValueCheck);
+    const StudenrDataSave = async () =>{
+        try {
+            let Data = structuredClone(storeData)
+            let selectiveData = []
+            fillValueCheck.map((value)=>{
+                if(value.value == 100){
+                    console.log(value.value);
+                   return Data.map((value1,index)=>{
+                        if(value1.firstname === value.name){
+                            console.log(value1.firstname,value.value);
+                            const getData = Data.pop(index);
+                            selectiveData.push(getData)
+                        }
+                    })
+                }
+                
+            })       
+            console.log(Data);
+            console.log(selectiveData);     
+        } catch (error) {
+            console.log('====================================');
+            console.log(error);
+            console.log('====================================');
+        }
+    }
+
     return (
         <>
             <div className="flex  text-3xl overflow-y-auto overflow-hidden">
@@ -65,7 +90,7 @@ const MultipleStudentAdd = () => {
                                     className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]`}
                                 >
                                     <img src="/plus.svg" alt="Add Student" />
-                                    <p>Add Student</p>
+                                    <p onClick={StudenrDataSave}>Add Student</p>
                                 </div>
                             </div>
                         </div>
@@ -76,30 +101,35 @@ const MultipleStudentAdd = () => {
                                 </div>
                                 <div>
                                     <table className='w-full'>
-                                        <tr className='flex gap-4 text-left text-base w-full p-5 bg-[#f9f9fc]'>
-                                            <th className='w-2/12'>Name</th>
-                                            <th className='w-1/12'>Phone</th>
-                                            <th className='w-1/12'>Father's Name</th>
-                                            <th className='w-1/12'>Mother's Name</th>
-                                            <th className='w-1/12'>Student ID</th>
-                                            <th className='w-1/12'>Fee</th>
-                                            <th className='w-1/12'>Course</th>
-                                            <th className='w-3/12'>Address</th>
-                                        </tr>
-                                        {storeData.map((value) => {
-                                            return (
-                                                <tr className='flex gap-4 text-left text-base w-full p-5 justify-center items-center border-b'>
-                                                    <td className='w-2/12'><p className={`flex flex-col ${!value.firstname ? " text-[#F04438]" : ""}`}>{value.firstname ? value?.firstname : "Missing"} {value?.lastname}<span className={`${!value.email ? " text-[#F04438]" : ""}`}>{value.email ? value?.email : "Missing"}</span></p></td>
-                                                    <td className={`w-1/12 ${!value.phone ? " text-[#F04438] " : ""}`}>{value.phone ? value?.phone : "Missing"}</td>
-                                                    <td className={`w-1/12 ${!value.fathername ? " text-[#F04438] " : ""}`}>{value.fathername ? value?.fathername : "Missing"}</td>
-                                                    <td className={`w-1/12 ${!value.mothername ? " text-[#F04438]" : ""}`}>{value.mothername ? value?.mothername : "Missing"}</td>
-                                                    <td className={`w-1/12 ${!value.rollnumber ? " text-[#F04438]" : ""}`}>{value.rollnumber ? value?.rollnumber : "Missing"}</td>
-                                                    <td className={`w-1/12 ${!value.Fee ? " text-[#F04438]" : ""}`}>{value.Fee ? value?.Fee : "Missing"}</td>
-                                                    <td className={`w-1/12 ${!value.course ? " text-[#F04438]" : ""}`}>{value.course ? value?.course : "Missing"}</td>
-                                                    <td className={`w-3/12 ${!value.address ? " text-[#F04438]" : ""}`}>{value.address ? value?.address : "Missing"}</td>
-                                                </tr>
-                                            )
-                                        })}
+                                        <thead>
+                                            <tr className='flex gap-4 text-left text-base w-full p-5 bg-[#f9f9fc]'>
+                                                <th className='w-2/12'>Name</th>
+                                                <th className='w-1/12'>Phone</th>
+                                                <th className='w-1/12'>Father's Name</th>
+                                                <th className='w-1/12'>Mother's Name</th>
+                                                <th className='w-1/12'>Student ID</th>
+                                                <th className='w-1/12'>Fee</th>
+                                                <th className='w-1/12'>Course</th>
+                                                <th className='w-3/12'>Address</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {storeData.map((value) => {
+                                                return (
+                                                    <tr className='flex gap-4 text-left text-base w-full p-5 justify-center items-center border-b'>
+                                                        <td className='w-2/12'><p className={`flex flex-col ${!value.firstname ? " text-[#F04438]" : ""}`}>{value.firstname ? value?.firstname : "Missing"} {value?.lastname}<span className={`${!value.email ? " text-[#F04438]" : ""}`}>{value.email ? value?.email : "Missing"}</span></p></td>
+                                                        <td className={`w-1/12 ${!value.phone ? " text-[#F04438] " : ""}`}>{value.phone ? value?.phone : "Missing"}</td>
+                                                        <td className={`w-1/12 ${!value.fathername ? " text-[#F04438] " : ""}`}>{value.fathername ? value?.fathername : "Missing"}</td>
+                                                        <td className={`w-1/12 ${!value.mothername ? " text-[#F04438]" : ""}`}>{value.mothername ? value?.mothername : "Missing"}</td>
+                                                        <td className={`w-1/12 ${!value.rollnumber ? " text-[#F04438]" : ""}`}>{value.rollnumber ? value?.rollnumber : "Missing"}</td>
+                                                        <td className={`w-1/12 ${!value.Fee ? " text-[#F04438]" : ""}`}>{value.Fee ? value?.Fee : "Missing"}</td>
+                                                        <td className={`w-1/12 ${!value.course ? " text-[#F04438]" : ""}`}>{value.course ? value?.course : "Missing"}</td>
+                                                        <td className={`w-3/12 ${!value.address ? " text-[#F04438]" : ""}`}>{value.address ? value?.address : "Missing"}</td>
+                                                    </tr>
+                                                )
+                                            })}
+                                        </tbody>
 
                                     </table>
                                 </div>
@@ -110,18 +140,22 @@ const MultipleStudentAdd = () => {
                                 </div>
                                 <div>
                                     <table className='w-full'>
-                                        <tr className='flex gap-4 text-left text-base w-full p-5 bg-[#f9f9fc]'>
-                                            <th className='w-2/4'>Profile Status</th>
-                                            <th className='w-2/4'>Action</th>
-                                        </tr>
-                                        {fillValueCheck.map((value) => {
-                                            return (
-                                                <tr className='flex gap-4 text-left text-base w-full p-5 justify-center items-center h-[90px] border-b'>
-                                                    <td className={`w-2/4  text-left `}><span className={`p-1 rounded-xl ${value.value == 100 ? " text-[#0D894F] bg-[#E7F4EE]" : " text-[#F04438] bg-[#FCDAD7]"}`}>{value.value != 100 ? value?.value + "%" : "Complete"}</span> </td>
-                                                    <td className={`w-2/4`}>{value.phone ? value?.phone : "Missing"}</td>
-                                                </tr>
-                                            )
-                                        })}
+                                        <thead>
+                                            <tr className='flex gap-4 text-left text-base w-full p-5 bg-[#f9f9fc]'>
+                                                <th className='w-2/4'>Profile Status</th>
+                                                <th className='w-2/4'>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {fillValueCheck.map((value) => {
+                                                return (
+                                                    <tr className='flex gap-4 text-left text-base w-full p-5 justify-center items-center h-[90px] border-b'>
+                                                        <td className={`w-2/4  text-left `}><span className={`p-1 rounded-xl ${value.value == 100 ? " text-[#0D894F] bg-[#E7F4EE]" : " text-[#F04438] bg-[#FCDAD7]"}`}>{value.value != 100 ? value?.value + "%" : "Complete"}</span> </td>
+                                                        <td className={`w-2/4`}>{value.phone ? value?.phone : "Missing"}</td>
+                                                    </tr>
+                                                )
+                                            })}
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>

@@ -8,7 +8,7 @@ const AuthProvider = ({children}) =>{
         _id : "",
         token : ""
     });
-    console.log(auth);
+    // console.log(auth);
 
     //set axios default
     axios.defaults.headers.common["authtok"] = auth?.token;

@@ -1,36 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
 import axios from "axios";
-import * as XLSX from "xlsx";
 import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
 import "../../../index.css"
-
 import { Link, useNavigate } from "react-router-dom";
+import handleExcelContext from "../../../Context/Excel/handleExcelContext";
 
 function AddStudent() {
-  const [data, setData] = useState(null);
+  const Method = useContext(handleExcelContext)
   const navigate = useNavigate()
-  const handleExcel = (e) => {
-    e.preventDefault();
-    if (e.target.files) {
-      const reader = new FileReader();
-      reader.readAsArrayBuffer(e.target.files[0]);
-      reader.onload = (e) => {
-        const data = e.target.result;
-        const workbook = XLSX.read(data, { type: "buffer" });
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
-        const json = XLSX.utils.sheet_to_json(worksheet,{defval : ""});
-        // console.log(json);
-        const dataString = JSON.stringify(json);
-        navigate(`/Dashboard/Sup_Admin/AddStudent/MultipleStudentAdd/${encodeURIComponent(dataString)}`)
-      };
-    }
-
-  }
-
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [formfill, setFormFill] = useState({
@@ -74,6 +53,19 @@ function AddStudent() {
       reader.readAsDataURL(file);
     }
   };
+
+  const HandleExcelNavigate = async (e) => {
+    try {
+      Method.handleExcel(e)
+      console.log(Method.Value);
+      await Method.Value && navigate(`/Dashboard/Sup_Admin/AddStudent/MultipleStudentAdd`)
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   //form fill Validation 
   useEffect(() => {
     try {
@@ -217,7 +209,7 @@ function AddStudent() {
                   className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]`}
                 >
                   <img src="/plus.svg" alt="Add Student" />
-                  <input type="file" onChange={(e) => { handleExcel(e) }} className="w-24 fileHandler" />
+                  <input type="file" onChange={(e) => { HandleExcelNavigate(e) }} className="w-24 fileHandler" />
                 </div>
 
                 <div
@@ -567,7 +559,7 @@ function AddStudent() {
                 className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[15px] py-2 px-5 text-[#ffff]`}
               >
                 <img src="/plus.svg" alt="Add Student" />
-                <input type="file" onChange={(e) => { handleExcel(e) }} className="w-24 fileHandler" />
+                <input type="file" onChange={(e) => { HandleExcelNavigate(e) }} className="w-24 fileHandler" />
               </div>
 
               <div
