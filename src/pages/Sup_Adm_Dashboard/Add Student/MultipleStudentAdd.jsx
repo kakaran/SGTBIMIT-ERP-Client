@@ -3,9 +3,13 @@ import Sidebar from '../../../components/Sidebar';
 import Header from '../../../components/Header';
 import { Link } from 'react-router-dom';
 import handleExcelContext from '../../../Context/Excel/handleExcelContext';
+import { FaRegEye } from 'react-icons/fa';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { BsPencil } from 'react-icons/bs';
+import axios from 'axios';
 const MultipleStudentAdd = () => {
     const Method = useContext(handleExcelContext)
-    const [storeData, setStoreData] = useState(Method.Value);
+    const [storeData, setStoreData] = useState([]);
     const [fillValueCheck, setFillValueCheck] = useState([])
 
 
@@ -13,7 +17,7 @@ const MultipleStudentAdd = () => {
     useEffect(() => {
         const checkData = async () => {
             let Data = []
-            storeData.map((value, index) => {
+            Method.Value.map((value) => {
                 // console.log(value);
                 let totalIndex = 0;
                 let fillIndex = 0;
@@ -29,43 +33,46 @@ const MultipleStudentAdd = () => {
                 })
             })
             setFillValueCheck(Data)
+            setStoreData(Method.Value)
         }
         checkData()
-    }, [])
+    }, [Method.Value])
 
-    const StudenrDataSave = async () =>{
+    //Completed Data Send to the sever
+    const StudenrDataSave = async () => {
         try {
             let Data = structuredClone(storeData)
             let selectiveData = []
-            fillValueCheck.map((value)=>{
-                if(value.value == 100){
-                    console.log(value.value);
-                   return Data.map((value1,index)=>{
-                        if(value1.firstname === value.name){
-                            console.log(value1.firstname,value.value);
-                            const getData = Data.pop(index);
-                            selectiveData.push(getData)
+            fillValueCheck.map((value) => {
+                if (value.value === 100) {
+                    return Data.map((value1, index) => {
+                        if (value1.firstname === value.name) {
+                            let getData = Data.splice(index, 1);
+                            selectiveData.push(getData[0]);
                         }
                     })
                 }
-                
-            })       
-            console.log(Data);
-            console.log(selectiveData);     
+            })
+
+            if (selectiveData.length) {
+                const Result = (await axios.post(`${process.env.REACT_APP_URL}/api/admin/Multiple_Student_Add`, { P_Json: selectiveData })).data
+                localStorage.setItem('StudentList', JSON.stringify(Data))
+                Method.setRefresh(1)
+            }
         } catch (error) {
             console.log('====================================');
             console.log(error);
             console.log('====================================');
         }
     }
-
+    console.log(storeData);
     return (
         <>
-            <div className="flex  text-3xl overflow-y-auto overflow-hidden">
+            <div className="flex  text-3xl overflow-y-auto overflow-hidden ">
                 <Sidebar />
                 <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
                     <Header />
-                    <div className="px-4 overflow-y-visible bg-gray-100 sm:px-6 lg:px-8 py-8 w-full  mx-auto">
+                    <div className="px-4 overflow-y-visible bg-gray-100 sm:px-6 lg:px-8 py-8 w-full  mx-auto min-h-screen">
                         <h2>Add Student</h2>
                         <div className="md:inline-flex hidden justify-between text-[15px] font-semibold w-full ">
                             <div>
@@ -150,8 +157,14 @@ const MultipleStudentAdd = () => {
                                             {fillValueCheck.map((value) => {
                                                 return (
                                                     <tr className='flex gap-4 text-left text-base w-full p-5 justify-center items-center h-[90px] border-b'>
-                                                        <td className={`w-2/4  text-left `}><span className={`p-1 rounded-xl ${value.value == 100 ? " text-[#0D894F] bg-[#E7F4EE]" : " text-[#F04438] bg-[#FCDAD7]"}`}>{value.value != 100 ? value?.value + "%" : "Complete"}</span> </td>
-                                                        <td className={`w-2/4`}>{value.phone ? value?.phone : "Missing"}</td>
+                                                        <td className={`w-2/4  text-left `}><span className={`p-1 rounded-xl ${value.value === 100 ? " text-[#0D894F] bg-[#E7F4EE]" : " text-[#F04438] bg-[#FCDAD7]"}`}>{value.value !== 100 ? value?.value + "%" : "Complete"}</span> </td>
+                                                        <td className={`w-2/4`}>
+                                                            <div className={"flex items-center space-x-3 "}>
+                                                                <FaRegEye className="text-lg text-zinc-600" />
+                                                                <BsPencil className="text-sm text-zinc-600" />
+                                                                <RiDeleteBin6Line className="text-lg text-zinc-600" onClick={() => { }} />
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 )
                                             })}

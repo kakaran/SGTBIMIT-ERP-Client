@@ -32,7 +32,7 @@ function Sidebar() {
   };
 
   return (
-    <div className="flex flex-col bg-white w-16  md:w-64 p-4">
+    <div className="flex flex-col bg-white w-16  md:w-64 p-4 min-h-screen">
       {/* Sidebar header */}
       <div className="flex space-x-2 ml-1 mx-auto flex-row items-center justify-center">
         <img className="h-10 w-10 " src="/collegelogo.png" alt="" />

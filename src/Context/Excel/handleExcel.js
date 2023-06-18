@@ -2,15 +2,10 @@ import React, { useEffect, useState } from 'react'
 import HandleExcelContext from "./handleExcelContext";
 import * as XLSX from "xlsx";
 
-// const useeHandleExcel = () => {
-//     const [Value, setValue] = useState([])
-//     return { setValue, Value }
-// }
-
 const HandleExcel = (props) => {
 
-    // const { setValue, Value } = useeHandleExcel()
     const [Value, setValue] = useState([])
+    const [refresh,setRefresh] = useState(0)
 
     const handleExcel = (e) => {
         e.preventDefault();
@@ -38,7 +33,7 @@ const HandleExcel = (props) => {
                 const Data =  localStorage.getItem('StudentList');
                 console.log(JSON.parse(Data));
                 setValue(await JSON.parse(Data))
-                console.log(Value);
+                // console.log(Value);
             } catch (error) {
                 console.log('====================================');
                 console.log(error);
@@ -46,11 +41,13 @@ const HandleExcel = (props) => {
             }
         }
         DataSet()
-    }, [])
+        setRefresh(0)
+        console.log("Handle");
+    }, [refresh])
 
     return (
         <>
-            <HandleExcelContext.Provider value={{ handleExcel, Value }}>
+            <HandleExcelContext.Provider value={{ handleExcel, Value,setRefresh }}>
                 {props.children}
             </HandleExcelContext.Provider>
         </>
