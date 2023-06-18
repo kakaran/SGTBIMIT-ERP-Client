@@ -6,6 +6,7 @@ import handleExcelContext from '../../../Context/Excel/handleExcelContext';
 import { FaRegEye } from 'react-icons/fa';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
+import swal from 'sweetalert'
 import axios from 'axios';
 const MultipleStudentAdd = () => {
     const Method = useContext(handleExcelContext)
@@ -65,7 +66,43 @@ const MultipleStudentAdd = () => {
             console.log('====================================');
         }
     }
-    console.log(storeData);
+
+    //Delete the Detail from State and Also Update the localStorage Data 
+    const StudentDataDelete = async (name) => {
+        try {
+            let Data = structuredClone(storeData)
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this imaginary file!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then(async (willDelete) => {
+                    if (willDelete) {
+                        swal("Poof! Student has been deleted!", {
+                            icon: "success",
+                        });
+                        Data.map((value, index) => {
+                            if (value.firstname === name) {
+                                Data.splice(index, 1);
+                            }
+                        })
+                        localStorage.setItem('StudentList', JSON.stringify(Data))
+                        Method.setRefresh(1)
+                    } else {
+                        swal("Your Student Detail is safe!");
+                    }
+                });
+        } catch (error) {
+            console.log('====================================');
+            console.log(error);
+            console.log('====================================');;
+        }
+    }
+
+
+    
     return (
         <>
             <div className="flex  text-3xl overflow-y-auto overflow-hidden ">
@@ -162,7 +199,7 @@ const MultipleStudentAdd = () => {
                                                             <div className={"flex items-center space-x-3 "}>
                                                                 <FaRegEye className="text-lg text-zinc-600" />
                                                                 <BsPencil className="text-sm text-zinc-600" />
-                                                                <RiDeleteBin6Line className="text-lg text-zinc-600" onClick={() => { }} />
+                                                                <RiDeleteBin6Line className="text-lg text-zinc-600" onClick={() => {StudentDataDelete(value.name) }} />
                                                             </div>
                                                         </td>
                                                     </tr>
