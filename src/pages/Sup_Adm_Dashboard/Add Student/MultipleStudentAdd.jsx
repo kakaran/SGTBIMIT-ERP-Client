@@ -7,10 +7,26 @@ import { FaRegEye } from 'react-icons/fa';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
 import axios from 'axios';
+import { Table, Pagination } from 'react-bootstrap';
 const MultipleStudentAdd = () => {
     const Method = useContext(handleExcelContext)
     const [storeData, setStoreData] = useState([]);
     const [fillValueCheck, setFillValueCheck] = useState([])
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(5);
+    const totalPages = Math.ceil(storeData.length / itemsPerPage);
+
+    // Calculate start and end indices for the current page
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    // Get the current page's data
+    const currentData = storeData.slice(startIndex, endIndex);
+
+    // Handle page change
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
 
     //Form Fill Status Check
@@ -106,8 +122,8 @@ const MultipleStudentAdd = () => {
                                 <div className='text-xl p-4 font-bold border-b-1'>
                                     Students
                                 </div>
-                                <div>
-                                    <table className='w-full'>
+                                <div className='grid'>
+                                    <Table className='w-full'>
                                         <thead>
                                             <tr className='flex gap-4 text-left text-base w-full p-5 bg-[#f9f9fc]'>
                                                 <th className='w-2/12'>Name</th>
@@ -122,9 +138,9 @@ const MultipleStudentAdd = () => {
                                         </thead>
 
                                         <tbody>
-                                            {storeData.map((value) => {
+                                            {currentData.map((value, index) => {
                                                 return (
-                                                    <tr className='flex gap-4 text-left text-base w-full p-5 justify-center items-center border-b'>
+                                                    <tr className='flex gap-4 text-left text-base w-full p-5 justify-center items-center border-b' key={`item-${index}`}>
                                                         <td className='w-2/12'><p className={`flex flex-col ${!value.firstname ? " text-[#F04438]" : ""}`}>{value.firstname ? value?.firstname : "Missing"} {value?.lastname}<span className={`${!value.email ? " text-[#F04438]" : ""}`}>{value.email ? value?.email : "Missing"}</span></p></td>
                                                         <td className={`w-1/12 ${!value.phone ? " text-[#F04438] " : ""}`}>{value.phone ? value?.phone : "Missing"}</td>
                                                         <td className={`w-1/12 ${!value.fathername ? " text-[#F04438] " : ""}`}>{value.fathername ? value?.fathername : "Missing"}</td>
@@ -138,7 +154,22 @@ const MultipleStudentAdd = () => {
                                             })}
                                         </tbody>
 
-                                    </table>
+                                    </Table>
+                                    <div className='ml-auto my-10 mr-5'>
+                                        <Pagination>
+                                            <div className='flex gap-5 ml-auto'>
+                                                {Array.from(Array(totalPages), (e, i) => {
+                                                    return (
+                                                        <Pagination.Item key={i} onClick={() => handlePageChange(i + 1)}>
+                                                            <div className={`w-12 h-12 text-2xl shadow-md rounded-lg p-5 flex justify-center items-center ${i === currentPage - 1 ? "bg-[#5c59e8] text-white" : "bg-white"}`}>
+                                                                {i + 1}
+                                                            </div>
+                                                        </Pagination.Item>
+                                                    );
+                                                })}
+                                            </div>
+                                        </Pagination>
+                                    </div>
                                 </div>
                             </div>
                             <div className='w-1/5 border bg-white rounded-md'>
