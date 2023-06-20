@@ -14,6 +14,8 @@ const MultipleStudentAdd = () => {
     const [fillValueCheck, setFillValueCheck] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(5);
+    const [popup, setPopup] = useState(false);
+
     const totalPages = Math.ceil(storeData.length / itemsPerPage);
 
     // Calculate start and end indices for the current page
@@ -22,6 +24,7 @@ const MultipleStudentAdd = () => {
 
     // Get the current page's data
     const currentData = storeData.slice(startIndex, endIndex);
+    const currentValueCheck = fillValueCheck.slice(startIndex, endIndex);
 
     // Handle page change
     const handlePageChange = (pageNumber) => {
@@ -177,7 +180,7 @@ const MultipleStudentAdd = () => {
                                     Status
                                 </div>
                                 <div>
-                                    <table className='w-full'>
+                                    <Table className='w-full'>
                                         <thead>
                                             <tr className='flex gap-4 text-left text-base w-full p-5 bg-[#f9f9fc]'>
                                                 <th className='w-2/4'>Profile Status</th>
@@ -185,14 +188,14 @@ const MultipleStudentAdd = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {fillValueCheck.map((value) => {
+                                            {currentValueCheck.map((value, index) => {
                                                 return (
                                                     <tr className='flex gap-4 text-left text-base w-full p-5 justify-center items-center h-[90px] border-b'>
                                                         <td className={`w-2/4  text-left `}><span className={`p-1 rounded-xl ${value.value === 100 ? " text-[#0D894F] bg-[#E7F4EE]" : " text-[#F04438] bg-[#FCDAD7]"}`}>{value.value !== 100 ? value?.value + "%" : "Complete"}</span> </td>
                                                         <td className={`w-2/4`}>
                                                             <div className={"flex items-center space-x-3 "}>
                                                                 <FaRegEye className="text-lg text-zinc-600" />
-                                                                <BsPencil className="text-sm text-zinc-600" />
+                                                                <BsPencil className="text-sm text-zinc-600" onClick={() => { setPopup(index) }} />
                                                                 <RiDeleteBin6Line className="text-lg text-zinc-600" onClick={() => { }} />
                                                             </div>
                                                         </td>
@@ -200,13 +203,38 @@ const MultipleStudentAdd = () => {
                                                 )
                                             })}
                                         </tbody>
-                                    </table>
+                                    </Table>
+                                    {storeData.map((value, index) => {
+                                        if (popup === index) {
+                                            return (
+                                                <div className=' flex justify-center items-center fixed top-0 left-0 h-screen w-screen bg-black bg-opacity-20 z-[1000000000000]'>
+                                                    <div className='w-1/2 h-1/2 rounded-md bg-white overflow-y-scroll'>
+                                                        <h1 className='m-5'><span className='font-bold'>Edit Details - </span>{value.firstname} {value.lastname}</h1>
+                                                        <form className='grid grid-cols-2 p-5 gap-5'>
+                                                            <div className='grid gap-5'>
+                                                                <label htmlFor="name_update">First Name:</label>
+                                                                <input type="text" value={`${value.firstname}`} className='rounded-md' id='name_update' onChange={(e) => {
+                                                                    let temp = structuredClone(storeData)
+                                                                    temp[index].firstname = e.target.value
+                                                                    setStoreData(temp)
+                                                                }} />
+                                                            </div>
+
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            )
+                                        }
+                                    }
+                                    )
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </>
     )
 }
