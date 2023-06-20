@@ -8,6 +8,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
 import axios from 'axios';
 import { Table, Pagination } from 'react-bootstrap';
+import UpdateDetails from './UpdateDetails';
 const MultipleStudentAdd = () => {
     const Method = useContext(handleExcelContext)
     const [storeData, setStoreData] = useState([]);
@@ -15,6 +16,8 @@ const MultipleStudentAdd = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(5);
     const [popup, setPopup] = useState(false);
+    const [tempObject, setTempObject] = useState(null);
+    const [indexx, setIndexx] = useState(null);
 
     const totalPages = Math.ceil(storeData.length / itemsPerPage);
 
@@ -195,7 +198,7 @@ const MultipleStudentAdd = () => {
                                                         <td className={`w-2/4`}>
                                                             <div className={"flex items-center space-x-3 "}>
                                                                 <FaRegEye className="text-lg text-zinc-600" />
-                                                                <BsPencil className="text-sm text-zinc-600" onClick={() => { setPopup(index) }} />
+                                                                <BsPencil className="text-sm text-zinc-600" onClick={() => { setPopup(true); setTempObject(storeData[index]); setIndexx(index) }} />
                                                                 <RiDeleteBin6Line className="text-lg text-zinc-600" onClick={() => { }} />
                                                             </div>
                                                         </td>
@@ -204,30 +207,9 @@ const MultipleStudentAdd = () => {
                                             })}
                                         </tbody>
                                     </Table>
-                                    {storeData.map((value, index) => {
-                                        if (popup === index) {
-                                            return (
-                                                <div className=' flex justify-center items-center fixed top-0 left-0 h-screen w-screen bg-black bg-opacity-20 z-[1000000000000]'>
-                                                    <div className='w-1/2 h-1/2 rounded-md bg-white overflow-y-scroll'>
-                                                        <h1 className='m-5'><span className='font-bold'>Edit Details - </span>{value.firstname} {value.lastname}</h1>
-                                                        <form className='grid grid-cols-2 p-5 gap-5'>
-                                                            <div className='grid gap-5'>
-                                                                <label htmlFor="name_update">First Name:</label>
-                                                                <input type="text" value={`${value.firstname}`} className='rounded-md' id='name_update' onChange={(e) => {
-                                                                    let temp = structuredClone(storeData)
-                                                                    temp[index].firstname = e.target.value
-                                                                    setStoreData(temp)
-                                                                }} />
-                                                            </div>
-
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            )
-                                        }
-                                    }
-                                    )
-                                    }
+                                    {tempObject && popup ? (
+                                        <UpdateDetails tempObject={tempObject} setTempObject={setTempObject} setStoreData={setStoreData} storeData={storeData} index={indexx} setPopup={setPopup} />
+                                    ) : ""}
                                 </div>
                             </div>
                         </div>
