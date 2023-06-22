@@ -9,12 +9,17 @@ import { BsPencil } from 'react-icons/bs';
 import swal from 'sweetalert'
 import axios from 'axios';
 import { Table, Pagination } from 'react-bootstrap';
+import UpdateDetails from './UpdateDetails';
 const MultipleStudentAdd = () => {
     const Method = useContext(handleExcelContext)
     const [storeData, setStoreData] = useState([]);
     const [fillValueCheck, setFillValueCheck] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(5);
+    const [popup, setPopup] = useState(false);
+    const [tempObject, setTempObject] = useState(null);
+    const [indexx, setIndexx] = useState(null);
+
     const totalPages = Math.ceil(storeData.length / itemsPerPage);
 
     // Calculate start and end indices for the current page
@@ -23,6 +28,7 @@ const MultipleStudentAdd = () => {
 
     // Get the current page's data
     const currentData = storeData.slice(startIndex, endIndex);
+    const currentValueCheck = fillValueCheck.slice(startIndex, endIndex);
 
     // Handle page change
     const handlePageChange = (pageNumber) => {
@@ -214,7 +220,7 @@ const MultipleStudentAdd = () => {
                                     Status
                                 </div>
                                 <div>
-                                    <table className='w-full'>
+                                    <Table className='w-full'>
                                         <thead>
                                             <tr className='flex gap-4 text-left text-base w-full p-5 bg-[#f9f9fc]'>
                                                 <th className='w-2/4'>Profile Status</th>
@@ -222,28 +228,32 @@ const MultipleStudentAdd = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {fillValueCheck.map((value) => {
+                                            {currentValueCheck.map((value, index) => {
                                                 return (
                                                     <tr className='flex gap-4 text-left text-base w-full p-5 justify-center items-center h-[90px] border-b'>
                                                         <td className={`w-2/4  text-left `}><span className={`p-1 rounded-xl ${value.value === 100 ? " text-[#0D894F] bg-[#E7F4EE]" : " text-[#F04438] bg-[#FCDAD7]"}`}>{value.value !== 100 ? value?.value + "%" : "Complete"}</span> </td>
                                                         <td className={`w-2/4`}>
                                                             <div className={"flex items-center space-x-3 "}>
                                                                 <FaRegEye className="text-lg text-zinc-600" />
-                                                                <BsPencil className="text-sm text-zinc-600" />
-                                                                <RiDeleteBin6Line className="text-lg text-zinc-600" onClick={() => {StudentDataDelete(value.name) }} />
+                                                                <BsPencil className="text-sm text-zinc-600" onClick={() => { setPopup(true); setTempObject(storeData[index]); setIndexx(index) }}/>
+                                                                <RiDeleteBin6Line className="text-lg text-zinc-600" onClick={() => { StudentDataDelete(value.name) }} />
                                                             </div>
                                                         </td>
                                                     </tr>
                                                 )
                                             })}
                                         </tbody>
-                                    </table>
+                                    </Table>
+                                    {tempObject && popup ? (
+                                        <UpdateDetails tempObject={tempObject} setTempObject={setTempObject} setStoreData={setStoreData} storeData={storeData} index={indexx} setPopup={setPopup} />
+                                    ) : ""}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </>
     )
 }

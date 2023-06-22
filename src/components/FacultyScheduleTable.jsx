@@ -55,17 +55,16 @@ const FacultyDetails = [
 ];
 
 export default function FacultyScheduleTable() {
-  //   const [timetable, setTimeTable] = useState([]);
+  const [timetable, setTimeTable] = useState([]);
 
-  //   const TodayDate = async (separator = "") => {
-  //     let newDate = new Date();
-  //     let date = newDate.getDate();
-  //     let month = newDate.getMonth() + 1;
-  //     let year = newDate.getFullYear();
-  //     return `${separator}${date}-${
-  //       month < 10 ? `0${month}` : `${month}`
-  //     }-${year}${separator}`;
-  //   };
+  const TodayDate = async (separator = "") => {
+    let newDate = new Date();
+    let date = newDate.getDate();
+    let month = newDate.getMonth() + 1;
+    let year = newDate.getFullYear();
+    return `${separator}${date}-${month < 10 ? `0${month}` : `${month}`
+      }-${year}${separator}`;
+  };
 
   //   const ProppeDataHold = async () => {
   //     let Date = await TodayDate();
@@ -102,6 +101,25 @@ export default function FacultyScheduleTable() {
   //     }
   //   }, [prope.Course]);
 
+  const TeacherTimeTableDataGet = async () => {
+    try {
+      let date = await TodayDate()
+      const Data = (await axios(`${process.env.REACT_APP_URL}/api/Faculty/Teacher_Time_Table_Get/${date}`)).data
+      console.log(Data);
+      setTimeTable(Data.getTeacherData)
+    } catch (error) {
+      console.log('====================================');
+      console.log(error);
+      console.log('====================================');
+    }
+  }
+
+
+  useEffect(() => {
+    TeacherTimeTableDataGet()
+  }, [])
+
+
   return (
     <div className="flex flex-col border-2 bg-white rounded-lg border-[#E0E2E7] justify-center items-center overflow-hidden">
       <div className="flex h-20 flex-col md:flex-row items-center gap-4 justify-between w-full">
@@ -132,12 +150,11 @@ export default function FacultyScheduleTable() {
             </tr>
           </thead>
           <tbody className="text-left">
-            {FacultyDetails.map((value, index) => {
-              // {index && StudentStatusCheck(value?.subject_id?._id, value?.time)}
+            {timetable?.Subjects?.map((value, index) => {
               return (
                 <tr className="h-20" key={index}>
                   <td className="py-2 px-4 border-b font-semibold  text-[#5C59E8]">
-                    {value.time}
+                    {value?.time}
                   </td>
                   <td className="flex flex-row py-6 space-x-3 px-4 border-b items-center  justify-start">
                     <img
@@ -147,23 +164,22 @@ export default function FacultyScheduleTable() {
                     />
                     <div className="flex flex-col ">
                       <span className="text-black font-semibold">
-                        {value.subjectName}
+                        {value?.Subject_id?.Subject_Name}
                       </span>{" "}
                       <span className="mt-1 font-semibold capitalize text-[#667085]">
-                        {value.SubjectCode}
+                        {value?.Subject_id?.Subject_Code}
                       </span>
                     </div>
                   </td>
 
                   <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                    {value.teacher}
+                    {value.Course + " " +  value.Sem + " " +value.Section}
                   </td>
 
                   <td className="border-b px-4 py-2">
                     <div
-                      className={`py-2 px-3 text-[15px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${
-                        value.status ? "  text-[#0D894F] " : " text-[#F04438] "
-                      } `}
+                      className={`py-2 px-3 text-[15px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${value.status ? "  text-[#0D894F] " : " text-[#F04438] "
+                        } `}
                     >
                       {value.status ? "Marked" : "Mark"}
                     </div>

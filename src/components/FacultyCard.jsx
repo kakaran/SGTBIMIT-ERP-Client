@@ -1,38 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 
-export default function FacultyCard() {
+export default function FacultyCard(props) {
   //   console.log(process.env.REACT_APP_URL);
   // console.log(prope);
   const TeacherDetails = [
     {
       id: 1,
-      detailName: "Employee ID",
+      detailName: "Designation",
       detailImage: "/studentID.png",
-      studentDetail: `01290202021`,
+      studentDetail: `${props?.designation}`,
     },
     {
       id: 2,
       detailName: "Email ID",
       detailImage: "/top_mail_box.png",
-      studentDetail: `rajkumar@gmail.com`,
+      studentDetail: `${props?.email}`,
     },
     {
       id: 3,
       detailName: "Phone Number",
       detailImage: "/phone.png",
-      studentDetail: `+91 999999999`,
+      studentDetail: `${props?.phone}`,
     },
     {
       id: 4,
       detailName: "Address",
       detailImage: "/address.png",
-      studentDetail: `202, Block MU, Pitampura, Delhi`,
+      studentDetail: `${props?.address}`,
     },
     {
       id: 5,
       detailName: "Joined In (Year)",
       detailImage: "/scheduleicon.png",
-      studentDetail: `2012`,
+      studentDetail: `${props?.joinYear}`,
     },
   ];
   return (
@@ -48,14 +48,14 @@ export default function FacultyCard() {
       <div className=" flex-col items-center flex ">
         <img
           className="object-cover absolute w-[164px] h-[164px] rounded-full"
-          src={`/FacultyAvatar.svg`}
+          src={`${process.env.REACT_APP_URL}/api/Faculty/Faculty_Image_Display/${props?._id}`}
           alt=""
         />
       </div>
 
       <div className="mt-40 flex-col flex items-center justify-center">
         <span className=" font-semibold text-[#333843] text-lg capitalize">
-          Dr Raj kumar
+          {props?.firstname + " " + (props?.lastname ? props?.lastname : "")}
         </span>
         <span className="text-sm text-center font-semibold text-[#667085] mt-[1px]"></span>
       </div>
