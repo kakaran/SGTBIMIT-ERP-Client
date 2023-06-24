@@ -4,6 +4,7 @@ import {
   CalendarIcon,
   AdjustmentsHorizontalIcon,
 } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 
 const FacultyDetails = [
   {
@@ -56,6 +57,7 @@ const FacultyDetails = [
 
 export default function FacultyScheduleTable() {
   const [timetable, setTimeTable] = useState([]);
+  const navigate = useNavigate()
 
   const TodayDate = async (separator = "") => {
     let newDate = new Date();
@@ -66,45 +68,10 @@ export default function FacultyScheduleTable() {
       }-${year}${separator}`;
   };
 
-  //   const ProppeDataHold = async () => {
-  //     let Date = await TodayDate();
-  //     const Detail = {
-  //       Date: Date,
-  //       Course: `${prope?.Course}`,
-  //       Semester: `${prope?.Semester}`,
-  //       section: `${prope?.Section}`,
-  //     };
-  //     return Detail;
-  //   };
-
-  //   useEffect(() => {
-  //     const TimeTableGet = async () => {
-  //       try {
-  //         const Detail = await ProppeDataHold();
-  //         const Data = await axios.post(
-  //           `${process.env.REACT_APP_URL}/api/Student/Student_Time_Table`,
-  //           { Detail }
-  //         );
-
-  //         // console.log(Data.data.data);
-  //         if (Data.data.status) {
-  //           setTimeTable(Data.data.data);
-  //         }
-  //       } catch (error) {
-  //         console.log("====================================");
-  //         console.log(error);
-  //         console.log("====================================");
-  //       }
-  //     };
-  //     {
-  //       prope.Course && TimeTableGet();
-  //     }
-  //   }, [prope.Course]);
-
   const TeacherTimeTableDataGet = async () => {
     try {
       let date = await TodayDate()
-      const Data = (await axios(`${process.env.REACT_APP_URL}/api/Faculty/Teacher_Time_Table_Get/${date}`)).data
+      const Data = (await axios.get(`${process.env.REACT_APP_URL}/api/Faculty/Teacher_Time_Table_Get/${date}`)).data
       console.log(Data);
       setTimeTable(Data.getTeacherData)
     } catch (error) {
@@ -173,15 +140,18 @@ export default function FacultyScheduleTable() {
                   </td>
 
                   <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                    {value.Course + " " +  value.Sem + " " +value.Section}
+                    {value?.Course + " " +  value?.Sem + " " +value?.Section}
                   </td>
 
                   <td className="border-b px-4 py-2">
                     <div
-                      className={`py-2 px-3 text-[15px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${value.status ? "  text-[#0D894F] " : " text-[#F04438] "
+                      className={`py-2 px-3 text-[15px] leading-5   rounded-full bg-[#E7F4EE] capitalize font-semibold  text-center ${value.attendance ? "  text-[#0D894F] " : " text-[#F04438] "
                         } `}
+                        onClick={()=>{
+                          navigate(`/Dashboard/Faculty/Mark_Attendance/${value?.Course}/${value?.Sem}/${value?.Section}/${value?.Subject_id?.Subject_Name}/${value?.time}/${value?.Subject_id?._id}`)
+                        }}
                     >
-                      {value.status ? "Marked" : "Mark"}
+                      {value.attendance ? "Marked" : "Mark"}
                     </div>
                   </td>
                 </tr>

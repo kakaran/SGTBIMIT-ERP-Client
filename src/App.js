@@ -14,6 +14,7 @@ import AdmDashboard from "./pages/Adm_Dashboard/AdmDashboard";
 import AddStudent from "./pages/Sup_Adm_Dashboard/Add Student/AddStudent";
 import MultipleStudentAdd from "./pages/Sup_Adm_Dashboard/Add Student/MultipleStudentAdd";
 import HandleExcel from "./Context/Excel/handleExcel";
+import MarkAttendance from "./pages/Fac_Dashboard/MarkAttendance/MarkAttendance";
 
 function App() {
   const StudentListData = localStorage.getItem('StudentList');
@@ -34,6 +35,8 @@ function App() {
             {/* Faculty Routes */}
             <Route exact path="/Dashboard" element={<Faculty />}>
               <Route exact path="Faculty" element={<FacDashboard />} />
+              <Route exact path="Faculty/Mark_Attendance/:course/:sem/:section/:subjectName/:time/:subject_id" element={<MarkAttendance />} />
+
             </Route>
 
             {/* Admin Routes */}
