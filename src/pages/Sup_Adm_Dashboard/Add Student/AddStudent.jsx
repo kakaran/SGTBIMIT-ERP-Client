@@ -569,7 +569,6 @@ function AddStudent() {
                 <img src="/plus.svg" alt="Add Student" />
                 <p>Add Student</p>
               </div>
-
             </div>
           </div>
         </div>
