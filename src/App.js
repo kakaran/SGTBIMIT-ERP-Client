@@ -14,6 +14,7 @@ import AdmDashboard from "./pages/Adm_Dashboard/AdmDashboard";
 import AddStudent from "./pages/Sup_Adm_Dashboard/Add Student/AddStudent";
 import MultipleStudentAdd from "./pages/Sup_Adm_Dashboard/Add Student/MultipleStudentAdd";
 import HandleExcel from "./Context/Excel/handleExcel";
+import AddTeacher from "./pages/Sup_Adm_Dashboard/Add Teacher/AddTeacher";
 
 function App() {
   const StudentListData = localStorage.getItem('StudentList');
@@ -46,6 +47,7 @@ function App() {
               <Route exact path="Sup_Admin" element={<SupAdmDashboard />} />
               <Route exact path="Sup_Admin/AddStudent" element={<AddStudent />} />
               <Route exact path="Sup_Admin/AddStudent/MultipleStudentAdd" element={<MultipleStudentAdd />} />
+              <Route exact path="Sup_Admin/AddTeacher" element={<AddTeacher />} />
             </Route>
           </Routes>
         </Router>
