@@ -8,6 +8,7 @@ const UpdateDetails = ({ tempObject, setTempObject, setStoreData, storeData, ind
         e.preventDefault();
         let Data = structuredClone(storeData)
         Data[index] = tempObject
+        localStorage.setItem('StudentList', JSON.stringify(Data))
         setStoreData(Data)
     }
     return (

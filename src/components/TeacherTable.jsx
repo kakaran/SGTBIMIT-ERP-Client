@@ -1,9 +1,10 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AdjustmentsHorizontalIcon,
   EyeIcon,
 } from "@heroicons/react/24/outline";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const TeacherDetails = [
   {
@@ -55,14 +56,15 @@ const TeacherDetails = [
 ];
 
 function TeacherTable() {
-  const [teachers,setTeachers] = useState();
+  const navigate = useNavigate();
+  const [teachers, setTeachers] = useState();
 
   useEffect(() => {
-    const AllTeacherGet = async () =>{
+    const AllTeacherGet = async () => {
       try {
         const Data = (await axios.get(`${process.env.REACT_APP_URL}/api/admin/Teacher_Display`)).data
         console.log(Data);
-        if(Data.Status){
+        if (Data.Status) {
           setTeachers(Data.Result)
         }
       } catch (error) {
@@ -73,12 +75,16 @@ function TeacherTable() {
     }
     AllTeacherGet()
   }, [])
-  
+
   return (
     <div className="flex flex-col  border-2 bg-white rounded-lg border-[#E0E2E7] justify-center items-center overflow-hidden">
       <div className="flex h-20 flex-col md:flex-row items-center gap-4 justify-between w-full">
         <h2 className="text-2xl ml-4 font-bold">Teachers</h2>
         <div className="text-[#667085] font-semibold text-[16px] space-x-2 leading-5 flex justify-center md:justify-end mr-4">
+          <div className="flex flex-row items-center rounded-xl border py-2 px-3 border-[#E0E2E7] space-x-1 cursor-pointer bg-[#5c59e8] text-white" onClick={() => navigate("/Dashboard/Sup_Admin/AddTeacher")}>
+            <span className="h-5 w-5 object-cover" >+</span>
+            <button className="text-sm px-4 py-2 rounded-md ">Add Teacher</button>
+          </div>
           <div className="flex flex-row items-center rounded-xl border py-2 px-3 border-[#E0E2E7] space-x-1">
             <AdjustmentsHorizontalIcon className="h-5 w-5 object-cover" />
             <button className="text-sm px-4 py-2 rounded-md ">Filters</button>
