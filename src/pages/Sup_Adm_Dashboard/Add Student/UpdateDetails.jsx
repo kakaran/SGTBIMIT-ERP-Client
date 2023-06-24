@@ -12,14 +12,14 @@ const UpdateDetails = ({ tempObject, setTempObject, setStoreData, storeData, ind
     }
     return (
         <div className=' flex justify-center items-center fixed top-0 left-0 h-screen w-screen bg-black bg-opacity-20 z-[1000000000000]'>
-            <div className='w-1/2 h-1/2 rounded-md bg-white overflow-y-scroll'>
+            <div className='w-1/2 h-1/2 rounded-md bg-white overflow-y-scroll flex flex-col'>
                 <div className='flex justify-between'>
-                    <h1 className='mx-5 my-10'><span className='font-bold'>Edit Details - </span>{storeData[index].firstname} {storeData[index].lastname}</h1>
+                    <h1 className='mx-5 my-10'><span className='font-bold'>Add Missing Details - </span>{storeData[index].firstname} {storeData[index].lastname}</h1>
                     <button className='m-5' onClick={() => setPopup(false)}>X</button>
                 </div>
-                <form onSubmit={(e) => handleSubmit(e)} className='grid'>
+                <form onSubmit={(e) => handleSubmit(e)} className='flex flex-col grow'>
                     <div className='grid grid-cols-2 p-5 gap-5'>
-                        <div className={inputContainerStyles}>
+                        {!tempObject.firstname && <div className={inputContainerStyles}>
                             <label htmlFor="name_update" className={labelStyles}>First Name:</label>
                             <input type="text" value={`${tempObject.firstname}`} className={inputStyles} id='name_update' name='name_update' onChange={(e) => setTempObject(prev => {
                                 return {
@@ -27,8 +27,8 @@ const UpdateDetails = ({ tempObject, setTempObject, setStoreData, storeData, ind
                                     firstname: e.target.value
                                 }
                             })} />
-                        </div>
-                        <div className={inputContainerStyles}>
+                        </div>}
+                        {!tempObject.lastname && <div className={inputContainerStyles}>
                             <label htmlFor="lname_update" className={labelStyles}>Last Name:</label>
                             <input type="text" value={`${tempObject.lastname}`} className={inputStyles} id='lname_update' name='lname_update' onChange={(e) => setTempObject(prev => {
                                 return {
@@ -36,8 +36,17 @@ const UpdateDetails = ({ tempObject, setTempObject, setStoreData, storeData, ind
                                     lastname: e.target.value
                                 }
                             })} />
-                        </div>
-                        <div className={inputContainerStyles}>
+                        </div>}
+                        {!tempObject.email && <div className={inputContainerStyles}>
+                            <label htmlFor="email_update" className={labelStyles}>Email:</label>
+                            <input type="text" value={`${tempObject.email}`} className={inputStyles} id='email_update' name='email_update' onChange={(e) => setTempObject(prev => {
+                                return {
+                                    ...prev,
+                                    email: e.target.value
+                                }
+                            })} />
+                        </div>}
+                        {!tempObject.fathername && <div className={inputContainerStyles}>
                             <label htmlFor="fname_update" className={labelStyles}>Father's Name:</label>
                             <input type="text" value={`${tempObject.fathername}`} className={inputStyles} id='fname_update' name='fname_update' onChange={(e) => setTempObject(prev => {
                                 return {
@@ -45,8 +54,8 @@ const UpdateDetails = ({ tempObject, setTempObject, setStoreData, storeData, ind
                                     fathername: e.target.value
                                 }
                             })} />
-                        </div>
-                        <div className={inputContainerStyles}>
+                        </div>}
+                        {!tempObject.mothername && <div className={inputContainerStyles}>
                             <label htmlFor="mnameupdate" className={labelStyles}>Mother's Name:</label>
                             <input type="text" value={`${tempObject.mothername}`} className={inputStyles} id='mnameupdate' name='mnameupdate' onChange={(e) => setTempObject(prev => {
                                 return {
@@ -54,8 +63,8 @@ const UpdateDetails = ({ tempObject, setTempObject, setStoreData, storeData, ind
                                     mothername: e.target.value
                                 }
                             })} />
-                        </div>
-                        <div className={inputContainerStyles}>
+                        </div>}
+                        {!tempObject.rollnumber && <div className={inputContainerStyles}>
                             <label htmlFor="sid_update" className={labelStyles}>Student ID:</label>
                             <input type="text" value={`${tempObject.rollnumber}`} className={inputStyles} id='sid_update' name='sid_update' onChange={(e) => setTempObject(prev => {
                                 return {
@@ -63,8 +72,8 @@ const UpdateDetails = ({ tempObject, setTempObject, setStoreData, storeData, ind
                                     rollnumber: e.target.value
                                 }
                             })} />
-                        </div>
-                        <div className={inputContainerStyles}>
+                        </div>}
+                        {!tempObject.Fee && <div className={inputContainerStyles}>
                             <label htmlFor="fee_update" className={labelStyles}>Fee:</label>
                             <input type="text" value={`${tempObject.Fee}`} className={inputStyles} id='fee_update' name='fee_update' onChange={(e) => setTempObject(prev => {
                                 return {
@@ -72,8 +81,8 @@ const UpdateDetails = ({ tempObject, setTempObject, setStoreData, storeData, ind
                                     Fee: e.target.value
                                 }
                             })} />
-                        </div>
-                        <div className={inputContainerStyles}>
+                        </div>}
+                        {!tempObject.course && <div className={inputContainerStyles}>
                             <label htmlFor="course_update" className={labelStyles}>Course:</label>
                             <input type="text" value={`${tempObject.course}`} className={inputStyles} id='course_update' name='course_update' onChange={(e) => setTempObject(prev => {
                                 return {
@@ -81,8 +90,8 @@ const UpdateDetails = ({ tempObject, setTempObject, setStoreData, storeData, ind
                                     course: e.target.value
                                 }
                             })} />
-                        </div>
-                        <div className={inputContainerStyles}>
+                        </div>}
+                        {!tempObject.address && <div className={inputContainerStyles}>
                             <label htmlFor="address_update" className={labelStyles}>Address:</label>
                             <input type="text" value={`${tempObject.address}`} className={inputStyles} id='address_update' name='address_update' onChange={(e) => setTempObject(prev => {
                                 return {
@@ -90,9 +99,9 @@ const UpdateDetails = ({ tempObject, setTempObject, setStoreData, storeData, ind
                                     address: e.target.value
                                 }
                             })} />
-                        </div>
+                        </div>}
                     </div>
-                    <button className='mx-auto my-5 w-max px-6 py-2 rounded-md bg-blue-500 text-white font-bold'>Submit</button>
+                    <button className='mx-auto mb-5 mt-auto w-max px-6 py-2 rounded-md bg-blue-500 text-white font-bold'>Submit</button>
                 </form>
             </div>
         </div>

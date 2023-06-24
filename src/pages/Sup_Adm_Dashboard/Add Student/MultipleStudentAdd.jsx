@@ -124,7 +124,7 @@ const MultipleStudentAdd = () => {
     }
 
 
-    
+
     return (
         <>
             <div className="flex  text-3xl overflow-y-auto overflow-hidden ">
@@ -235,7 +235,7 @@ const MultipleStudentAdd = () => {
                                                         <td className={`w-2/4`}>
                                                             <div className={"flex items-center space-x-3 "}>
                                                                 <FaRegEye className="text-lg text-zinc-600" />
-                                                                <BsPencil className="text-sm text-zinc-600" onClick={() => { setPopup(true); setTempObject(storeData[index]); setIndexx(index) }}/>
+                                                                <BsPencil className="text-sm text-zinc-600" onClick={() => { setPopup(true); setTempObject(storeData[index]); setIndexx(index) }} />
                                                                 <RiDeleteBin6Line className="text-lg text-zinc-600" onClick={() => { StudentDataDelete(value.name) }} />
                                                             </div>
                                                         </td>
