@@ -189,7 +189,9 @@ function AddStudent() {
               <div>
                 <div className="flex my-3 text-lg space-x-3">
                   <p className="text-[#5C59E8]">Dashboard</p>
+                  <img src="/chevron-right.svg" alt="" />
                   <p className="text-[#5C59E8]">Students</p>
+                  <img src="/chevron-right.svg" alt="" />
                   <p>Add Student</p>
                 </div>
               </div>

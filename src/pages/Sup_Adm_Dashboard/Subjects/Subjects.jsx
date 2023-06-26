@@ -5,6 +5,8 @@ import { Table } from "react-bootstrap";
 import axios from "axios";
 import { BsPencil } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { IoIosAdd } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const Subjects = () => {
   const [allSubject, setAllSubject] = useState();
@@ -34,7 +36,12 @@ const Subjects = () => {
         <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
           <Header />
           <div className="px-4 overflow-y-visible bg-gray-100 sm:px-6 lg:px-8 py-8 w-full  mx-auto min-h-screen">
-            <h2>All Subjects</h2>
+            <div className="flex justify-between">
+              <h2>All Subjects</h2>
+              <Link to="/Dashboard/Sup_Admin/Subjects/Add_Subject">
+                <button className="bg-[#5C59E8] py-[10px] px-[14px] rounded-xl text-[16px] flex items-center gap-2 text-white" ><IoIosAdd className="text-[28px]" /> Add Subject</button>
+              </Link>
+            </div>
             <div className="w-full border mt-8 shadow-[rgba(99, 99, 99, 0.2) 0px 2px 8px 0px]  mr-5 bg-white rounded-md">
               <div className="text-xl p-4 font-bold">Subject</div>
               <div className="grid">

@@ -17,6 +17,7 @@ import HandleExcel from "./Context/Excel/handleExcel";
 import AddTeacher from "./pages/Sup_Adm_Dashboard/Add Teacher/AddTeacher";
 import MarkAttendance from "./pages/Fac_Dashboard/MarkAttendance/MarkAttendance";
 import Subjects from "./pages/Sup_Adm_Dashboard/Subjects/Subjects";
+import SubjectAdd from "./pages/Sup_Adm_Dashboard/Subjects/SubjectAdd";
 
 function App() {
   const StudentListData = localStorage.getItem('StudentList');
@@ -53,7 +54,7 @@ function App() {
               <Route exact path="Sup_Admin/AddStudent/MultipleStudentAdd" element={<MultipleStudentAdd />} />
               <Route exact path="Sup_Admin/AddTeacher" element={<AddTeacher />} />
               <Route exact path="Sup_Admin/Subjects" element={<Subjects />} />
-
+              <Route exact path="Sup_Admin/Subjects/Add_Subject" element={<SubjectAdd />} />
             </Route>
           </Routes>
         </Router>
