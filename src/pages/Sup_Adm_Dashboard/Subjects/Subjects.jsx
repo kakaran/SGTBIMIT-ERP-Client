@@ -35,7 +35,7 @@ const Subjects = () => {
         <Sidebar />
         <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
           <Header />
-          <div className="px-4 overflow-y-visible bg-gray-100 sm:px-6 lg:px-8 py-8 w-full  mx-auto min-h-screen">
+          <div className="px-4 overflow-y-visible bg-gray-100 sm:px-6 lg:px-8 py-8 w-full h-full">
             <div className="flex justify-between">
               <h2>All Subjects</h2>
               <Link to="/Dashboard/Sup_Admin/Subjects/Add_Subject">
