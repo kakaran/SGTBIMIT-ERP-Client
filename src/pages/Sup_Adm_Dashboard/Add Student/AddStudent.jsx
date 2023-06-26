@@ -228,7 +228,7 @@ function AddStudent() {
               <div className="grid grid-cols-12 my-10 gap-4 ">
                 <div className="col-span-9">
                   {/* General Information */}
-                  <div className="w-[840px] p-4 md:w-full max-h-fit bg-white rounded-lg  border-2 border-[]">
+                  <div className="w-[840px] p-4 md:w-full max-h-fit bg-white rounded-lg  border-2">
                     <h2>General Information</h2>
 
                     <div className="grid grid-cols-2 my-4 gap-4 ">
