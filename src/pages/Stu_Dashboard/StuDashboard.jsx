@@ -17,7 +17,7 @@ export default function StuDashboard() {
             `${process.env.REACT_APP_URL}/api/Student/Student_Get`
           )
         ).data;
-        console.log(Data);
+        // console.log(Data);
         if (Data) {
           setStudentDetail(Data);
         }
