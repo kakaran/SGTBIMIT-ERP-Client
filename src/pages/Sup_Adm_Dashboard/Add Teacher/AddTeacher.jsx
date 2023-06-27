@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom'
 import { useEffect } from 'react'
 
 const AddTeacher = () => {
+    const [selectedFile, setSelectedFile] = useState(null);
+
     const [formfill, setFormFill] = useState({
         total: "",
         status: "",
@@ -21,8 +23,25 @@ const AddTeacher = () => {
         email: '',
         phone: '',
         address: '',
-        Category: '',
+        Department: ""
+
     })
+    const [imageUrl, setImageUrl] = useState("");
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedFile(file);
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImageUrl(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+
     const options = {
         position: "top-center",
         autoClose: 5000,
@@ -35,9 +54,27 @@ const AddTeacher = () => {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        // e.preventDefault()
         try {
-            const response = await axios.post(`${process.env.REACT_APP_URL}`, teacherDetails)
+            let formData = new FormData();
+            formData.append("firstName", teacherDetails.firstName);
+            formData.append("Gender", teacherDetails.Gender);
+            formData.append("lastname", teacherDetails.lastname);
+            formData.append("Joinyear", teacherDetails.Joinyear);
+            formData.append("dob", teacherDetails.dob);
+            formData.append("designation", teacherDetails.designation);
+            formData.append("email", teacherDetails.email);
+            formData.append("phone", teacherDetails.phone);
+            formData.append("address", teacherDetails.address);
+            formData.append("Category", "Teacher");
+            formData.append("Department", teacherDetails.Department);
+            formData.append("avatar", selectedFile);
+            const response = await axios.post(`${process.env.REACT_APP_URL}/api/admin/Faculty_Add`, formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
             console.log(response)
             if (response.data.success) {
                 toast.success('Teacher Added Successfully', options)
@@ -111,12 +148,12 @@ const AddTeacher = () => {
 
                             </div>
                         </div>
-                        <div className="grid my-10 gap-4 ">
+                        <div className="grid  mt-10 mb-20 gap-4 ">
                             <div className="">
                                 <div className='w-full p-4 md:w-full max-h-fit bg-white rounded-lg  border-2'>
                                     <ToastContainer />
                                     <h2> General Information </h2>
-                                    <form onSubmit={handleSubmit} >
+                                    <form >
                                         <div className='grid grid-cols-2 my-4 gap-4'>
                                             <div className={inputContainerStyles}>
                                                 <label htmlFor="name" className={labelStyles}>First Name</label>
@@ -193,12 +230,21 @@ const AddTeacher = () => {
                                                     }
                                                 })} />
                                             </div>
-                                            <div className={inputContainerStyles}>
+                                            {/* <div className={inputContainerStyles}>
                                                 <label htmlFor='Category' className={labelStyles}>Category </label>
                                                 <input placeholder='Category' type="text" value={`${teacherDetails.Category}`} className={inputStyles} id='Category' name='Category' onChange={(e) => setTeacherDetails(prev => {
                                                     return {
                                                         ...prev,
                                                         Category: e.target.value
+                                                    }
+                                                })} />
+                                            </div> */}
+                                            <div className={inputContainerStyles}>
+                                                <label htmlFor='Department' className={labelStyles}>Department </label>
+                                                <input placeholder='Department' type="text" value={`${teacherDetails.Department}`} className={inputStyles} id='Department' name='Department' onChange={(e) => setTeacherDetails(prev => {
+                                                    return {
+                                                        ...prev,
+                                                        Department: e.target.value
                                                     }
                                                 })} />
                                             </div>
@@ -213,6 +259,57 @@ const AddTeacher = () => {
                                                     }
                                                 })} />
                                             </div>
+                                        </div>
+                                        <div className="mx-auto w-full">
+                                            <label
+                                                htmlFor="example5"
+                                                className="mb-1 block text-lg my-2 font-semibold text-black"
+                                            >
+                                                Upload file
+                                            </label>
+                                            <label className="flex w-full cursor-pointer appearance-none items-center justify-center rounded-md border-2 border-dashed border-gray-200 p-6 transition-all hover:border-primary-300">
+                                                <div className="space-y-1 text-center">
+                                                    {imageUrl ? (
+                                                        <img
+                                                            src={imageUrl}
+                                                            alt="Uploaded"
+                                                            className="mx-auto h-40"
+                                                        />
+                                                    ) : (
+                                                        <div className="mx-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none"
+                                                                viewBox="0 0 24 24"
+                                                                strokeWidth="1.5"
+                                                                stroke="currentColor"
+                                                                className="h-6 w-6 text-gray-500"
+                                                            >
+                                                                {/* SVG path here */}
+                                                            </svg>
+                                                        </div>
+                                                    )}
+                                                    <div className="text-gray-600">
+                                                        <a
+                                                            href="#"
+                                                            className="font-medium text-primary-500 hover:text-primary-700"
+                                                        >
+                                                            Click to upload
+                                                        </a>{" "}
+                                                        or drag and drop
+                                                    </div>
+                                                    <p className="text-sm text-gray-500">
+                                                        SVG, PNG, JPG or GIF (max. 800x400px)
+                                                    </p>
+                                                </div>
+                                                <input
+                                                    id="example5"
+                                                    type="file"
+                                                    className="sr-only"
+                                                    accept="image/png,image/jpeg,image/jpg"
+                                                    onChange={handleFileChange}
+                                                />
+                                            </label>
                                         </div>
                                         {/* <button className='bg-[#5c59e8] text-sm px-4 py-2 rounded-md text-white'>Add Teacher</button> */}
                                     </form>

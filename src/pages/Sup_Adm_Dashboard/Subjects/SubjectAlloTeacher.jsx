@@ -6,19 +6,21 @@ import SubjectList from '../../../components/SubjectList'
 import SubListContext from '../../../Context/SubList/SubListContext'
 import { MdAdd } from 'react-icons/md'
 import axios from 'axios'
+import swal from 'sweetalert'
+
 
 
 
 const SubjectAlloTeacher = () => {
     const Method = useContext(SubListContext)
-    const { count, CountIncrement, setFilterData,selectIds } = Method
+    const { count, CountIncrement, setFilterData, selectIds } = Method
     const [subject, setSubject] = useState()
     const [teacher, setTeacher] = useState([])
     const select = useRef({
         Course: "",
         Semester: "",
         Section: "",
-        Teacher : ""
+        Teacher: ""
     })
     const FilterData = async () => {
         const { Course, Semester } = select.current;
@@ -41,7 +43,26 @@ const SubjectAlloTeacher = () => {
     }, [])
 
 
+    const SelectiveSubjectAssign = async () => {
+        try {
+            const { Section, Teacher } = select.current
+            const Detail = {
+                Section: Section,
+                Teacher_id: Teacher,
+                Subject_ids: selectIds
+            }
+            const Data = (await axios.post(`${process.env.REACT_APP_URL}/api/admin/Teacher_Subject_Select`, {Detail})).data;
 
+            if(Data.status){
+                swal("Submit!", `${Data.message}`, "success")
+            }
+            console.log(Data);
+        } catch (error) {
+            console.log('====================================');
+            console.log(error);
+            console.log('====================================');
+        }
+    }
 
 
     return (
@@ -77,7 +98,7 @@ const SubjectAlloTeacher = () => {
                                     className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[#ffff]`}
                                 >
                                     <img src="/plus.svg" alt="Add Student" />
-                                    <p className='cursor-pointer'  >Add Subject</p>
+                                    <p className='cursor-pointer' onClick={() => { SelectiveSubjectAssign() }} >Subject</p>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +146,7 @@ const SubjectAlloTeacher = () => {
                             </select>
                             <select
                                 className="bg-gray-100 rounded-3xl border-none text-[#667085]"
-                                name='Section'
+                                name='Teacher'
                                 id='course'
                                 onChange={(e) => { select.current.Teacher = e.target.value }}
                             >
@@ -133,7 +154,7 @@ const SubjectAlloTeacher = () => {
                                 <img src="/ArrowDown.svg" alt="" />
                                 {teacher.map((value) => {
                                     return (
-                                        <option value="A">{value.firstName+ " " + (value.lastName ? value.lastName : "")}</option>
+                                        <option value={value._id}>{value.firstName + " " + (value.lastName ? value.lastName : "")}</option>
                                     )
                                 })}
                             </select>
@@ -143,7 +164,7 @@ const SubjectAlloTeacher = () => {
                             {count.map((value, index) => {
                                 return (
                                     <SubjectList index={index}
-                                    value ={value} 
+                                        value={value}
                                     />
                                 )
                             })}
