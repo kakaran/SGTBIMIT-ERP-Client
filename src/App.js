@@ -5,7 +5,7 @@ import StudentLogin from "./LOGIN/STUDENT/StudentLogin";
 import Student from "./Routes/Student";
 import Faculty from "./Routes/Faculty";
 import AdSupAdm from "./LOGIN/Admin_SuperAdmin/AdSupAdm";
-import Super_Admin from "./Routes/Super_Admin";
+import SuperAdmin from "./Routes/Super_Admin";
 import Admin from "./Routes/Admin";
 import FacDashboard from "./pages/Fac_Dashboard/FacDashboard";
 import StuDashboard from "./pages/Stu_Dashboard/StuDashboard";
@@ -53,7 +53,7 @@ function App() {
                 </Route>
 
                 {/* Super Admin Routes */}
-                <Route exact path="/Dashboard" element={<Super_Admin />}>
+                <Route exact path="/Dashboard" element={<SuperAdmin />}>
                   <Route exact path="Sup_Admin" element={<SupAdmDashboard />} />
                   <Route exact path="Sup_Admin/AddStudent" element={<AddStudent />} />
                   <Route exact path="Sup_Admin/AddStudent/MultipleStudentAdd" element={<MultipleStudentAdd />} />

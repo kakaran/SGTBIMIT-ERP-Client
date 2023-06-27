@@ -79,7 +79,7 @@ const AddTeacher = () => {
 
                 <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
                     <Header />
-                    <div className='px-4  overflow-y-visible   bg-gray-100 sm:px-6 lg:px-8 py-8 w-full  mx-auto'>
+                    <div className='px-4  overflow-y-visible bg-gray-100 sm:px-6 lg:px-8 py-8 w-full  mx-auto'>
                         <h2> Add Teacher </h2>
                         <div className="md:inline-flex hidden justify-between text-[15px] font-semibold w-full">
                             <div>
@@ -111,9 +111,9 @@ const AddTeacher = () => {
 
                             </div>
                         </div>
-                        <div className="grid grid-cols-12 my-10 gap-4 ">
-                            <div className="col-span-9">
-                                <div className='w-[840px] p-4 md:w-full max-h-fit bg-white rounded-lg  border-2'>
+                        <div className="grid my-10 gap-4 ">
+                            <div className="">
+                                <div className='w-full p-4 md:w-full max-h-fit bg-white rounded-lg  border-2'>
                                     <ToastContainer />
                                     <h2> General Information </h2>
                                     <form onSubmit={handleSubmit} >
