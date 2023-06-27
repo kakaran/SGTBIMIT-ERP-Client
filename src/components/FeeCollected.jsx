@@ -10,7 +10,7 @@ function FeeCollected() {
   const progress = 75;
   return (
     <div className="w-[360px] bg-white h-[376px] md:w-full border-[] border-2 p-6 rounded-lg">
-      FeeCollected
+      Fee Collected
       <div className="my-10">
         <ProgressBar progress={progress} />
       </div>

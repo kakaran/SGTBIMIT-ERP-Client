@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 import { RxDashboard } from "react-icons/rx";
 import { FiHeadphones } from "react-icons/fi";
@@ -11,19 +11,33 @@ import {
   Cog6ToothIcon,
 } from "@heroicons/react/24/outline";
 import { MdOutlineLibraryBooks } from "react-icons/md";
+import { Link, useNavigate } from "react-router-dom";
 
 function Sidebar() {
   const [isSubjectsOpen, setIsSubjectsOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("");
   const [activeSubLink, setActiveSubLink] = useState("");
 
+  const navigate = useNavigate()
+
   const handleLinkClick = (linkTitle) => {
     setActiveLink(linkTitle);
+    localStorage.setItem("activeLink", linkTitle);
     setActiveSubLink("");
+    linkTitle === "Dashboard" && navigate("/Dashboard/Sup_Admin")
+
   };
 
   const handleSubLinkClick = (subLinkTitle) => {
-    setActiveSubLink(subLinkTitle);
+    if (subLinkTitle) {
+      setActiveSubLink(subLinkTitle);
+      localStorage.setItem("activeSubLink", subLinkTitle);
+      localStorage.setItem("activeLink", "Subjects");
+      setActiveLink("Subjects");
+      subLinkTitle === "All Subjects" && navigate("/Dashboard/Sup_Admin/Subjects")
+      subLinkTitle === "Allocate Subjects" && navigate("/Dashboard/Sup_Admin/Subjects/Subject_Allocate")
+    }
+
   };
 
   const handleSubjectsClick = () => {
@@ -31,17 +45,32 @@ function Sidebar() {
     setActiveSubLink("");
   };
 
+
+  useEffect(() => {
+    const activeLink = localStorage.getItem("activeLink");
+    if (activeLink) {
+      setActiveLink(activeLink);
+    }
+    const activeSubLink = localStorage.getItem("activeSubLink");
+    if (activeSubLink) {
+      setActiveSubLink(activeSubLink);
+    }
+
+  }, []);
+
+
+
   return (
     <div className="flex flex-col bg-white w-16  md:w-64 p-4 min-h-screen">
       {/* Sidebar header */}
       <div className="flex space-x-2 ml-1 mx-auto flex-row items-center justify-center">
         <img className="h-10 w-10 " src="/collegelogo.png" alt="" />
-        <a
-          href="#"
-          className="text-2xl font-extrabold hidden md:inline  text-red-500"
+        <Link
+          to="/Dashboard/Sup_Admin"
+          className="text-2xl font-extrabold hidden md:inline text-red-500"
         >
           SGTBIMIT<span className="text-black">ERP</span>
-        </a>
+        </Link>
       </div>
 
       {/* Links */}
@@ -52,7 +81,7 @@ function Sidebar() {
           onClick={() => handleLinkClick("Dashboard")}
           isActive={activeLink === "Dashboard"}
         />
-        <div className="">
+        <div className="grid gap-2">
           <SidebarLinkGroup
             Icon={MdOutlineLibraryBooks}
             title="Subjects"
@@ -63,15 +92,15 @@ function Sidebar() {
             <div className="  ">
               <SidebarLinkGroup
                 Icon={AcademicCapIcon}
-                title="Assignments"
-                onClick={() => handleSubLinkClick("Assignments", "Subjects")}
-                isActive={activeSubLink === "Assignments"}
+                title="All Subjects"
+                onClick={() => handleSubLinkClick("All Subjects", "Subjects")}
+                isActive={activeSubLink === "All Subjects"}
               />
               <SidebarLinkGroup
                 Icon={SquaresPlusIcon}
-                title="Notes"
-                onClick={() => handleSubLinkClick("Notes", "Subjects")}
-                isActive={activeSubLink === "Notes"}
+                title="Allocate Subjects"
+                onClick={() => handleSubLinkClick("Allocate Subjects", "Subjects")}
+                isActive={activeSubLink === "Allocate Subjects"}
               />
             </div>
           )}
