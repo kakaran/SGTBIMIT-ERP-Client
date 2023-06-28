@@ -47,7 +47,7 @@ const AddTeacher = () => {
             }
         }
         catch (err) {
-            toast.error(`Error`, options)
+            toast.error(`catch Error`, options)
             console.log(err)
         }
 

@@ -245,7 +245,7 @@ const MultipleStudentAdd = () => {
                                         </tbody>
                                     </Table>
                                     {tempObject && popup ? (
-                                        <UpdateDetails tempObject={tempObject} setTempObject={setTempObject} setStoreData={setStoreData} storeData={storeData} index={indexx} setPopup={setPopup} />
+                                        <UpdateDetails tempObject={tempObject} setTempObject={setTempObject} setStoreData={setStoreData} storeData={storeData} index={indexx} setPopup={setPopup} originalData={storeData} />
                                     ) : ""}
                                 </div>
                             </div>

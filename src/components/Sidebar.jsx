@@ -105,12 +105,12 @@ function Sidebar() {
             </div>
           )}
         </div>
-        <SidebarLinkGroup
+        {/* <SidebarLinkGroup
           Icon={RiBarChartHorizontalFill}
           title="Results"
           onClick={() => handleLinkClick("Results")}
           isActive={activeLink === "Results"}
-        />
+        /> */}
 
         <SidebarLinkGroup
           Icon={AcademicCapIcon}
@@ -126,12 +126,12 @@ function Sidebar() {
           isActive={activeLink === "Schedule"}
         />
 
-        <SidebarLinkGroup
+        {/* <SidebarLinkGroup
           Icon={BsGraphUp}
           title="Performance"
           onClick={() => handleLinkClick("Performance")}
           isActive={activeLink === "Performance"}
-        />
+        /> */}
       </div>
       <div className="flex-grow" />
 
