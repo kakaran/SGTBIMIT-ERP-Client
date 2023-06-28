@@ -73,7 +73,7 @@ const SubjectAlloTeacher = () => {
                 <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
                     <Header />
                     <div className="px-4  overflow-y-visible bg-gray-100 sm:px-6 lg:px-8 py-8 w-full  mx-auto h-full">
-                        <h2>Add Subject</h2>
+                        <h2>Subject Allocating</h2>
                         <div className="md:inline-flex hidden justify-between text-[15px] font-semibold w-full">
                             <div>
                                 <div className="flex my-3 text-lg space-x-3">
@@ -81,7 +81,7 @@ const SubjectAlloTeacher = () => {
                                     <img src="/chevron-right.svg" alt="" />
                                     <p className="text-[#5C59E8]">Subjects</p>
                                     <img src="/chevron-right.svg" alt="" />
-                                    <p>Add Subject</p>
+                                    <p>Subject Allocating</p>
                                 </div>
                             </div>
 

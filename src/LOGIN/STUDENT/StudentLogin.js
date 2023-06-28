@@ -53,7 +53,7 @@ const StudentLogin = () => {
         <div className="Login-form_Container">
           <h2>Login</h2>
           <p>Welcome to official ERP system of SGTBIMIT</p>
-          <div className="LoginsDiversionbutton">
+          <div className="LoginsDiversionbutton cursor-pointer">
             <p className={loginOption ? "LoginDiversButtoninActive" : "LoginDriveButtoninNotActive"} onClick={() => {
               setloginOption(!loginOption)
             }}>Student</p>
@@ -78,7 +78,7 @@ const StudentLogin = () => {
           </div>
           <button onClick={() => {
             StudentFacultylogin()
-          }}>Login <MdKeyboardArrowRight /></button>
+          }} className="cursor-pointer">Login <MdKeyboardArrowRight /></button>
         </div>
       </div>
     </>

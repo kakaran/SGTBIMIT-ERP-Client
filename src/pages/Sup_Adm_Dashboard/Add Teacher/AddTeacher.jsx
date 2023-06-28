@@ -69,6 +69,7 @@ const AddTeacher = () => {
             formData.append("Category", "Teacher");
             formData.append("Department", teacherDetails.Department);
             formData.append("avatar", selectedFile);
+            console.log(formData);
             const response = await axios.post(`${process.env.REACT_APP_URL}/api/admin/Faculty_Add`, formData,
                 {
                     headers: {
@@ -76,7 +77,7 @@ const AddTeacher = () => {
                     },
                 })
             console.log(response)
-            if (response.data.success) {
+            if (response.data.status) {
                 toast.success('Teacher Added Successfully', options)
             }
             else {
@@ -143,7 +144,7 @@ const AddTeacher = () => {
                                     onClick={handleSubmit}
                                 >
                                     <img src="/plus.svg" alt="Add Teacher" />
-                                    <p>Add Teacher</p>
+                                    <p className='cursor-pointer'>Add Teacher</p>
                                 </div>
 
                             </div>
@@ -347,7 +348,7 @@ const AddTeacher = () => {
                                 onClick={handleSubmit}
                             >
                                 <img src="/plus.svg" alt="Add Teacher" />
-                                <p>Add Teacher</p>
+                                <p className='cursor-pointer'>Add Teacher</p>
                             </div>
                         </div>
                     </div>
