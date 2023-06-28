@@ -10,6 +10,7 @@ import swal from 'sweetalert'
 import axios from 'axios';
 import { Table, Pagination } from 'react-bootstrap';
 import UpdateDetails from './UpdateDetails';
+
 const MultipleStudentAdd = () => {
     const Method = useContext(handleExcelContext)
     const [storeData, setStoreData] = useState([]);

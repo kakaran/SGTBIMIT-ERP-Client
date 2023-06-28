@@ -10,6 +10,7 @@ import {
 import { FaRegEye } from 'react-icons/fa';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
+import { Link } from "react-router-dom";
 
 
 
@@ -141,9 +142,6 @@ function StudentsDetailTable() {
             value1.Sections.map((value2) => {
               if (value2.section == Section.current) {
                 setFilterData(value2);
-                // setSemester("")
-                // setCourse("")
-                // Section.current = ""
               }
             });
           }
@@ -269,12 +267,12 @@ function StudentsDetailTable() {
             <div className="text-[#fff]  font-semibold text-[16px]  leading-5 flex justify-center md:justify-end mr-4">
               <div className="flex flex-row bg-[#5C59E8] items-center rounded-xl border-none py-2 px-3  space-x-1">
                 <PlusIcon className="h-5 w-5 object-cover" />
-                <a
-                  href="/Dashboard/Sup_Admin/AddStudent"
+                <Link
+                  to="/Dashboard/Sup_Admin/AddStudent"
                   className="text-sm px-4 py-2 rounded-md "
                 >
                   Add Student
-                </a>
+                </Link>
               </div>
             </div>
           </div>

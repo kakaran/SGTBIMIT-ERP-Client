@@ -113,7 +113,7 @@ function TeacherTable() {
                     {value?.firstName + (value?.lastName ? value?.lastName : "")}
 
                     <span className="text-[#667085]">
-                      secondary text
+                      {value?.designation}
                     </span>
                   </td>
                   <td className="py-2 px-4 border-b">
@@ -123,7 +123,7 @@ function TeacherTable() {
                   </td>
 
                   <td className="py-2 px-4 border-b font-semibold text-[#667085]">
-                    {value?.departmentName}
+                    {value?.Department}
                   </td>
                   <td className="py-2 px-4 border-b font-semibold text-[#667085]">
                     {value?.phone}

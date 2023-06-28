@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Header from '../../../components/Header'
 import Sidebar from '../../../components/Sidebar'
 import { Link } from 'react-router-dom'
@@ -6,45 +6,33 @@ import SubjectList from '../../../components/SubjectList'
 import SubListContext from '../../../Context/SubList/SubListContext'
 import { MdAdd } from 'react-icons/md'
 import axios from 'axios'
+import swal from 'sweetalert'
+
 
 
 
 const SubjectAlloTeacher = () => {
     const Method = useContext(SubListContext)
-    const { count, CountIncrement } = Method
+    const { count, CountIncrement, setFilterData, selectIds } = Method
     const [subject, setSubject] = useState()
-    const [teacher, setTeacher] = useState()
-    const [select, setSelect] = useState({
+    const [teacher, setTeacher] = useState([])
+    const select = useRef({
         Course: "",
         Semester: "",
-        Section: ""
+        Section: "",
+        Teacher: ""
     })
-    const [filterData, setFilterData] = useState([])
-
     const FilterData = async () => {
-
-        const { Course, Semester, Section } = select;
-
-        subject.map((value) => {
-            if (value.Course == Course || value.Semester == Semester || value.Section == Section) {
-                console.log(value);
-                setFilterData(current => [...current, value])
-            }
-        })
+        const { Course, Semester } = select.current;
+        setFilterData(subject.filter((sub) => (sub.Course == Course && sub.Sem == Semester)))
     }
-
-    const HandleChange = async (e) => {
-        setSelect({ ...select, [e.target.name]: e.target.value })
-        FilterData()
-    }
-
 
     useEffect(() => {
         const TeacherStudentDataGet = async () => {
             try {
                 const Data = (await axios.get(`${process.env.REACT_APP_URL}/api/Subject/All_Subject_Teacher_Display`)).data
-                setSubject(Data.Subjects)
-                setTeacher(Data.Teachers)
+                setSubject(Data?.Subjects)
+                setTeacher(Data?.Teachers)
             } catch (error) {
                 console.log('====================================');
                 console.log(error);
@@ -54,7 +42,28 @@ const SubjectAlloTeacher = () => {
         TeacherStudentDataGet()
     }, [])
 
-    console.log(filterData);
+
+    const SelectiveSubjectAssign = async () => {
+        try {
+            const { Section, Teacher } = select.current
+            const Detail = {
+                Section: Section,
+                Teacher_id: Teacher,
+                Subject_ids: selectIds
+            }
+            const Data = (await axios.post(`${process.env.REACT_APP_URL}/api/admin/Teacher_Subject_Select`, {Detail})).data;
+
+            if(Data.status){
+                swal("Submit!", `${Data.message}`, "success")
+            }
+            console.log(Data);
+        } catch (error) {
+            console.log('====================================');
+            console.log(error);
+            console.log('====================================');
+        }
+    }
+
 
     return (
         <>
@@ -89,7 +98,7 @@ const SubjectAlloTeacher = () => {
                                     className={` flex items-center text-[15px] font-semibold  border-[#858D9D] py-2 px-5 rounded-lg border-2 space-x-2 border-none bg-[#5C59E8] text-[#ffff]`}
                                 >
                                     <img src="/plus.svg" alt="Add Student" />
-                                    <p className='cursor-pointer'  >Add Subject</p>
+                                    <p className='cursor-pointer' onClick={() => { SelectiveSubjectAssign() }} >Subject</p>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +108,7 @@ const SubjectAlloTeacher = () => {
                                 className="bg-gray-100 rounded-3xl border-none text-[#667085]"
                                 name='Course'
                                 id='course'
-                                onChange={HandleChange}
+                                onChange={(e) => { select.current.Course = e.target.value }}
                             >
                                 <option className="bg-gray-100" value="">Course</option>
                                 <img src="/ArrowDown.svg" alt="" />
@@ -111,7 +120,7 @@ const SubjectAlloTeacher = () => {
                                 className="bg-gray-100 rounded-3xl border-none text-[#667085]"
                                 name='Semester'
                                 id='course'
-                                onChange={HandleChange}
+                                onChange={(e) => { select.current.Semester = e.target.value;; FilterData() }}
                             >
                                 <option className="bg-gray-100" value="">Semester</option>
                                 <img src="/ArrowDown.svg" alt="" />
@@ -126,7 +135,7 @@ const SubjectAlloTeacher = () => {
                                 className="bg-gray-100 rounded-3xl border-none text-[#667085]"
                                 name='Section'
                                 id='course'
-                                onChange={HandleChange}
+                                onChange={(e) => { select.current.Section = e.target.value }}
                             >
                                 <option className="bg-gray-100" value="">Section</option>
                                 <img src="/ArrowDown.svg" alt="" />
@@ -135,12 +144,28 @@ const SubjectAlloTeacher = () => {
                                 <option value="C">C</option>
                                 <option value="D">D</option>
                             </select>
+                            <select
+                                className="bg-gray-100 rounded-3xl border-none text-[#667085]"
+                                name='Teacher'
+                                id='course'
+                                onChange={(e) => { select.current.Teacher = e.target.value }}
+                            >
+                                <option className="bg-gray-100" value="">Teachers</option>
+                                <img src="/ArrowDown.svg" alt="" />
+                                {teacher.map((value) => {
+                                    return (
+                                        <option value={value._id}>{value.firstName + " " + (value.lastName ? value.lastName : "")}</option>
+                                    )
+                                })}
+                            </select>
                         </div>
                         <div className='w-full border-2 bg-white rounded-lg p-4 mt-5 flex gap-3 flex-col items-start'>
                             <h2 className='text-[18px] font-bold'>Subjects</h2>
                             {count.map((value, index) => {
                                 return (
-                                    <SubjectList index={value} />
+                                    <SubjectList index={index}
+                                        value={value}
+                                    />
                                 )
                             })}
 

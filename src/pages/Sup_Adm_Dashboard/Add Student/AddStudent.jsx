@@ -58,7 +58,7 @@ function AddStudent() {
     try {
       Method.handleExcel(e)
       console.log(Method.Value);
-      await Method.Value && navigate(`/Dashboard/Sup_Admin/AddStudent/MultipleStudentAdd`)
+      navigate(`/Dashboard/Sup_Admin/AddStudent/MultipleStudentAdd`)
 
     } catch (error) {
       console.log(error);
