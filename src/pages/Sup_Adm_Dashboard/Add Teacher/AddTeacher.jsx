@@ -54,9 +54,10 @@ const AddTeacher = () => {
     }
 
     const handleSubmit = async (e) => {
-        // e.preventDefault()
+        e.preventDefault()
         try {
             let formData = new FormData();
+            console.log({ teacherDetails })
             formData.append("firstName", teacherDetails.firstName);
             formData.append("Gender", teacherDetails.Gender);
             formData.append("lastname", teacherDetails.lastname);
@@ -77,7 +78,7 @@ const AddTeacher = () => {
                     },
                 })
             console.log(response)
-            if (response.data.status) {
+            if (response.data.success) {
                 toast.success('Teacher Added Successfully', options)
             }
             else {
@@ -182,6 +183,7 @@ const AddTeacher = () => {
                                                         Gender: e.target.value
                                                     }
                                                 })}>
+                                                    <option value="">Select Gender</option>
                                                     <option value="Male">Male</option>
                                                     <option value="Female">Female</option>
                                                 </select>
