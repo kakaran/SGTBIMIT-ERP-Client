@@ -18,10 +18,10 @@ const StudentLogin = () => {
     try {
       let Data
       if (loginOption) {
-         Data = (await axios.post("https://spotless-handbag-bat.cyclic.app/api/Student/Signin", { email, password })).data;
+         Data = (await axios.post(`${process.env.REACT_APP_URL}/api/Student/Signin,`, { email, password })).data;
          navigate("/Dashboard/Student")
       } else {
-         Data = (await axios.post("https://spotless-handbag-bat.cyclic.app/api/Faculty/Signin", { email, password })).data
+         Data = (await axios.post(`${process.env.REACT_APP_URL}/api/Faculty/Signin`, { email, password })).data
          navigate("/Dashboard/Faculty")
 
       }
